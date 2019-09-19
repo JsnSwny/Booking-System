@@ -14,6 +14,7 @@ class TableItem(models.Model):
     group = models.ForeignKey(TableGroup, related_name="tables", on_delete=models.CASCADE)
     people = models.IntegerField(default=0)
 
+
 class Booking(models.Model):
     
     time = models.TimeField(auto_now=False, auto_now_add=False)
@@ -26,6 +27,8 @@ class Booking(models.Model):
     assign = models.CharField(max_length=100, default='')
     created_date = models.DateTimeField(auto_now_add=True)
 
+    table = models.ForeignKey(TableItem, null=True, blank=True, related_name="table", on_delete=models.SET_NULL)
+
     arrived = models.BooleanField(default=False)
     cleared = models.BooleanField(default=False)
 
@@ -35,7 +38,6 @@ class Booking(models.Model):
     def __str__(self):
         d = f'{str(self.date)[8:10]}/{str(self.date)[5:7]}/{str(self.date)[0:4]}' 
         return f'{d} - {str(self.time)[0:5]} - {self.name} ({self.people}) taken by {self.initials} at {str(self.created_date)[0:16]}'
-
 
 class Staff(models.Model):
     name = models.CharField(max_length=100)

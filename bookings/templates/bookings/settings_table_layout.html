@@ -1,0 +1,287 @@
+{% extends "bookings/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <div class="modal fade" id="editTableModal" tabindex="-1" role="dialog" aria-labelledby="tableModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100">Edit Table</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTable">
+                        <div class="row align-items-center justify-content-center">
+                            <input placeholder="Table Name" type="text">
+                        </div>   
+                        <div class="mb-2 mt-4" style="margin: 0 60px;">
+                            <input class="btn btn-success" style="width: 100%" type="submit" value="Update Table">
+                            <button class="btn btn-danger my-2" style="width: 100%">Delete Table</button>
+                        </div>
+                    </form>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editGroupModal" tabindex="-1" role="dialog" aria-labelledby="tableModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100">Edit Group</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editGroup">
+                        <div class="row align-items-center justify-content-center">
+                            <input type="color" id="editGroupColor" style="border: none; box-shadow: none; background: inherit; width: 40px; height: 40px;">
+                            <input placeholder="Group Name" type="text">
+                        </div>   
+                        <div class="mb-2 mt-4" style="margin: 0 60px;">
+                            
+                            <input class="btn btn-success" style="width: 100%" type="submit" value="Update Group">
+                            <button class="btn btn-danger my-2" style="width: 100%">Delete Table</button>
+                        </div>
+                    </form>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <h1 style="font-family: Niconne; font-size: 48px;" class="text-center">Table Layout</h1>
+    <div class="row align-items-center justify-content-center">
+        <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
+    </div>
+
+    <form id="createGroup">
+        <div class="row align-items-center justify-content-center">
+            <input type="color" value="#ff0000" id="createGroupColour" style="border: none; box-shadow: none; background: inherit; width: 40px; height: 40px;">
+
+            <div class="col-md-4 col-sm-12 col-xs-12 my-2">
+                <input type="text" id="createGroupName" class="form-control" placeholder="Table Group Name" required autofocus>
+            </div>
+            
+            <div class="col-md-4 col-sm-12 col-xs-12 my-2">
+                <input class="btn btn-success" style="width: 100%" type="submit" value="Create Group">
+                
+            </div>
+        </div>
+    </form>
+    
+    {% for i in tables %}
+        <table class="table mt-4">
+            <thead class="thead-dark text-center" >
+            
+                <tr>
+                <th class="tableGroup" data-id="{{ i.pk }}" data-colour="{{ i.colour }}" data-name="{{ i.name }}" style="width: 25%; font-size: 25px; text-transform: uppercase;">{{ i.name }}</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for a in i.tables.all %}
+                    <tr style="background: rgb(216, 216, 216);">
+                        <td class="tableItem font-weight-bold" data-id="{{ a.pk }}" data-name="{{ a.name }}">{{ a.name }} 
+                        </td>
+                    </tr>
+                    <tr style="background: rgb(243, 243, 243);">
+                        <td>
+                            <div class="row align-items-center justify-content-center">
+                                <select required class="form-control table_amount col-3" data-people="{{ a.people }}" data-id="{{ a.pk }}">
+                                </select>
+                            </div>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            
+        </tbody>
+        </table>
+    {% endfor %}
+    
+    <form id="addTable">
+        <div class="row align-items-center justify-content-center">
+                <div class="col-md-3 col-sm-12 col-xs-12 my-2">
+                    <input type="text" class="form-control" placeholder="Table Name" required autofocus>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12 my-2">
+                    <select class="form-control" required>
+                        <option value="" disabled selected>Select Table Group</option>
+                        {% for i in tables %}
+                            <option value="{{ i.name }}">{{ i.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12 my-2 mb-3">
+                    <input class="btn btn-success" data-id="" style="width: 100%" type="submit" value="Add Table">
+                    
+                </div>
+        </div>
+    </form>
+    
+
+<script>
+    for (i=0; i < 151; i++) {
+        $('.table_amount').append('<option class="text-center" value='+i+'>' + i + ' People</option>')
+    }
+
+    $('.table_amount').each(function(){
+        $(this).val($(this).data("people"))
+    });
+    
+    $(".table_amount").on("change", function(){
+        var id = $(this).data("id")
+        $.ajax({
+            url: '/ajax/20/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'table_id': id, 'people': this.value},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+            }
+        });
+    });
+
+    $(".tableGroup").on("click", function(){
+        $("#editGroupModal").modal("show")
+        
+        $("#editGroup input:nth-child(2)").val($(this).data("name"))
+        $("#editGroup input:first").val($(this).data("colour"))
+        $("#editGroup :submit").data("id", $(this).data("id"))
+    });
+
+    $("#editGroup button").on("click", function(){
+        var id = $("#editGroup :submit").data("id")
+        $.ajax({
+            url: '/ajax/32/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        }); 
+    });
+
+    $('#editGroupModal').on('shown.bs.modal', function () {
+        $('#editGroup input:first').trigger('focus')
+    })
+
+    $("#editGroup").submit(function( event ) {
+        event.preventDefault();
+        var id = $("#editGroup :submit").data("id")
+        var name = $("#editGroup input:nth-child(2)").val()
+        var colour = $("#editGroup input:first").val()
+        $.ajax({
+            url: '/ajax/31/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'name': name, 'id': id, 'colour': colour},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        });    
+    });
+
+
+
+
+
+    $(".tableItem").on("click", function(){
+        $("#editTableModal").modal("show")
+        $("#editTable input:first").val($(this).data("name"))
+        $("#editTable :submit").data("id", $(this).data("id"))
+    });
+
+    $("#editTable button").on("click", function(){
+        var id = $("#editTable :submit").data("id")
+        $.ajax({
+            url: '/ajax/30/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        }); 
+    });
+
+    $('#editTableModal').on('shown.bs.modal', function () {
+        $('#editTable input:first').trigger('focus')
+    })
+
+    $("#editTable").submit(function( event ) {
+        event.preventDefault();
+        var id = $("#editTable :submit").data("id")
+        var name = $("#editTable input:first").val()
+        $.ajax({
+            url: '/ajax/29/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'name': name, 'id': id},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        });    
+    });
+
+    $("#createGroup").submit(function( event ) {
+        event.preventDefault();
+        var name = $("#createGroupName").val()
+        var colour = $("#createGroupColour").val()
+        $.ajax({
+            url: '/ajax/27/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'name': name, 'colour': colour},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
+    $("#addTable").submit(function( event ) {
+        event.preventDefault();
+        var name = $("#addTable input:first").val()
+        var group = $("#addTable select").val()
+        $.ajax({
+            url: '/ajax/28/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'name': name, 'group': group},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
+    function deleteStaff(id) {
+        $.ajax({
+            url: '/ajax/26/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        });
+    }
+</script>
+
+
+{% endblock content %}

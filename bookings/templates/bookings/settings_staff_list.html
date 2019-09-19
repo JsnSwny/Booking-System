@@ -1,0 +1,79 @@
+{% extends "bookings/base.html" %}
+{% load static %}
+
+{% block content %}
+    <h1 style="font-family: Niconne; font-size: 48px;" class="text-center">Staff List</h1>
+    <div class="row align-items-center justify-content-center">
+        <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
+    </div>
+    <table class="table table-hover table-bordered">
+        <thead class="thead-dark text-center">
+            <tr>
+            <th scope="col ">Staff Name</th>
+            <th scope="col">Booking Taker?</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="history" class="text-center">
+            {% for i in staff %}
+                <tr>
+                <td>{{ i.name }}</td>
+                <td>{{ i.booking }}</td>
+                <td><span class="btn btn-danger btn-sm" onclick="deleteStaff({{ i.pk }})">Delete</span></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <form id="addStaff">
+        <div class="row align-items-center justify-content-center">
+                <div class="col-md-3 col-sm-12 col-xs-12 my-2">
+                    <input type="text" class="form-control" placeholder="Staff Name" required autofocus>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12 my-2">
+                    <select class="form-control" required>
+                        <option value="" disabled selected>Booking Taker?</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12 my-2 mb-3">
+                    <input class="btn btn-success" style="width: 100%" type="submit" value="Add Staff">
+                </div>
+        </div>
+    </form>
+    
+
+<script>
+    $("#addStaff").submit(function( event ) {
+        event.preventDefault();
+        var name = $("#addStaff input:first").val()
+        var booking = $("#addStaff select").val()
+        $.ajax({
+            url: '/ajax/25/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'name': name, 'booking': booking},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        });
+    });
+
+    function deleteStaff(id) {
+        $.ajax({
+            url: '/ajax/26/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                location.reload();
+            }
+        });
+    }
+</script>
+
+
+{% endblock content %}

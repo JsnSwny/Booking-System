@@ -1,0 +1,326 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    
+    <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <link href='https://fonts.googleapis.com/css?family=Niconne' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet'>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/offline-js/0.7.19/offline.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/offline-js/0.7.19/themes/offline-language-english.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.default.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'bookings/style.css' %}">
+
+    <title>Booking System</title>
+
+</head>
+<body>
+    <div hidden id="booking_print"></div>
+
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModal" aria-hidden="true" style="overflow:hidden;">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-center" id="alert_title" style="margin: 0 auto; font-family: Courgette;">Create Alert</h3>    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>                    
+                <div class="modal-body text-center">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="form-group col-md-8">    
+                            <h6 class="text-center">Date</h6>
+                            <input onkeydown="return false;" type="text" class="form-control text-center" id="alert_datepicker" autocomplete="off" required>
+                        </div> 
+                    </div>   
+                    <form id="addAlertForm">
+                        <div class="row">
+                            <input hidden id="alert_id" value="">
+                            <div class="form-group col-md-12">
+                                <h6>Alert Message</h6>
+                                <textarea class="form-control" value="" id="alert_message" rows="3" style="resize: none;"></textarea>
+                            </div>                  
+                        </div>
+                        <button type="button" class="btn btn-danger mb-2 mt-3 col-md-8" id="addAlert" hidden="true">Add Alert</button>
+                        <button type="button" class="btn btn-info text-light mb-2 mt-3 col-md-4" data-id="" id="updateAlert" hidden="true">Update Alert</button>
+                        <button type="button" class="btn btn-danger text-light mb-2 mt-3 col-md-4" id="deleteAlert" hidden="true">Delete</button>
+                    </form>                            
+                    <p class="col-md-12 mt-3" style="border-bottom: 1px solid #dddddd;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <nav class="navbar p-3 navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/bookings">Booking System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" style="cursor: pointer;" href="/create" data-target="#bookingModal">Create Booking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="createAlert" style="cursor: pointer;" data-target="#alertModal">Create Alert</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="printBookings" style="cursor: pointer;">Print Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="historyNav" href="/history">History</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Settings
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/staff_list">Staff List</a>
+                        <a class="dropdown-item" href="/table_layout">Table Layout</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    {% block other %}{% endblock other %}
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-12" style="padding-top: 20px;">
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+        $("#printBookings").on("click", function(){
+            printContent('booking_print')
+        });
+
+        function printContent(el){
+            document.getElementById("booking_print").hidden = false
+            date = moment().format("DD/MM/YYYY")
+            $.ajax({
+                url: '/ajax/1/',
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date},
+                dataType: 'json',
+                type: 'GET',
+                global: false,
+                success: function(data) {
+                    $("#booking_print").html("");
+                    var full_date = moment(date, "DD/MM/YYYY").format("dddd, Do MMMM YYYY")
+                    $("#booking_print").append("<h1 class='text-uppercase text-center mb-4'>" + full_date + "</h1>")
+                    for (i = 0; i < data.objects.length; i++) {
+                        var bookingField = data.objects[i].fields;
+                        var name = bookingField.name.toUpperCase();
+                        var people = bookingField.people;
+                        var time = moment(bookingField.time.substring(0, 5), "HH:mm").format("HH:mm");
+                        var timeA = moment(time, "HH:mm").format("h A")
+                        var info = bookingField.info;
+                        if(info != "") {
+                            info = '<small class="h6 text-muted"><span style="white-space: pre-wrap;">' + bookingField.info + '</span></small>'
+                        }
+                        var assign = ""
+                        if (bookingField.assign != "") {
+                            assign = '<span class="h4 mr-2 text-uppercase float-right">' + bookingField.assign + '</span>'
+                        }
+                        if (moment(time, "HH:mm") > moment()) {
+
+                            $("#booking_print").append('\
+                                <ul class="list-group">\
+                                    <li class="list-group-item">\
+                                        <div class="float-right">\
+                                            <h2>' + assign + '</h2>\
+                                        </div>\
+                                        <div class="ml-1 mb-1 mt-1 row">\
+                                            <div class="row" id="print_tablelist_' + data.objects[i].pk + '">\
+                                            </div>\
+                                        </div>\
+                                        <div class="row"><span class="h2 font-weight-bold ml-4">' + time + ' - (' + people + 'ppl) - ' + name + '</span></div>\
+                                        <div class="mt-2 ml-3">\
+                                            ' + info + '\
+                                        </div>\
+                                </div>\
+                                    </li>\
+                                </ul>')
+ 
+                            if(data.objects[i].table != "None") {
+                                $("#print_tablelist_" + data.objects[i].pk).append('\
+                                    <div class="d-flex flex-row"><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn text-light" style="width: 85%; background: ' + data.objects[i].colour + ';">' + data.objects[i].table + '</h1>\
+                                    </div>');
+                            } 
+                            else {
+                                $("#print_tablelist_" + data.objects[i].pk).append('\
+                                    <div class="d-flex flex-row"><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn btn-danger" style="width: 85%;">Assign Table</h1>\
+                                    </div>');  
+                            }
+
+
+                        }
+                    }
+                    var restorepage = $('body').html();
+                    var printcontent = $('#' + el).clone();
+                    $('body').empty().html(printcontent);
+                    window.print();
+                    $('body').html(restorepage);
+                    document.getElementById("booking_print").hidden = true
+                }
+            });
+
+        }
+
+        
+        $("#createAlert").on("click", function() {
+            $("#alertModal").modal("show")    
+            document.getElementById("alert_message").value = ""
+            document.getElementById("alert_title").innerHTML = "Create Alert"
+            document.getElementById("addAlert").hidden = false
+            document.getElementById("updateAlert").hidden = true
+            document.getElementById("deleteAlert").hidden = true
+            if($("#main_datepicker").length > 0) {
+                document.getElementById("alert_datepicker").value = document.getElementById("main_datepicker").value
+            }
+            else if($("#datepicker").length > 0) {
+                document.getElementById("alert_datepicker").value = document.getElementById("datepicker").value
+            }
+            else {
+                document.getElementById("alert_datepicker").value = moment().format("DD/MM/YYYY")
+            }
+        }); 
+
+        $("#addAlert").on("click", function(){
+            var date = document.getElementById("alert_datepicker").value
+            var message = document.getElementById("alert_message").value
+            date = date.split("/")
+            date = date.reverse().join("-")
+
+            $.ajax({
+                url: '/ajax/13/',
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date, 'message': message},
+                dataType: 'json',
+                type: 'GET',
+                global: false,
+                success: function(data) {
+                    $("#alertModal").modal("hide") 
+                    updateBookings() 
+                }
+            });
+        });
+
+        $("#deleteAlert").on("click", function(){
+            var id = $('#updateAlert').attr('data-id')
+
+            $.ajax({
+                url: '/ajax/16/',
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
+                dataType: 'json',
+                type: 'GET',
+                global: false,
+                success: function(data) {
+                    document.getElementById("addAlert").hidden = false
+                    document.getElementById("updateAlert").hidden = true
+                    document.getElementById("deleteAlert").hidden = true
+                    document.getElementById("alert_title").innerHTML = "Create Alert"
+                    document.getElementById("alert_message").value = ""  
+                    updateBookings()
+                    bookingsList(document.getElementById("alert_datepicker").value)             
+                }
+            });
+        });
+        $( document ).ready(function() {
+            $.ajax({
+                url: '/ajax/18/',
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: 'json',
+                type: 'GET',
+                success: function(data) {
+                    $( "#datepicker" ).datepicker({
+                        dateFormat: "dd/mm/yy"
+                        ,	duration: "fast",
+                        beforeShowDay: highlightDays,
+                        minDate : 0,
+                    });
+                    $( "#main_datepicker" ).datepicker({
+                        dateFormat: "dd/mm/yy"
+                        ,	duration: "fast",
+                        beforeShowDay: highlightDays,
+                    });
+                    $( "#alert_datepicker" ).datepicker({
+                        dateFormat: "dd/mm/yy"
+                        ,	duration: "fast",
+                        beforeShowDay: highlightDays,
+                    });
+                    datepicker_dates_low = []
+                    datepicker_dates_med = []
+                    datepicker_dates_high = []
+                    for (i=0; i < data.dates.length; i++) {
+                        if (data.people[i] <= 50) {
+                            datepicker_dates_low.push(data.dates[i])
+                        } else if (data.people[i] <= 100) {
+                            datepicker_dates_med.push(data.dates[i])
+                        } else {
+                            datepicker_dates_high.push(data.dates[i])
+                        }
+                    }
+                    $("#datepicker").removeAttr("disabled");
+                }
+            });
+        });
+
+        function highlightDays(date) {
+            date = $.datepicker.formatDate('dd/mm/yy', date);
+            if (moment(date, "DD/MM/YYYY") >= moment() || moment(date, "DD/MM/YYYY").format("DD/MM/YYYY") == moment().format("DD/MM/YYYY")) {
+                if (datepicker_dates_low.includes(date)) {
+                    return [true, 'dates_low'];
+                } else if (datepicker_dates_med.includes(date)) {
+                    return [true, 'dates_med'];
+                } else if (datepicker_dates_high.includes(date)) {
+                    return [true, 'dates_high'];
+                }
+            } else {
+                if (datepicker_dates_low.includes(date)) {
+                    return [true, 'dates_low_before'];
+                } else if (datepicker_dates_med.includes(date)) {
+                    return [true, 'dates_med_before'];
+                } else if (datepicker_dates_high.includes(date)) {
+                    return [true, 'dates_high_before'];
+                }
+            }
+            return [true, ''];
+        } 
+    </script>
+</body>
+</html>

@@ -8,12 +8,13 @@ from simple_history.models import HistoricalRecords
 class TableGroup(models.Model):
     name = models.CharField(max_length=100)
     colour = models.CharField(max_length=100)
+    user_id = models.IntegerField(null=True, blank=True)
 
 class TableItem(models.Model):
     name = models.CharField(max_length=100)
     group = models.ForeignKey(TableGroup, related_name="tables", on_delete=models.CASCADE)
     people = models.IntegerField(default=0)
-
+    user_id = models.IntegerField(null=True, blank=True)
 
 class Booking(models.Model):
     
@@ -34,6 +35,7 @@ class Booking(models.Model):
 
     objects = models.Manager()
     history = HistoricalRecords()
+    user_id = models.IntegerField(null=True, blank=True)
     
     def __str__(self):
         d = f'{str(self.date)[8:10]}/{str(self.date)[5:7]}/{str(self.date)[0:4]}' 
@@ -42,12 +44,11 @@ class Booking(models.Model):
 class Staff(models.Model):
     name = models.CharField(max_length=100)
     booking = models.BooleanField()
-
-
+    user_id = models.IntegerField(null=True, blank=True)
     
 class Alert(models.Model):
     
     message = models.TextField()
     date = models.DateField()
-
+    user_id = models.IntegerField(null=True, blank=True)
     objects = models.Manager()

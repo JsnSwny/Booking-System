@@ -31,10 +31,10 @@ def getAjaxRequest(request, id):
             date = request.GET.get('date')
             datetime_object = datetime.datetime.strptime(date, '%d/%m/%Y')
 
-            bookings = Booking.objects.filter(date=datetime_object).order_by('time')
+            bookings = Booking.objects.filter(date=datetime_object, user_id=request.user.id).order_by('time')
             bookings_dict = serializers.serialize('python', bookings)
 
-            alerts = Alert.objects.filter(date=datetime_object)
+            alerts = Alert.objects.filter(date=datetime_object, user_id=request.user.id)
             alerts_dict = serializers.serialize('python', alerts)
 
             for i in bookings_dict:
@@ -48,6 +48,8 @@ def getAjaxRequest(request, id):
 
             data['objects'] = bookings_dict
             data['alerts'] = alerts_dict
+            current_user = request.user
+            print(current_user)
 
 
 
@@ -56,13 +58,13 @@ def getAjaxRequest(request, id):
             table_id = request.GET.get('table_id')
             id = request.GET.get('id')
             
-            table = TableItem.objects.filter(pk = table_id).first()
-            Booking.objects.filter(pk = id).update(table = table)
+            table = TableItem.objects.filter(pk=table_id).first()
+            Booking.objects.filter(pk=id).update(table = table)
 
         # Get Booking
         elif id == 3:
             id = request.GET.get('id')
-            booking = Booking.objects.filter(id=id).first() 
+            booking = Booking.objects.filter(id=id, user_id=request.user.id).first() 
             people = booking.people
             name = booking.name
             time = booking.time
@@ -80,7 +82,7 @@ def getAjaxRequest(request, id):
                 people = 0
 
             if int(people) <= TableItem.objects.filter(pk=id)[0].people and int(people) > 0:
-                addWalkIn(id, people)     
+                addWalkIn(id, people, request.user.id)     
             else:
                 data = {'valid': 'False'}
             
@@ -89,8 +91,8 @@ def getAjaxRequest(request, id):
         elif id == 5:
             time = request.GET.get('time')
             date = datetime.datetime.now().date()
-            bookings = Booking.objects.filter(date=date)
-            tables = TableItem.objects.all().order_by('group')
+            bookings = Booking.objects.filter(date=date, user_id=request.user.id)
+            tables = TableItem.objects.filter(user_id=request.user.id).order_by('group')
             available = []
             unavailable = []
 
@@ -148,7 +150,7 @@ def getAjaxRequest(request, id):
             taker = request.GET.get('taker')
             tel = request.GET.get('tel')
             additional = request.GET.get('additional')
-            booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional)
+            booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional, user_id=request.user.id)
             booking.save()
 
         elif id == 11:
@@ -173,7 +175,7 @@ def getAjaxRequest(request, id):
         elif id == 13:
             date = request.GET.get('date')
             message = request.GET.get('message')
-            alert = Alert(date = date, message = message)
+            alert = Alert(date = date, message = message, user_id=request.user.id)
             alert.save()
 
         elif id == 14:
@@ -198,7 +200,7 @@ def getAjaxRequest(request, id):
             date = date.split("/")
             date = f'{date[2]}-{date[1]}-{date[0]}'
             date = datetime.datetime.strptime(date, '%Y-%m-%d')
-            bookings = Booking.objects.filter(date=date)
+            bookings = Booking.objects.filter(date=date, user_id=request.user.id)
             for i in bookings:
                 p = datetime.datetime.combine(date, i.time)
                 t = datetime.datetime.combine(date, datetime.datetime.strptime(time, '%H:%M').time())
@@ -252,7 +254,7 @@ def getAjaxRequest(request, id):
             date = date.split("/")
             date = f'{date[2]}-{date[1]}-{date[0]}'
             date = datetime.datetime.strptime(date, '%Y-%m-%d')
-            bookings = Booking.objects.filter(date=date)
+            bookings = Booking.objects.filter(date=date, user_id=request.user.id)
             for time in times:
                 total_people = 0
                 for i in bookings:
@@ -288,19 +290,19 @@ def getAjaxRequest(request, id):
         elif id == 25:
             name = request.GET.get('name')
             booking = request.GET.get('booking')
-            staff = Staff(name = name, booking = booking)
+            staff = Staff(name = name, booking = booking, user_id=request.user.id)
             staff.save()
         elif id == 26:
             Staff.objects.filter(id = request.GET.get('id')).delete()
         elif id == 27:
             name = request.GET.get('name')
             colour = request.GET.get('colour')
-            group = TableGroup(name = name, colour = colour)
+            group = TableGroup(name = name, colour = colour, user_id=request.user.id)
             group.save()
         elif id == 28:
             name = request.GET.get('name')
-            group = TableGroup.objects.filter(name = request.GET.get('group')).first()
-            table = TableItem(name = name, group = group, people = 0)
+            group = TableGroup.objects.filter(name = request.GET.get('group'), user_id=request.user.id).first()
+            table = TableItem(name = name, group = group, people = 0, user_id=request.user.id)
             table.save()
         elif id == 29:
             name = request.GET.get('name')
@@ -320,26 +322,9 @@ def getAjaxRequest(request, id):
             TableGroup.objects.filter(pk = id).delete()
     return JsonResponse(data)
 
-
-def home(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        send_mail(
-            'Contact Email Received',
-            'From: ' + name + ' (Email - ' + email + ') \n' + message,
-            'montrestaurant@gmail.com',
-            ['montrestaurant@gmail.com'],
-            fail_silently=False,
-        )
-        return HttpResponseRedirect('/')
-    else:
-        return render(request, 'bookings/home.html')
-
-def addWalkIn(table, people):
+def addWalkIn(table, people, userid):
     table = TableItem.objects.filter(pk=table).first()
-    booking = Booking(name = 'Walk In', arrived = 'True', people = people, time = datetime.datetime.now().time(), date = datetime.datetime.now(), table = table)
+    booking = Booking(name = 'Walk In', arrived = 'True', people = people, time = datetime.datetime.now().time(), date = datetime.datetime.now(), table = table, user_id=userid)
     booking.save()
     Booking.history.filter(name="Walk In").delete()
 
@@ -367,72 +352,24 @@ def available_tables():
                 if (i.table, Table.objects.filter(booking=None, table=i.table)[0].people) in available:
                     available.remove( (i.table, Table.objects.filter(booking=None, table=i.table)[0].people) )
     return [unavailable, available]
-    
-def findTable(num, date, time):
-    bookings = Booking.objects.filter(date=date)
-    tables = Table.objects.filter(booking=None)
-    available_tables = {}
-    unavailable = []
-    for i in tables:
-        if i.table > 9:
-            if i.people > 0:
-                if i.people >= num:
-                    available_tables[i.table] = i.people
-
-    for b in bookings:
-        b_tables = Table.objects.filter(booking=b)
-        p = datetime.datetime.combine(date, b.time)
-        t = datetime.datetime.combine(date, time)
-        time_dif = (p - t)
-        hours = abs(time_dif.total_seconds() / 3600)
-        if hours < 3 and hours > -3:
-            for i in b_tables:
-                unavailable.append(i.table)
-
-    for i in unavailable:
-        if i in available_tables:
-            del available_tables[i]
-
-    sorted_values = sorted(available_tables.items(), key=lambda kv: kv[1])
-    if sorted_values != []:
-        lowest_num = sorted_values[0][1]     
-        x = [x for x in sorted_values if x[1] == lowest_num]
-        allocated_table = random.choice(x)
-    else:
-
-        for i in tables:
-            if i.table > 9:
-                if i.people > 0:
-                    available_tables[i.table] = i.people
-
-        for i in unavailable:
-            if i in available_tables:
-                del available_tables[i]
-        
-        sorted_values = sorted(available_tables.items(), key=lambda kv: -kv[1])
-        if sorted_values != []:
-            allocated_table = sorted_values[0]
-        else:
-            allocated_table = (0, 0)
-    return allocated_table
 
 def tablelayout(request):
-    tables = TableGroup.objects.all()
+    tables = TableGroup.objects.filter(user_id=request.user.id).order_by('pk')
     return render(request, 'bookings/settings_table_layout.html', {'tables': tables})
 
 def stafflist(request):
-    staff = Staff.objects.all()
+    staff = Staff.objects.filter(user_id=request.user.id)
     return render(request, 'bookings/settings_staff_list.html', {'staff': staff})
 
 def bookings(request):
-    staff = Staff.objects.all()
+    staff = Staff.objects.filter(user_id=request.user.id)
     return render(request, 'bookings/booking_list.html', {'staff': staff, 'groups': TableGroup.objects.all()})
 
 def history(request):
     if request.is_ajax():
         data = {}
         id = request.GET.get('id')
-        history_list = Booking.history.filter(id=id)
+        history_list = Booking.history.filter(id=id, user_id=request.user.id)
         paginator = Paginator(history_list, 25) # Show 25 contacts per page
         page = request.GET.get('page')
         history = paginator.get_page(page)
@@ -440,14 +377,14 @@ def history(request):
         data['history'] = history
         return JsonResponse(data)
     else:
-        history_list = Booking.history.all()
+        history_list = Booking.history.all().filter(user_id=request.user.id)
         paginator = Paginator(history_list, 25) # Show 25 contacts per page
         page = request.GET.get('page')
         history = paginator.get_page(page)
         return render(request, 'bookings/history.html', {'history': history})
 
 def create(request):
-    staff = Staff.objects.filter(booking = True)
+    staff = Staff.objects.filter(booking = True, user_id=request.user.id)
     return render(request, 'bookings/createbooking.html', {'staff': staff})
 
 def total_people_on_table(instance):

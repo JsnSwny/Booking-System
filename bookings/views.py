@@ -320,6 +320,15 @@ def getAjaxRequest(request, id):
         elif id == 32:
             id = request.GET.get('id')
             TableGroup.objects.filter(pk = id).delete()
+        elif id == 33:
+            groups = TableGroup.objects.filter(user_id=request.user.id).order_by('pk')
+            group_dict = serializers.serialize('python', groups)
+            for idx, item in enumerate(group_dict):
+                tables = TableItem.objects.filter(group=groups[idx]).order_by('pk')
+                tables = serializers.serialize('python', tables)
+                print(tables)
+                item.update({'tables': tables})
+            data['groups'] = group_dict
     return JsonResponse(data)
 
 def addWalkIn(table, people, userid):

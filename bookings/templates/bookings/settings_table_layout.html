@@ -62,7 +62,10 @@
     <div class="row align-items-center justify-content-center">
         <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
     </div>
-
+    <h3 style="font-family: Courgette" class="mt-4 mb-2 text-center">Create Group</h2>
+    <div class="row align-items-center justify-content-center">
+        <p class="col-8" style="border-bottom: 1px solid #dddddd;"></p>
+    </div>
     <form id="createGroup">
         <div class="row align-items-center justify-content-center">
             <input type="color" value="#ff0000" id="createGroupColour" style="border: none; box-shadow: none; background: inherit; width: 40px; height: 40px;">
@@ -77,36 +80,10 @@
             </div>
         </div>
     </form>
-    
-    {% for i in tables %}
-        <table class="table mt-4">
-            <thead class="thead-dark text-center" >
-            
-                <tr>
-                <th class="tableGroup" data-id="{{ i.pk }}" data-colour="{{ i.colour }}" data-name="{{ i.name }}" style="width: 25%; font-size: 25px; text-transform: uppercase;">{{ i.name }}</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                {% for a in i.tables.all %}
-                    <tr style="background: rgb(216, 216, 216);">
-                        <td class="tableItem font-weight-bold" data-id="{{ a.pk }}" data-name="{{ a.name }}">{{ a.name }} 
-                        </td>
-                    </tr>
-                    <tr style="background: rgb(243, 243, 243);">
-                        <td>
-                            <div class="row align-items-center justify-content-center">
-                                <select required class="form-control table_amount col-3" data-people="{{ a.people }}" data-id="{{ a.pk }}">
-                                </select>
-                            </div>
-                        </td>
-
-                    </tr>
-                {% endfor %}
-            
-        </tbody>
-        </table>
-    {% endfor %}
-    
+    <h3 style="font-family: Courgette" class="mt-4 mb-2 text-center">Add Table</h2>
+    <div class="row align-items-center justify-content-center">
+        <p class="col-8" style="border-bottom: 1px solid #dddddd;"></p>
+    </div>
     <form id="addTable">
         <div class="row align-items-center justify-content-center">
                 <div class="col-md-3 col-sm-12 col-xs-12 my-2">
@@ -126,6 +103,38 @@
                 </div>
         </div>
     </form>
+    
+    <div class="mb-4">
+        {% for i in tables %}
+            <table class="table mt-4">
+                <thead class="thead-dark text-center" >
+                
+                    <tr>
+                    <th class="tableGroup" data-id="{{ i.pk }}" data-colour="{{ i.colour }}" data-name="{{ i.name }}" style="width: 25%; font-size: 25px; text-transform: uppercase;">{{ i.name }}</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for a in i.tables.all %}
+                        <tr style="background: rgb(216, 216, 216);">
+                            <td class="tableItem font-weight-bold" data-id="{{ a.pk }}" data-name="{{ a.name }}">{{ a.name }} 
+                            </td>
+                        </tr>
+                        <tr style="background: rgb(243, 243, 243);">
+                            <td>
+                                <div class="row align-items-center justify-content-center">
+                                    <select required class="form-control table_amount col-3" data-people="{{ a.people }}" data-id="{{ a.pk }}">
+                                    </select>
+                                </div>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                
+            </tbody>
+            </table>
+        {% endfor %}
+    </div>
+
     
 
 <script>

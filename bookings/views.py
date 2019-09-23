@@ -49,7 +49,6 @@ def getAjaxRequest(request, id):
             data['objects'] = bookings_dict
             data['alerts'] = alerts_dict
             current_user = request.user
-            print(current_user)
 
 
 
@@ -326,7 +325,6 @@ def getAjaxRequest(request, id):
             for idx, item in enumerate(group_dict):
                 tables = TableItem.objects.filter(group=groups[idx]).order_by('pk')
                 tables = serializers.serialize('python', tables)
-                print(tables)
                 item.update({'tables': tables})
             data['groups'] = group_dict
     return JsonResponse(data)

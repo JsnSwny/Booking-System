@@ -114,7 +114,8 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    {% for a in i.tables.all %}
+                    {% for a in i.tables.all|dictsort:"pk" %}
+
                         <tr style="background: rgb(216, 216, 216);">
                             <td class="tableItem font-weight-bold" data-id="{{ a.pk }}" data-name="{{ a.name }}">{{ a.name }} 
                             </td>

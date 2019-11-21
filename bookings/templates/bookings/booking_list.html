@@ -92,8 +92,9 @@
 
 
 
-        <div class="row justify-content-center">
-            <h1 id="booking-title" class="" style="text-align: center; font-family: Niconne;"></h1>
+        <div class="booking-title">
+            <h1 id="booking-title-1"></h1>
+            <h2 id="booking-title-2"></h2>
         </div>    
         <div class="row justify-content-center">
             <div class="mb-4">    
@@ -113,13 +114,10 @@
             <h6 class="text-center text-muted mb-3">Select Table to Add Walk-In</h6>
             <div id="tables">
             </div>
-        </div>      
+        </div>
         <div id="currentTablesTitle" hidden=false>
-            <div class="row justify-content-center align-items-center">
-                <h3 class="text-center mt-5 col-12" style="font-family: Niconne; font-size: 36px;">Current Tables</h3>
-            </div>
-            <div class="row justify-content-center align-items-center mb-1">
-                <p class="col-3" style="border-bottom: 1px solid #dddddd;"></p>
+            <div class="tableTitle">
+                <h2 class="strike">Current Tables</h2>
             </div>
         </div>
         
@@ -127,12 +125,8 @@
         </div>
 
         <div id="clearedTablesTitle" hidden=false>
-            <div class="row justify-content-center align-items-center">
-                <h3 class="text-center mt-5 col-12" style="font-family: Niconne; font-size: 36px;">Cleared Tables</h3>
-                
-            </div>
-            <div class="row justify-content-center align-items-center mb-1">
-                <p class="col-3" style="border-bottom: 1px solid #dddddd;"></p>
+            <div class="tableTitle">
+                <h2 class="strike">Cleared Tables</h2>
             </div>
         </div>
 
@@ -187,7 +181,9 @@
                     document.getElementById("currentTablesTitle").hidden = true
                     date = document.getElementById("main_datepicker").value
                     var full_date = moment(date, "DD/MM/YYYY")
-                    document.getElementById("booking-title").innerHTML = full_date.format("dddd, Do MMMM YYYY")
+                    document.getElementById("booking-title-1").innerHTML = full_date.format("dddd Do")
+                    document.getElementById("booking-title-2").innerHTML = full_date.format("MMMM YYYY")
+                    
                     $("#bookinglist").html("");
                     $("#clearedlist").html("");
                     $("#alertList").html("");

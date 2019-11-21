@@ -22,24 +22,77 @@
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/offline-js/0.7.19/offline.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/offline-js/0.7.19/themes/offline-language-english.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.default.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'bookings/style.css' %}">
 
-    <title>Book At Rest</title>
+    <title>BookEasy</title>
 
 </head>
 <body>
     <div hidden id="booking_print"></div>
 
+    <div id="modal-container">
+        <div id="modal-box">
+            <div id="table-people-modal" class="modal-element">
+                <h2>Assign Max People</h2>
+                <h4 id="table-num"></h4>
+                <select data-id="" id="table-people-input"></select>
+
+
+                <div class="btn-container">
+                    <btn data-id="" class="btn-1">Delete</btn>
+                </div>
+            </div>
+
+            <div id="create-group-modal" class="modal-element">
+                <h2>Create Group</h2>
+                <input placeholder="Enter name..." type="text" />
+                <br>
+                <select>
+                    <option value="#001f3f">Navy</option>
+                    <option value="#0074D9">Blue</option>
+                    <option value="#7FDBFF">Aqua</option>
+                    <option value="#39CCCC">Teal</option>
+                    <option value="#3D9970">Olive</option>
+                    <option value="#2ECC40">Green</option>
+                    <option value="#01FF70">Lime</option>
+                    <option value="#FFDC00">Yellow</option>
+                    <option value="#FF851B">Orange</option>
+                    <option value="#FF4136">Red</option>
+                    <option value="#85144b">Maroon</option>
+                    <option value="#F012BE">Fuchsia</option>
+                    <option value="#B10DC9">Purple</option>
+                    <option value="#AAAAAA">Gray</option>
+
+                </select>
+                <div class="btn-container">
+                    <btn class="btn-1">Create</btn>
+                </div>
+                
+            </div>
+
+            <div id="add-table-modal" class="modal-element">
+                <h2>Add Table</h2>
+                <input placeholder="Enter name..." type="text" />
+                <div class="btn-container">
+                    <btn data-group="" class="btn-1">Add</btn>
+                </div>
+            </div>
+
+            <div id="delete-group-modal" class="modal-element">
+                <h2>Do you want to delete group "<span></span>"?</h2>
+                <div class="btn-container">
+                    <btn data-id="" class="btn-1">Delete</btn>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModal" aria-hidden="true" style="overflow:hidden;">
         <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title text-center" id="alert_title" style="margin: 0 auto; font-family: Courgette;">Create Alert</h3>    
+                    <h3 class="modal-title text-center" id="alert_title" style="margin: 0 auto;">Create Alert</h3>    
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,9 +124,9 @@
 
     
 
-    <nav class="navbar p-3 navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar p-3 navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">Book At Rest</a>
+            <a class="navbar-brand" href="/"><span>Reserve</span>Table</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -108,14 +161,16 @@
         </div>
     </nav>
 
-
-    {% block other %}{% endblock other %}
-    <div class="container">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-md-12" style="padding-top: 20px;">
-                {% block content %}{% endblock content %}
+    <div class="top-fix" style="padding-top: 8em;">
+        {% block other %}{% endblock other %}
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-12">
+                    {% block content %}{% endblock content %}
+                </div>
             </div>
         </div>
+
     </div>
 
 
@@ -130,6 +185,37 @@
         $("#printBookings").on("click", function(){
             printContent('booking_print')
         });
+
+        function openModal(elem) {
+            $( ".modal-element" ).hide();
+            document.getElementById("modal-container").style.zIndex = 2;
+            document.getElementById("modal-container").style.opacity = 1;
+            $( "#" + elem ).show();
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("modal-container")) {
+                document.getElementById("modal-container").style.zIndex = 3;
+                document.getElementById("modal-container").style.opacity = 0;
+                setTimeout(function(){ 
+                    if (document.getElementById("modal-container").style.zIndex != 2) {
+                        document.getElementById("modal-container").style.zIndex = -1;
+                    } 
+                    
+                }, 250);
+                
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("modal-container").style.zIndex = 3;
+            document.getElementById("modal-container").style.opacity = 0;
+            setTimeout(function(){ 
+                if (document.getElementById("modal-container").style.zIndex != 2) {
+                    document.getElementById("modal-container").style.zIndex = -1;
+                }
+            }, 700);
+        }
 
         function printContent(el){
             document.getElementById("booking_print").hidden = false

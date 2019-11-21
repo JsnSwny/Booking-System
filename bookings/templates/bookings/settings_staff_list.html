@@ -1,51 +1,64 @@
 {% extends "bookings/base.html" %}
 {% load static %}
-
 {% block content %}
-    <h1 style="font-family: Niconne; font-size: 48px;" class="text-center">Staff List</h1>
-    <div class="row align-items-center justify-content-center">
-        <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
+
+<div class="title-header">
+    <h1>Staff List</h1>
+</div>
+
+<div class="add-staff">
+    <input type="text" placeholder="Staff Name">
+    <btn class="btn-1 create-group">Add Staff</btn>
+</div>
+
+<div class="staff-container">
+    <div class="staff">
     </div>
-    <form id="addStaff" class="mb-4">
-        <div class="row align-items-center justify-content-center">
-                <div class="col-md-3 col-sm-12 col-xs-12 my-2">
-                    <input type="text" class="form-control" placeholder="Staff Name" required autofocus>
-                </div>
-                <div class="col-md-3 col-sm-12 col-xs-12 my-2">
-                    <select class="form-control" required>
-                        <option value="" disabled selected>Booking Taker?</option>
-                        <option value="True">True</option>
-                        <option value="False">False</option>
-                    </select>
-                </div>
-                <div class="col-md-3 col-sm-12 col-xs-12 my-2 mb-3">
-                    <input class="btn btn-success" style="width: 100%" type="submit" value="Add Staff">
-                </div>
-        </div>
-    </form>
-    <table class="table table-hover table-bordered">
-        <thead class="thead-dark text-center">
-            <tr>
-            <th scope="col ">Staff Name</th>
-            <th scope="col">Booking Taker?</th>
-            <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody id="history" class="text-center">
-            {% for i in staff %}
-                <tr>
-                <td>{{ i.name }}</td>
-                <td>{{ i.booking }}</td>
-                <td><span class="btn btn-danger btn-sm" onclick="deleteStaff({{ i.pk }})">Delete</span></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+</div>
     
 
     
 
 <script>
+    updateStaff()
+    function updateStaff() {
+        pagePostion = document.documentElement.scrollTop;
+        $(".staff").html("")
+        $.ajax({
+            url: '/ajax/35/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                for(i=0; i < data.staff.length; i++) {
+                    $(".staff").append('\
+                    <div class="staff-item">\
+                        </h4>' + data.staff[i] + '</h4>\
+                    </div>');
+                }
+                document.documentElement.scrollTop = document.body.scrollTop = pagePostion;
+            }
+        });
+    }
+
+
+    $(".add-staff btn").on("click", function(){
+        var name = $(".add-staff input").val();
+        $.ajax({
+            url: '/ajax/25/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'name': name, 'booking': "True"},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                updateStaff()
+                $(".add-staff input").val("").focus()
+            }
+        });
+    });
+
+
     $("#addStaff").submit(function( event ) {
         event.preventDefault();
         var name = $("#addStaff input:first").val()

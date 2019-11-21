@@ -1,15 +1,446 @@
-body {
-    background-image: linear-gradient(-90deg, red, yellow);      
-  }
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,700&display=swap");
 
-.login-box {
-    background: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 3px;
-    margin: auto;
-    width: 75%;
-    padding: 10px;
-    -webkit-box-shadow: -1px 1px 5px 9px rgba(0,0,0,0.75);
-    -moz-box-shadow: -1px 1px 5px 9px rgba(0,0,0,0.75);
-    box-shadow: -1px 1px 5px 9px rgba(0,0,0,0.50);
+
+body {
+  margin: 0;
+  font-family: "Montserrat";
+  background-color: rgb(32, 32, 32);
 }
+
+
+nav {
+  width: 100%;
+  position: fixed;
+  background-color: rgb(34, 34, 34);
+  display: flex;
+  z-index: 10;
+  -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  -moz-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+}
+
+.navbar-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-btn:nth-child(4) {
+  display: none;
+}
+
+.nav-btn {
+  margin: 15px 30px;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+
+.nav-btn:hover {
+  color: rgb(255, 81, 0);
+}
+
+.login-button > h4 {
+  position: absolute;
+  right: 0;
+}
+
+
+.nav-btn::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  width: 30%;
+  margin-top: 5px;
+  height: 2px;
+  background-color: rgb(177, 58, 3);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.nav-btn:hover::after {
+  opacity: 1;
+}
+.hero {
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/static/media/restaurant.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;     
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  color: white;
+  background-color: rgba(112, 105, 81, 0.1);
+  padding: 100px 0;
+  position: relative;
+  width: 600px;
+  display: block;
+  margin: 0 auto;
+  -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  -moz-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+}
+
+.title h1 span {
+  color: rgb(255, 255, 255); 
+}
+
+/* 
+.title::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  width: 30%;
+  margin-top: 5px;
+  height: 2px;
+  background-color: rgb(177, 58, 3);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  opacity: 0;
+  transition: all 1s ease;
+} */
+
+.title h1 {
+  font-size: 72px;
+  font-weight: bold;
+  line-height: 55px;
+  color: rgb(255, 115, 50);
+}
+
+.title h4 {
+  font-size: 24px;
+}
+
+.buttons {
+  display: flex;
+  margin: 30px auto;
+  width: 500px;
+}
+
+header {
+  width: 80%;
+}
+
+.demo-btn {
+  background-color: rgba(160, 160, 160, 0.103);
+  width: 100%;
+  
+  padding: 10px 0;
+  margin: 10px;
+
+  border: 1px white solid;
+  color: white;
+
+  font-size: 18px;
+  cursor: pointer;
+  transition: border 0.5s ease;
+  
+}
+
+.demo-btn:hover {
+  border: 1px rgb(255, 81, 0) solid;
+}
+
+.demo-btn:nth-child(2) {
+  border: 1px rgb(255, 81, 0) solid;
+}
+
+.showcase {
+  width: 80%;
+  height: 250px;
+  background-color: white;
+  display: block;
+  margin: 0 auto;
+}
+
+section.about {
+  margin: 0 auto;
+  width: 70%;
+}
+
+.about-inner {
+  padding-top: 100px;
+  color: white;
+  display: flex;
+}
+
+.about-inner h1 {
+  text-align: left;
+  position: relative;
+  font-weight: bold;
+  padding-bottom: 10px;
+  font-size: 50px;
+}
+
+.about-inner p {
+  font-size: 18px;
+}
+
+.about-img img {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+
+.about-img {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.features {
+  margin-top: 80px;
+  padding-top: 60px;
+  background: rgb(241, 241, 241);
+  padding-bottom: 100px;
+}
+
+.features-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features > h1 {
+  font-weight: bold;
+  text-align: center;
+  font-size: 50px;
+  margin-bottom: 40px;
+}
+
+.features-inner {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+
+.features-inner h1 {
+  font-size: 20px;
+}
+
+.features-text {
+  margin: 20px;
+  width: 350px;
+  height: 300px;
+  padding-top: 30px;
+  border-radius: 10px;
+  background-color: white;
+  -webkit-box-shadow: 0px 6px 10px -4px rgba(0,0,0,0.57);
+  -moz-box-shadow: 0px 6px 10px -4px rgba(0,0,0,0.57);
+  box-shadow: 0px 6px 10px -4px rgba(0,0,0,0.57);
+}
+
+.features-text h1 {
+  font-weight: bold;
+  margin-top: 20px;
+  margin: 20px;
+}
+
+.features-text p {
+  margin: 20px;
+}
+
+
+/* .about-inner h1::after {
+  content: ' ';
+  height: 2px;
+  width: 110px;
+  position: absolute;
+  background: rgb(0, 0, 0);
+  bottom: 0;
+  right: 50%;
+} */
+
+
+
+#login-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: -1;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.616);
+  opacity: 0;
+  transition: all 0.75s ease-out;
+}
+
+#login-box {
+  background: #ffffff;
+  /* border: 2px rgb(255, 81, 0) solid; */
+  border-radius: 20px;
+  width: 30%;
+  padding: 30px;
+  -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  -moz-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+}
+
+#login-box > h2 {
+  text-align: center;
+  font-weight: bold;
+}
+
+.contact {
+  padding-top: 70px;
+  padding-bottom: 50px;
+}
+
+.contact-text h1 {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 50px;
+  margin-bottom: 30px;
+}
+
+.contact-text h6 {
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  margin: 0 30px;
+}
+
+.contact-text h6 span {
+  color: rgb(255, 81, 0);
+  font-weight: bold;
+}
+
+.contact-form {
+  background-color: white;
+  width: 40%;
+  margin-top: 50px;
+  padding: 30px 50px;
+  padding-bottom: 60px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  -moz-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+}
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-form h1 {
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-form h6 {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.input-container {
+  display: block;
+  background-color: red;
+  margin: 0 auto;
+}
+
+.contact-form input, textarea {
+  display: block;
+  width: 65%;;
+  margin: 0 auto;
+}
+
+.contact-form h4 {
+  margin-top: 20px;
+}
+
+.btn-1 {
+  display: block;
+  padding: 15px 0;
+  font-size: 18px;
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+  background: rgb(255, 81, 0);
+  border-radius: 5px;
+  color: white;
+  margin: 0 auto;
+  transition: background-color 0.5s ease;
+}
+
+@media only screen and (max-width: 720px) {
+  .title h1 {
+    font-size: 36px;
+    line-height: 30px;
+  }
+  .title {
+    width: 100%;
+    padding: 60px 0;
+  }
+  .buttons {
+    width: 95%;
+    margin: 10px auto;
+  }
+  .nav-btn {
+    margin: 10px 1px;
+    font-size: 14px;
+  }
+  #login-box {
+    width: 80%;
+  }
+  .login-button > h4 {
+    position: relative;
+  }
+  .nav-btn:nth-child(4) {
+    display: block;
+  }
+  .login-button {
+    display: none;
+  }
+  .demo-btn {
+    font-size: 16px;
+  }
+  .about-inner h1, .features > h1, .contact-text > h1 {
+    font-size: 36px;
+  }
+  .features-inner {
+    width: 90%;
+  }
+  .contact-form {
+    width: 80%;
+  }
+  .contact-form input, textarea {
+    width: 90%;
+
+  }
+}
+
+/* .fas {
+  padding: 20px;
+  border-radius: 50%;
+  border: 1px black solid;
+} */

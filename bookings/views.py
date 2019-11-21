@@ -327,6 +327,24 @@ def getAjaxRequest(request, id):
                 tables = serializers.serialize('python', tables)
                 item.update({'tables': tables})
             data['groups'] = group_dict
+
+        elif id == 34:
+            table_groups = {}
+            table_group = TableGroup.objects.filter(user_id=request.user.id).order_by('pk')
+            for i in table_group:
+                table_groups[i.name] = [i.pk]
+
+            for i in TableItem.objects.filter(user_id=request.user.id).order_by('pk'):
+                table_groups[i.group.name].append([i.name, i.pk, i.people, i.group.colour])
+
+            print(table_groups)
+            data['tables'] = table_groups
+
+        elif id == 35:
+            staff = []
+            for i in Staff.objects.filter(user_id=request.user.id).order_by('name'):
+                staff.append(i.name)
+            data['staff'] = staff
     return JsonResponse(data)
 
 def addWalkIn(table, people, userid):

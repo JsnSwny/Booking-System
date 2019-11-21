@@ -172,19 +172,20 @@ header {
   margin: 0 auto;
 }
 
-section.about {
+.about {
   margin: 0 auto;
-  width: 70%;
+  padding-top: 60px;
+  width: 50%;
 }
 
 .about-inner {
-  padding-top: 100px;
+  
   color: white;
   display: flex;
 }
 
 .about-inner h1 {
-  text-align: left;
+  text-align: center;
   position: relative;
   font-weight: bold;
   padding-bottom: 10px;
@@ -193,6 +194,7 @@ section.about {
 
 .about-inner p {
   font-size: 18px;
+  text-align: center;
 }
 
 .about-img img {
@@ -438,7 +440,10 @@ section.about {
 
   }
   .about-inner p {
-    font-size: 14px;
+    font-size: 16px;
+  }
+  .about {
+    width: 70%;
   }
 }
 

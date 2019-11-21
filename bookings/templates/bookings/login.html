@@ -53,10 +53,10 @@
             <h4 class="nav-btn" data-scroll="about-inner">About</h4>
             <h4 class="nav-btn" data-scroll="features-inner">Features</h4>
             <h4 class="nav-btn" data-scroll="contact-inner">Pricing/Contact</h4>
-            <h4 class="nav-btn">Login</h4>
+            <h4 class="nav-btn" onclick="openLogin()">Login</h4>
         </div>
         <div class="login-button">
-            <h4 class="nav-btn">Login</h4>
+            <h4 class="nav-btn" onclick="openLogin()">Login</h4>
         </div>
     </nav>
     
@@ -71,7 +71,7 @@
                     <a>Login</a>
                 </div>
                 <div class="demo-btn">
-                    <a>Try Demo</a>
+                    <a data-scroll="contact-inner">Free Trial</a>
                 </div>
             </div>
         </header>
@@ -81,11 +81,11 @@
         <div class="about-inner">
             <div class="about-text">
                 <h1>About</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam aut animi quam adipisci omnis quisquam vitae corporis, suscipit eos, molestias, necessitatibus eaque exercitationem unde rerum magni blanditiis id obcaecati quasi. Sunt quibusdam nam necessitatibus fuga praesentium repellendus deleniti ipsum sequi facere itaque distinctio est rem quidem numquam eos optio velit esse, nemo commodi, voluptatibus corporis, dicta et animi. Dicta eum est mollitia excepturi magni aperiam hic? Alias nostrum odit numquam porro dolore repudiandae culpa? Minima non, recusandae omnis veniam molestias culpa nihil libero neque aperiam vero. Iure qui numquam rerum voluptates corporis porro temporibus aliquam exercitationem? Nemo modi ab nam.</p>
+                <p>ReserveTable aims to make managing your bookings a whole lot easier.
+                View all of your bookings for the day in order, or look ahead and see what bookings you have coming up.
+                Fully customise your table layout to match your restaurant, allowing you to assign tables to your bookings
+                and manage what tables you have available.
             </div>
-            <!-- <div class="about-img">
-                <img src="{% static 'media/person.jpg' %}">
-            </div> -->
         </div>
     </section>
 
@@ -167,9 +167,8 @@
                 }
             }
 
-            $(".navbar-items h4").on("click", function(){
+            $(".navbar-items h4, .demo-btn:nth-child(2) a").on("click", function(){
                 elem = $(this).data("scroll")
-                console.log(elem)
                 $("html, body").animate({
                     scrollTop: $("." + elem).offset().top - 200
                 }, 1000);

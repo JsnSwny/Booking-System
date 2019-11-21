@@ -431,11 +431,14 @@ section.about {
     width: 90%;
   }
   .contact-form {
-    width: 80%;
+    width: 90%;
   }
   .contact-form input, textarea {
-    width: 90%;
+    width: 100%;
 
+  }
+  .about-inner p {
+    font-size: 14px;
   }
 }
 

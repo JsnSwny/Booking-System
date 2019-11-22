@@ -420,21 +420,19 @@ header {
 .slide img {
   display: block;
   margin: 0 auto;
-  height: 100%;
+  height: auto;
+  width: 470px;
   left: 0;
   right: 0;
   border: white 1px solid;
 }
 
-.slide-1 {
-  display: none;
-}
 
 .slide-btn {
   cursor: pointer;
   height: 10px;
   width: 30px;
-  margin: 20px 15px;
+  margin: 35px 15px;
   border-radius: 5px;
   background-color: rgb(179, 179, 179);
   display: inline-block;
@@ -497,10 +495,14 @@ header {
     width: 70%;
   }
   .slide img {
-    width: 380px;
+    width:300px; /* you can use % */
+    height: auto;
+  }
+  .slide {
+    height: auto;
   }
   .slide-btn {
-    margin: 20px 10px;
+    margin: 20px 5px;
   }
 }
 

@@ -70,8 +70,8 @@
                 <div onclick="openLogin()" class="demo-btn">
                     <a>Login</a>
                 </div>
-                <div class="demo-btn">
-                    <a data-scroll="contact-inner">Free Trial</a>
+                <div data-scroll="contact-inner" class="demo-btn">
+                    <a >Free Trial</a>
                 </div>
             </div>
         </header>
@@ -86,6 +86,31 @@
                 Fully customise your table layout to match your restaurant, allowing you to assign tables to your bookings
                 and manage what tables you have available.
             </div>
+        </div>
+
+        <div class="slideshow-container">
+            <div class="slide slide-1">
+                <img src="{% static 'media/slide-1.png' %}">
+            </div>
+            <div class="slide">
+                <img src="{% static 'media/slide-2.png' %}">
+            </div>
+            <div class="slide">
+                <img src="{% static 'media/slide-3.png' %}">
+            </div>
+            <div class="slide">
+                <img src="{% static 'media/slide-4.png' %}">
+            </div>
+            <div class="slide">
+                <img src="{% static 'media/slide-5.png' %}">
+            </div>
+        </div>
+        <div style="text-align:center">
+            <span class="slide-btn" onclick="currentSlide(1)"></span>
+            <span class="slide-btn" onclick="currentSlide(2)"></span>
+            <span class="slide-btn" onclick="currentSlide(3)"></span>
+            <span class="slide-btn" onclick="currentSlide(4)"></span>
+            <span class="slide-btn" onclick="currentSlide(5)"></span>
         </div>
     </section>
 
@@ -168,7 +193,7 @@
                 }
             }
 
-            $(".navbar-items h4, .demo-btn:nth-child(2) a").on("click", function(){
+            $(".navbar-items h4, .demo-btn:nth-child(2)").on("click", function(){
                 elem = $(this).data("scroll")
                 $("html, body").animate({
                     scrollTop: $("." + elem).offset().top - 200
@@ -203,6 +228,35 @@
                     }
                 });
             });
+
+                var slideIndex = 1;
+                showSlides(slideIndex);
+
+                function currentSlide(n) {
+                    showSlides(slideIndex = n);
+                }
+
+                function showSlides(n) {
+                    var i;
+                    var slides = document.getElementsByClassName("slide");
+                    var slideBtn = document.getElementsByClassName("slide-btn");
+
+                    if (n > slides.length) {
+                        slideIndex = 1
+                    }
+                    if (n < 1) {
+                        slideIndex = slides.length
+                    }
+                    for (i = 0; i < slides.length; i++) {
+                        slides[i].style.display = "none";
+                    }
+                    for (i = 0; i < slideBtn.length; i++) {
+                        slideBtn[i].className = slideBtn[i].className.replace(" active", "");
+                    }
+
+                    slides[slideIndex-1].style.display = "block";
+                    slideBtn[slideIndex-1].className += " active";
+                }
         </script>
 
     </body>

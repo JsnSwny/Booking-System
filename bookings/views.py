@@ -20,6 +20,9 @@ from django.template.loader import render_to_string
 
 from django.core.mail import send_mail
 
+from django.conf import settings
+
+
 
 def getAjaxRequest(request, id):
     data = {}
@@ -345,6 +348,16 @@ def getAjaxRequest(request, id):
             for i in Staff.objects.filter(user_id=request.user.id).order_by('name'):
                 staff.append(i.name)
             data['staff'] = staff
+
+        elif id == 36:
+            name = request.GET.get('name')
+            email = request.GET.get('email')
+            phone = request.GET.get('phone')
+            address = request.GET.get('address')
+            message = request.GET.get('message')
+
+            full_message = f'From: {name} \nEmail: {email}\nPhone: {phone}\nAddress: {address}\nMessage: {message}'
+            send_mail("Booking System Contact!", full_message, "jsnswny@gmail.com", ['jsnswny@gmail.com'])
     return JsonResponse(data)
 
 def addWalkIn(table, people, userid):

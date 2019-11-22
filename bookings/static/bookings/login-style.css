@@ -394,6 +394,15 @@ header {
   transition: background-color 0.5s ease;
 }
 
+.contact-form h3 {
+  color: green;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 24px;
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
 @media only screen and (max-width: 720px) {
   .title h1 {
     font-size: 36px;
@@ -446,6 +455,7 @@ header {
     width: 70%;
   }
 }
+
 
 /* .fas {
   padding: 20px;

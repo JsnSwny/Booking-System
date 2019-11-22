@@ -33,15 +33,35 @@
             success: function(data) {
                 for(i=0; i < data.staff.length; i++) {
                     $(".staff").append('\
-                    <div class="staff-item">\
-                        </h4>' + data.staff[i] + '</h4>\
+                    <div data-name="' + data.staff[i][0] + '" data-id="' + data.staff[i][1] + '" class="staff-item">\
+                        </h4>' + data.staff[i][0] + '</h4>\
                     </div>');
                 }
                 document.documentElement.scrollTop = document.body.scrollTop = pagePostion;
+                $(".staff-item").on("click", function(){
+                    openModal("delete-staff-modal");
+                    $("#delete-staff-modal span").html($(this).data("name"))
+                    $("#delete-staff-modal btn").data("id", $(this).data("id"))
+                });
             }
         });
     }
 
+
+    $("#delete-staff-modal btn").on("click", function(){
+        var id = $(this).data("id")
+        $.ajax({
+            url: '/ajax/26/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+                closeModal()
+                updateStaff()
+            }
+        }); 
+    });
 
     $(".add-staff btn").on("click", function(){
         var name = $(".add-staff input").val();

@@ -346,7 +346,7 @@ def getAjaxRequest(request, id):
         elif id == 35:
             staff = []
             for i in Staff.objects.filter(user_id=request.user.id).order_by('name'):
-                staff.append(i.name)
+                staff.append([i.name, i.pk])
             data['staff'] = staff
 
         elif id == 36:

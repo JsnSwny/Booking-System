@@ -225,7 +225,7 @@ def getAjaxRequest(request, id):
             for i in bookings:
                 if i.date.strftime('%d/%m/%Y') not in dates:
                     total_people = 0
-                    total_people_bookings = Booking.objects.filter(date=i.date)
+                    total_people_bookings = Booking.objects.filter(date=i.date, user_id=request.user.id)
                     for i in total_people_bookings:
                         total_people += i.people
                     dates.append(i.date.strftime('%d/%m/%Y'))

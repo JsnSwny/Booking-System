@@ -42,7 +42,7 @@ nav {
 
 
 .nav-btn:hover {
-  color: rgb(255, 81, 0);
+  color: rgb(255, 115, 50);
 }
 
 .login-button > h4 {
@@ -161,9 +161,6 @@ header {
   border: 1px rgb(255, 81, 0) solid;
 }
 
-.demo-btn:nth-child(2) {
-  border: 1px rgb(255, 81, 0) solid;
-}
 
 .showcase {
   width: 80%;
@@ -330,7 +327,7 @@ header {
 }
 
 .contact-text h6 span {
-  color: rgb(255, 81, 0);
+  color: rgb(255, 115, 50);
   font-weight: bold;
 }
 
@@ -388,7 +385,7 @@ header {
   width: 200px;
   text-align: center;
   cursor: pointer;
-  background: rgb(255, 81, 0);
+  background: rgb(255, 115, 50);
   border-radius: 5px;
   color: white;
   margin: 0 auto;

@@ -448,8 +448,11 @@ header {
 
 @media only screen and (max-width: 720px) {
   .title h1 {
-    font-size: 36px;
+    font-size: 28px;
     line-height: 30px;
+  }
+  .title h4 {
+    font-size: 20px;
   }
   .title {
     width: 100%;
@@ -506,6 +509,10 @@ header {
   }
   .slide-btn {
     margin: 20px 5px;
+  }
+  .title img {
+    width: 125px;
+    height: 125px;
   }
 }
 

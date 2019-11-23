@@ -395,6 +395,9 @@ def tablelayout(request):
     tables = TableGroup.objects.filter(user_id=request.user.id).order_by('pk')
     return render(request, 'bookings/settings_table_layout.html', {'tables': tables})
 
+def changepassword(request):
+    return render(request, 'bookings/changepassword.html')
+
 def stafflist(request):
     staff = Staff.objects.filter(user_id=request.user.id)
     return render(request, 'bookings/settings_staff_list.html', {'staff': staff})

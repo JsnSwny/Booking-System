@@ -85,6 +85,15 @@ nav {
   text-align: center;
 }
 
+footer {
+  width: 100%;
+  text-align: center;
+  background-color: black;
+  padding: 20px 0;
+  color: white;
+
+}
+
 .title {
   color: white;
   background-color: rgba(112, 105, 81, 0.1);

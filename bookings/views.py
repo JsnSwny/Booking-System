@@ -358,6 +358,13 @@ def getAjaxRequest(request, id):
 
             full_message = f'From: {name} \nEmail: {email}\nPhone: {phone}\nAddress: {address}\nMessage: {message}'
             send_mail("Booking System Contact!", full_message, "jsnswny@gmail.com", ['jsnswny@gmail.com'])
+        elif id == 37:
+            old_password = request.GET.get('old_password')
+            new_password = request.GET.get('new_password')
+            if request.user.check_password(old_password):
+                request.user.set_password(new_password)
+                request.user.save()
+    
     return JsonResponse(data)
 
 def addWalkIn(table, people, userid):

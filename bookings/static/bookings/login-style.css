@@ -88,9 +88,9 @@ nav {
 .title {
   color: white;
   background-color: rgba(112, 105, 81, 0.1);
-  padding: 100px 0;
+  padding: 30px 0;
   position: relative;
-  width: 600px;
+  width: 80%;
   display: block;
   margin: 0 auto;
   -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
@@ -102,22 +102,10 @@ nav {
   color: rgb(255, 255, 255); 
 }
 
-/* 
-.title::after {
-  content: ' ';
-  display: block;
-  position: absolute;
-  width: 30%;
-  margin-top: 5px;
-  height: 2px;
-  background-color: rgb(177, 58, 3);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0 auto;
-  opacity: 0;
-  transition: all 1s ease;
-} */
+.title img {
+  width: 220px;
+  height: 220px;
+}
 
 .title h1 {
   margin-top: 30px;
@@ -402,7 +390,6 @@ header {
 }
 
 .slideshow-container {
-  height: 400px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -441,22 +428,25 @@ header {
   background-color: rgb(255, 81, 0);
 }
 
-.title img {
-  width: 200px;
-  height: 200px;
+
+@media only screen and (max-width: 1024px) {
+  .title {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 720px) {
   .title h1 {
     font-size: 28px;
     line-height: 30px;
+    margin-top: 15px;
   }
   .title h4 {
     font-size: 20px;
   }
   .title {
     width: 100%;
-    padding: 60px 0;
+    padding: 20px 0;
   }
   .buttons {
     width: 95%;
@@ -504,9 +494,9 @@ header {
     width:300px; /* you can use % */
     height: auto;
   }
-  .slide {
+  /* .slide {
     height: auto;
-  }
+  } */
   .slide-btn {
     margin: 20px 5px;
   }
@@ -515,10 +505,3 @@ header {
     height: 125px;
   }
 }
-
-
-/* .fas {
-  padding: 20px;
-  border-radius: 50%;
-  border: 1px black solid;
-} */

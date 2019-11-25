@@ -375,6 +375,11 @@ header {
   margin-top: 20px;
 }
 
+.contact-inner > h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+
 .btn-1 {
   display: block;
   padding: 15px 0;

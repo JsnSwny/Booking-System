@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG_VALUE')
 
-ALLOWED_HOSTS = ['reservetable.co.uk', 'www.reservetable.co.uk']
+ALLOWED_HOSTS = ['reservetable.co.uk', 'www.reservetable.co.uk', 'bookatrest.herokuapp.com', 'www.bookatrest.herokuapp.com']
 
 
 # Application definition

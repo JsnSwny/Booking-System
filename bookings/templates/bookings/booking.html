@@ -1,0 +1,165 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <link rel="icon" type="image/png" href="{% static 'media/logo.png' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'bookings/booking.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <title>ReserveTable</title>
+
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <img src="{% static 'media/logo-home.png' %}" />
+            <h1>Reserve<span>Table</span></h1>
+        </div>
+    </header>
+
+    <div class="booking-container">
+        <div class="booking-box">
+            <h1>Book a Table at <span style="color: rgb(255, 115, 50);">{{ username }}</span></h1>
+            
+            <div class="date-time-people">
+                <div class="book-input">
+                    <h5><i class="fas fa-calendar fa-5x"></i></h5>
+                    <input onkeydown="return false;" readonly type="text" id="book-datepicker" autocomplete="off">
+                </div>
+
+                <div class="book-input">
+                    <h5><i class="fas fa-user-friends fa-5x"></i></h5>
+                    <select id="book-input-people" type="password"></select>
+                </div>
+
+                <div class="book-input">
+                    <h5><i class="far fa-clock fa-5x"></i></h5>
+                    <select id="book-input-time"></select>
+                </div>
+            </div>
+
+            <div class="details">
+                <div class="details-input">
+                    <input type="text" id="book-name" placeholder="Full Name*">
+                </div>
+                <div class="details-input">
+                    <input type="text" id="book-email" placeholder="Email*">
+                </div>
+                <div class="details-input">
+                    <input type="text" id="book-phone" placeholder="Phone Number*">
+                </div>
+                <div class="details-input">
+                    <input type="text" id="book-info" placeholder="Any Requests?">
+                </div>          
+            </div>
+
+            <div class="submit-btn">
+                <btn class="btn" id="book-table-btn">Book Table</btn>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $( document ).ready(function() {
+            var date = moment();
+
+            date = moment(date).format("DD/MM/YYYY")   
+            document.getElementById("book-datepicker").value = date 
+            updateTimes()
+            $( "#book-datepicker" ).datepicker({
+                dateFormat: "dd/mm/yy"
+                ,	duration: "fast",
+                minDate : 0,
+            });
+        });
+
+        for (i=1; i < 12; i++) {
+            $('#book-input-people').append('<option value='+i+'>' + i + ' People</option>')
+        }
+        $('#book-input-people').append('<option value=12>12+ People</option>')
+
+        $('#book-datepicker').on('change', function() {
+            updateTimes()
+        });
+
+        function updateTimes() {
+            date = document.getElementById("book-datepicker").value
+            people = document.getElementById("book-input-people").value
+
+            $.ajax({
+                url: '/ajax/38/',
+                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'user': "{{ username }}", 'date': date, 'people': people},
+                dataType: 'json',
+                type: 'GET',
+                global: false,
+                success: function(data) {
+                    $('#book-input-time').empty()
+                    var times = []
+                    for(i=10; i < 21; i++) {
+                        times.push(i + ":00")
+                        times.push(i + ":15")
+                        times.push(i + ":30")
+                        times.push(i + ":45")
+                    }
+
+                    for (i=0; i < times.length; i++) {
+                        if(data['time'][times[i]] < 10 || data['time'][times[i]] === undefined) {
+                            if(data['hour'][times[i].substr(0,2)] < 35 || data['hour'][times[i].substr(0,2)] === undefined) {
+                                $("#book-input-time").append('<option data-time=' + times[i] + '>' + times[i] + '</option>')
+                            }
+                            
+                        }
+                    }
+                }
+            });
+        }
+
+        $('#book-table-btn').on('click', function() {
+            var name = document.getElementById("book-name")
+            var date = document.getElementById("book-datepicker")
+            var time = document.getElementById("book-input-time")
+            var people = document.getElementById("book-input-people")
+            var tel = document.getElementById("book-phone")
+            var email = document.getElementById("book-email")
+            var additional = document.getElementById("book-info")
+
+            inputs = [name, tel, email]
+            for(i=0; i<inputs.length; i++) {
+                if(inputs[i].value == "") {
+                    inputs[i].style.border= "2px solid red"
+                } else {
+                    inputs[i].style.border= "2px solid green"
+                }
+            }
+
+            if (name.value != "" && email.value != "" && tel.value != "") {
+                date = date.value.split("/")
+                date = date.reverse().join("-")
+                $('#book-table-btn').prop('disabled', true);
+                $.ajax({
+                    url: '/ajax/10/',
+                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date, 'name': name.value, 
+                        'time': time.value, 'people': people.value, 'taker': "ReserveTable", 
+                        'tel': tel.value, 'additional': additional.value},
+                    dataType: 'json',
+                    type: 'GET',
+                    global: false,
+                    success: function(data) {
+                        $('#book-table-btn').prop('disabled', false);  
+                        location.reload()
+                    }
+                });
+            };
+        });
+    </script>
+</body>

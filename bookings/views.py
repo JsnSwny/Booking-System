@@ -17,7 +17,7 @@ import os
 import logging
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
-
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
 from django.conf import settings
@@ -365,6 +365,32 @@ def getAjaxRequest(request, id):
                 request.user.set_password(new_password)
                 request.user.save()
     
+        elif id == 38:
+            user = request.GET.get('user') 
+            date = request.GET.get('date') 
+            people = request.GET.get('people')
+
+            datetime_object = datetime.datetime.strptime(date, '%d/%m/%Y')
+            print(datetime_object)
+
+            id = User.objects.get(username=user).pk
+            bookings = Booking.objects.filter(user_id=id, date=datetime_object)
+
+            times = []
+            obj = {}
+            hour_obj = {}
+
+            bookings = Booking.objects.filter(user_id=id, date=datetime_object)
+            for b in bookings:
+                obj.setdefault(str(b.time)[0:5], 0)
+                obj[str(b.time)[0:5]] = obj[str(b.time)[0:5]] + b.people
+
+                hour_obj.setdefault(str(b.time)[0:2], 0)
+                hour_obj[str(b.time)[0:2]] = hour_obj[str(b.time)[0:2]] + b.people
+
+            data['hour'] = hour_obj
+            data['time'] = obj
+                        
     return JsonResponse(data)
 
 def addWalkIn(table, people, userid):
@@ -372,6 +398,10 @@ def addWalkIn(table, people, userid):
     booking = Booking(name = 'Walk In', arrived = 'True', people = people, time = datetime.datetime.now().time(), date = datetime.datetime.now(), table = table, user_id=userid)
     booking.save()
     Booking.history.filter(name="Walk In").delete()
+
+def book(request, username):
+    u = User.objects.get(username=username).pk
+    return render(request, 'bookings/booking.html', {'username': username})
 
 def available_tables():
 

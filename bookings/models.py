@@ -65,5 +65,3 @@ class Settings(models.Model):
     friday = models.CharField(max_length=100)
     saturday = models.CharField(max_length=100)
     sunday = models.CharField(max_length=100)
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)

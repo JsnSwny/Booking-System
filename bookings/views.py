@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Booking, Alert, Staff, TableGroup, TableItem, Setting
+from .models import Booking, Alert, Staff, TableGroup, TableItem, Settings
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -158,7 +158,7 @@ def getAjaxRequest(request, id):
             
 
             if email != None:
-                restaurant_name = Setting.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
+                restaurant_name = Settings.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
                 full_message = f'You have successfully made a reservation at {restaurant_name} for {people} people at {time} on {date} under the name of {name}'
                 send_mail("Booking Reservation", full_message, "reservetableuk@gmail.com", [email])
 
@@ -408,13 +408,13 @@ def getAjaxRequest(request, id):
             sunday = request.GET.get('sunday') 
             restaurant_name = request.GET.get('restaurant_name') 
 
-            if len(Setting.objects.filter(user=request.user)) > 0:
-                Setting.objects.filter(user=request.user).update(
+            if len(Settings.objects.filter(user=request.user)) > 0:
+                Settings.objects.filter(user=request.user).update(
                     monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
                     friday=friday, saturday=saturday, sunday=sunday, 
                     restaurant_name = restaurant_name)
             else:
-                setting = Setting(monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
+                setting = Settings(monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
                 friday=friday, saturday=saturday, sunday=sunday, restaurant_name = restaurant_name, user=request.user)
                 setting.save()
     return JsonResponse(data)
@@ -427,7 +427,7 @@ def addWalkIn(table, people, userid):
 
 def book(request, username):
     u = User.objects.get(username=username).pk
-    return render(request, 'bookings/booking.html', {'username': username, 'userid': u, 'settings': Setting.objects.filter(user=User.objects.get(username=username)).first()})
+    return render(request, 'bookings/booking.html', {'username': username, 'userid': u, 'settings': Settings.objects.filter(user=User.objects.get(username=username)).first()})
 
 def available_tables():
 
@@ -462,7 +462,7 @@ def changepassword(request):
     return render(request, 'bookings/changepassword.html')
 
 def settings(request):
-    return render(request, 'bookings/settings.html', {'settings': Setting.objects.filter(user=request.user).first()})
+    return render(request, 'bookings/settings.html', {'settings': Settings.objects.filter(user=request.user).first()})
 
 def stafflist(request):
     staff = Staff.objects.filter(user_id=request.user.id)

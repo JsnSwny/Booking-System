@@ -53,7 +53,7 @@ class Alert(models.Model):
     user_id = models.IntegerField(null=True, blank=True)
     objects = models.Manager()
 
-class Setting(models.Model):
+class Settings(models.Model):
     restaurant_name = models.TextField()
 
     monday = models.CharField(max_length=100)

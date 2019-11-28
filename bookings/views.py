@@ -158,7 +158,7 @@ def getAjaxRequest(request, id):
             
 
             if email != None:
-                restaurant_name = Settings.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
+                # restaurant_name = Settings.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
                 full_message = f'You have successfully made a reservation at {restaurant_name} for {people} people at {time} on {date} under the name of {name}'
                 send_mail("Booking Reservation", full_message, "reservetableuk@gmail.com", [email])
 
@@ -408,15 +408,15 @@ def getAjaxRequest(request, id):
             sunday = request.GET.get('sunday') 
             restaurant_name = request.GET.get('restaurant_name') 
 
-            if len(Settings.objects.filter(user=request.user)) > 0:
-                Settings.objects.filter(user=request.user).update(
-                    monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
-                    friday=friday, saturday=saturday, sunday=sunday, 
-                    restaurant_name = restaurant_name)
-            else:
-                setting = Settings(monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
-                friday=friday, saturday=saturday, sunday=sunday, restaurant_name = restaurant_name, user=request.user)
-                setting.save()
+            # if len(Settings.objects.filter(user=request.user)) > 0:
+            #     Settings.objects.filter(user=request.user).update(
+            #         monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
+            #         friday=friday, saturday=saturday, sunday=sunday, 
+            #         restaurant_name = restaurant_name)
+            # else:
+            #     setting = Settings(monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
+            #     friday=friday, saturday=saturday, sunday=sunday, restaurant_name = restaurant_name, user=request.user)
+            #     setting.save()
     return JsonResponse(data)
 
 def addWalkIn(table, people, userid):
@@ -463,7 +463,8 @@ def changepassword(request):
     return render(request, 'bookings/changepassword.html')
 
 def settings(request):
-    return render(request, 'bookings/settings.html', {'settings': Settings.objects.filter(user=request.user).first()})
+    return render(request, 'bookings/settings.html')
+    # , {'settings': Settings.objects.filter(user=request.user).first()}
 
 def stafflist(request):
     staff = Staff.objects.filter(user_id=request.user.id)

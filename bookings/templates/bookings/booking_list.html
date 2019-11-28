@@ -205,7 +205,8 @@
                         var info = bookingField.info
                         var arrived = bookingField.arrived
                         var cleared = bookingField.cleared
-
+                        var online = bookingField.online
+                        console.log(online)
                         if(info != "") {
                             info = '<small class="mb-2"><span class="h6">Additional Info: </span> <br> <span style="white-space: pre-wrap;">' + bookingField.info + '</span></small>'
                         }
@@ -266,9 +267,15 @@
                             topBooking = ""
                         }
 
+                        var onlineText = ""
+                        if(online == true) {
+                            onlineText = "<h6 style='color: green;'>[Online]</h6>"
+                        }
+
 
                         $("#" + div).append('\
                         <div class="ml-3 mr-3 mb-4">\
+                            ' + onlineText + '\
                             <div ' + topBooking + 'class="content-section p-2" style="' + contentStyle + '">\
                                 <div class="time_to float-right">\
                                     <small class=' + time_text + '</small>\

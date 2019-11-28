@@ -191,8 +191,10 @@
                     type: 'GET',
                     global: false,
                     success: function(data) {
-                        $('#book-table-btn').prop('disabled', false);  
-                        location.reload()
+                        $('#book-table-btn').prop('disabled', false); 
+                        alert("Successfully Booked at {{ settings.restaurant_name }}\nCheck your email for confirmation!")
+                        $("input").css("border", "2px solid white")
+                        $("#book-name, #book-email, #book-phone, #book-info").val("")                    
                     }
                 });
             };

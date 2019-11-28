@@ -20,6 +20,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
+
 def getAjaxRequest(request, id):
     data = {}
     if request.is_ajax():
@@ -152,10 +153,9 @@ def getAjaxRequest(request, id):
             email = request.GET.get('email')
             if userid == None:
                 userid = request.user.id
-            booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional, user_id=userid)
-            booking.save()
             
             if email != None:
+                booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional, user_id=userid, online=True)
                 user = User.objects.get(id=userid)
                 restaurant_name = Settings.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
                 full_message = f'You have successfully made a reservation at { restaurant_name } for {people} people at {time} on {date} under the name of "{name}"'
@@ -163,7 +163,10 @@ def getAjaxRequest(request, id):
 
                 full_message = f'Reservation made online at { time } for {people} on {date} under the name of "{name}"'
                 send_mail("Table Reservation", full_message, "reservetableuk@gmail.com", [user.usersettings.email])
+            else:
+                booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional, user_id=userid)
 
+            booking.save()
         elif id == 11:
             id = request.GET.get('id')
             booking = Booking.objects.filter(pk=id)
@@ -426,6 +429,7 @@ def getAjaxRequest(request, id):
                 max_at_time = max_at_time, max_at_hour = max_at_hour, phone=phone, email=email)
                 setting.save()
     return JsonResponse(data)
+
 
 def addWalkIn(table, people, userid):
     table = TableItem.objects.filter(pk=table).first()

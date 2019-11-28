@@ -62,9 +62,19 @@
                     <input type="text" id="book-info" placeholder="Any Requests?">
                 </div>          
             </div>
-
+            
             <div class="submit-btn">
                 <btn class="btn" id="book-table-btn">Book Table</btn>
+            </div>
+
+            <div class="contact-btn">
+                <p>Booking for more than 8 people?</p>
+                {% if settings.email %}
+                    <h2><a href="{{ settings.email }}">Email</a></h2>
+                {% endif %}
+                {% if settings.phone %}
+                    <h2>Call on {{ settings.phone }}</h2>
+                {% endif %}
             </div>
             
         </div>
@@ -84,10 +94,9 @@
             });
         });
 
-        for (i=1; i < 12; i++) {
+        for (i=1; i < 9; i++) {
             $('#book-input-people').append('<option value='+i+'>' + i + ' People</option>')
         }
-        $('#book-input-people').append('<option value=12>12+ People</option>')
 
         $('#book-datepicker').on('change', function() {
             updateTimes()
@@ -133,10 +142,12 @@
                     if(date == moment().format("DD/MM/YYYY") && parseInt(moment().format("HH")) >= time_end) {
                         times = []
                     }
-
+                    maxattime = parseInt("{{ settings.max_at_time }}")
+                    maxathour = parseInt("{{ settings.max_at_hour }}")
+                    
                     for (i=0; i < times.length; i++) {
-                        if(data['time'][times[i]] < 10 || data['time'][times[i]] === undefined) {
-                            if(data['hour'][times[i].substr(0,2)] < 35 || data['hour'][times[i].substr(0,2)] === undefined) {
+                        if(data['time'][times[i]] < maxattime || data['time'][times[i]] === undefined) {
+                            if(data['hour'][times[i].substr(0,2)] < maxathour || data['hour'][times[i].substr(0,2)] === undefined) {
                                 $("#book-input-time").append('<option data-time=' + times[i] + '>' + times[i] + '</option>')
                             }
                             

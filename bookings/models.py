@@ -66,4 +66,7 @@ class Settings(models.Model):
     saturday = models.CharField(max_length=100)
     sunday = models.CharField(max_length=100)
 
+    max_at_time = models.IntegerField(default="15")
+    max_at_hour = models.IntegerField(default="50")
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)

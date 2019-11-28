@@ -28,6 +28,13 @@
         <h6>Sunday</h6>
         <select class="hours" id="sunday_start"></select> -
         <select class="hours" id="sunday_end"></select>
+
+        <h6>Maximum Booking at one time</h6>
+        <input type="number" value="{{ settings.max_at_time }}" id="max-at-time" />
+
+        <h6>Maximum Bookings per hour</h6>
+        <input type="number" value="{{ settings.max_at_hour }}" id="max-at-hour" />
+
         <btn class="btn-1">Submit</btn>
     </div>
 </div>
@@ -48,8 +55,8 @@
 
     $(".settings-box .btn-1").on("click", function(){
         name = document.getElementById("name").value
-
-
+        maxattime = document.getElementById("max-at-time").value
+        maxathour = document.getElementById("max-at-hour").value
         monday = document.getElementById("monday_start").value + "-" + document.getElementById("monday_end").value
         tuesday = document.getElementById("tuesday_start").value + "-" + document.getElementById("tuesday_end").value
         wednesday = document.getElementById("wednesday_start").value + "-" + document.getElementById("wednesday_end").value
@@ -60,7 +67,7 @@
         $.ajax({
             url: '/ajax/39/',
             data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'monday': monday, 'tuesday': tuesday, 'wednesday': wednesday, 'thursday': thursday, 
-            'friday': friday, 'saturday': saturday, 'sunday': sunday, 'restaurant_name': name},
+            'friday': friday, 'saturday': saturday, 'sunday': sunday, 'restaurant_name': name, 'max-at-time': maxattime, 'max-at-hour': maxathour},
             dataType: 'json',
             type: 'GET',
             global: false,

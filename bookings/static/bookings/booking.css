@@ -107,7 +107,7 @@ header {
     margin-top: 40px;
 }
 
-.submit-btn .btn {
+.submit-btn .btn, .contact-btn .btn {
     display: block;
     margin: 0 auto;
     font-size: 18px;
@@ -121,8 +121,23 @@ header {
     transition: background-color 0.5s ease;
   }
 
+.contact-btn .btn {
+    background-color: rgb(150, 150, 150);
+}
+
+.contact-btn .btn:hover {
+    background-color: rgb(109, 109, 109);
+}
+
 .btn:hover {
     background: rgb(216, 85, 25);
+}
+
+.contact-btn p {
+    font-size: 18px;
+    margin: 0;
+    margin-top: 40px;
+    margin-bottom: 15px;
 }
 
 @media only screen and (max-width: 1024px) {

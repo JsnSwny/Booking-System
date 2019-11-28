@@ -54,14 +54,3 @@ class Alert(models.Model):
     date = models.DateField()
     user_id = models.IntegerField(null=True, blank=True)
     objects = models.Manager()
-
-class Settings(models.Model):
-    restaurant_name = models.TextField()
-
-    monday = models.CharField(max_length=100)
-    tuesday = models.CharField(max_length=100)
-    wednesday = models.CharField(max_length=100)
-    thursday = models.CharField(max_length=100)
-    friday = models.CharField(max_length=100)
-    saturday = models.CharField(max_length=100)
-    sunday = models.CharField(max_length=100)

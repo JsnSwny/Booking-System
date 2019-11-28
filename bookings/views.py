@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Booking, Alert, Staff, TableGroup, TableItem
+from .models import Booking, Alert, Staff, TableGroup, TableItem, Settings
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -427,9 +427,7 @@ def addWalkIn(table, people, userid):
 
 def book(request, username):
     u = User.objects.get(username=username).pk
-    return render(request, 'bookings/booking.html', {'username': username, 'userid': u})
-
-    # 'settings': Settings.objects.filter(user=User.objects.get(username=username)).first()
+    return render(request, 'bookings/booking.html', {'username': username, 'userid': u, 'settings': Settings.objects.filter(user=User.objects.get(username=username)).first()})
 
 def available_tables():
 

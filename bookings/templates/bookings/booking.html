@@ -107,13 +107,14 @@
                     var times = []
                     d = moment(date, "DD/MM/YYYY").format("d")
 
-                    days = ["{{ settings.sunday }}", "{{ settings.monday }}", "{{ settings.tuesday }}", "{{ settings.wednesday }}", "{{ settings.thursday }}",
-                    "{{ settings.friday }}", "{{ settings.saturday }}"]
+                    // days = ["{{ settings.sunday }}", "{{ settings.monday }}", "{{ settings.tuesday }}", "{{ settings.wednesday }}", "{{ settings.thursday }}",
+                    // "{{ settings.friday }}", "{{ settings.saturday }}"]
 
-                    time_start = parseInt(days[d].split("-")[0])
-                    time_end = parseInt(days[d].split("-")[1])
+                    // time_start = parseInt(days[d].split("-")[0])
+                    // time_end = parseInt(days[d].split("-")[1])
 
-
+                    time_start = 12
+                    time_end = 20
 
 
                     if(date == moment().format("DD/MM/YYYY") && parseInt(moment().format("HH")) < time_end && parseInt(moment().format("HH")) > time_start) {

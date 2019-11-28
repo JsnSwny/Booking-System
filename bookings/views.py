@@ -154,13 +154,15 @@ def getAjaxRequest(request, id):
                 userid = request.user.id
             booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional, user_id=userid)
             booking.save()
-
             
-
             if email != None:
+                user = User.objects.get(id=userid)
                 restaurant_name = Settings.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
-                full_message = f'You have successfully made a reservation at { restaurant_name } for {people} people at {time} on {date} under the name of {name}'
-                send_mail("Booking Reservation", full_message, "reservetableuk@gmail.com", [email])
+                full_message = f'You have successfully made a reservation at { restaurant_name } for {people} people at {time} on {date} under the name of "{name}"'
+                send_mail("Table Reservation", full_message, "reservetableuk@gmail.com", [email])
+
+                full_message = f'Reservation made online at { time } for {people} on {date} under the name of "{name}"'
+                send_mail("Table Reservation", full_message, "reservetableuk@gmail.com", [user.usersettings.email])
 
         elif id == 11:
             id = request.GET.get('id')
@@ -412,8 +414,6 @@ def getAjaxRequest(request, id):
             email = request.GET.get('email')
             phone = request.GET.get('phone')
 
-            print(email)
-            print(phone)
             if len(Settings.objects.filter(user=request.user)) > 0:
                 Settings.objects.filter(user=request.user).update(
                     monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 

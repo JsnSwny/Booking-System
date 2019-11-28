@@ -72,4 +72,4 @@ class Settings(models.Model):
     email = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='usersettings')

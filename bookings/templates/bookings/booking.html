@@ -68,7 +68,9 @@
             </div>
 
             <div class="contact-btn">
-                <p style="margin-bottom: 20px;">Booking for more than 8 people?</p>
+                {% if settings.email or settings.phone %}
+                    <p style="margin-bottom: 20px;">Booking for more than 8 people?</p>
+                {% endif %}
                 {% if settings.email %}
                     <p>Email - <a href="mailto:{{ settings.email }}">{{ settings.email }}</a></p>
                 {% endif %}

@@ -1,0 +1,75 @@
+{% extends "bookings/base.html" %}
+{% block other %}
+
+<div class="settings-container">
+    <div class="settings-box">
+        <h2>Settings</h2>
+        <h6>Restaurant Name</h6>
+        <input type="text" value="{{ settings.restaurant_name }}" id="name" />
+        <h4>Opening Hours</h4>
+        <h6>Monday</h6>
+        <select class="hours" id="monday_start"></select> -
+        <select class="hours" id="monday_end"></select>
+        <h6>Tuesday</h6>
+        <select class="hours" id="tuesday_start"></select> -
+        <select class="hours" id="tuesday_end"></select>
+        <h6>Wednesday</h6>
+        <select class="hours" id="wednesday_start"></select> -
+        <select class="hours" id="wednesday_end"></select>
+        <h6>Thursday</h6>
+        <select class="hours" id="thursday_start"></select> -
+        <select class="hours" id="thursday_end"></select>
+        <h6>Friday</h6>
+        <select class="hours" id="friday_start"></select> -
+        <select class="hours" id="friday_end"></select>
+        <h6>Saturday</h6>
+        <select class="hours" id="saturday_start"></select> -
+        <select class="hours" id="saturday_end"></select>
+        <h6>Sunday</h6>
+        <select class="hours" id="sunday_start"></select> -
+        <select class="hours" id="sunday_end"></select>
+        <btn class="btn-1">Submit</btn>
+    </div>
+</div>
+
+
+<script>
+    for (i=0; i < 24; i++) {
+        $('.hours').append('<option value='+i+'>' + i + ':00</option>')
+    }
+
+    days = ["{{ settings.sunday }}", "{{ settings.monday }}", "{{ settings.tuesday }}", "{{ settings.wednesday }}", "{{ settings.thursday }}",
+    "{{ settings.friday }}", "{{ settings.saturday }}"] 
+    for(i=0; i<7; i++) {
+        d = moment(i, "d").format("dddd").toLowerCase()
+        $("#"+d+"_start").val(days[i].split("-")[0])
+        $("#"+d+"_end").val(days[i].split("-")[1])
+    }
+
+    $(".settings-box .btn-1").on("click", function(){
+        name = document.getElementById("name").value
+
+
+        monday = document.getElementById("monday_start").value + "-" + document.getElementById("monday_end").value
+        tuesday = document.getElementById("tuesday_start").value + "-" + document.getElementById("tuesday_end").value
+        wednesday = document.getElementById("wednesday_start").value + "-" + document.getElementById("wednesday_end").value
+        thursday = document.getElementById("thursday_start").value + "-" + document.getElementById("thursday_end").value
+        friday = document.getElementById("friday_start").value + "-" + document.getElementById("friday_end").value
+        saturday = document.getElementById("saturday_start").value + "-" + document.getElementById("saturday_end").value
+        sunday = document.getElementById("sunday_start").value + "-" + document.getElementById("sunday_end").value
+        $.ajax({
+            url: '/ajax/39/',
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'monday': monday, 'tuesday': tuesday, 'wednesday': wednesday, 'thursday': thursday, 
+            'friday': friday, 'saturday': saturday, 'sunday': sunday, 'restaurant_name': name},
+            dataType: 'json',
+            type: 'GET',
+            global: false,
+            success: function(data) {
+
+            }
+        });
+    });
+    
+</script>
+
+{% endblock other %}

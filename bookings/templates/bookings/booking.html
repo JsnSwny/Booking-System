@@ -29,7 +29,7 @@
 
     <div class="booking-container">
         <div class="booking-box">
-            <h1>Book a Table at <span style="color: rgb(255, 115, 50);">{{ username }}</span></h1>
+            <h1>Book a Table at<br/><span style="color: rgb(255, 115, 50);">{{ settings.restaurant_name }}</span></h1>
             
             <div class="date-time-people">
                 <div class="book-input">
@@ -66,6 +66,7 @@
             <div class="submit-btn">
                 <btn class="btn" id="book-table-btn">Book Table</btn>
             </div>
+            
         </div>
     </div>
 
@@ -95,7 +96,6 @@
         function updateTimes() {
             date = document.getElementById("book-datepicker").value
             people = document.getElementById("book-input-people").value
-
             $.ajax({
                 url: '/ajax/38/',
                 data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'user': "{{ username }}", 'date': date, 'people': people},
@@ -105,11 +105,33 @@
                 success: function(data) {
                     $('#book-input-time').empty()
                     var times = []
-                    for(i=10; i < 21; i++) {
-                        times.push(i + ":00")
-                        times.push(i + ":15")
-                        times.push(i + ":30")
-                        times.push(i + ":45")
+                    d = moment(date, "DD/MM/YYYY").format("d")
+
+                    days = ["{{ settings.sunday }}", "{{ settings.monday }}", "{{ settings.tuesday }}", "{{ settings.wednesday }}", "{{ settings.thursday }}",
+                    "{{ settings.friday }}", "{{ settings.saturday }}"]
+
+                    time_start = parseInt(days[d].split("-")[0])
+                    time_end = parseInt(days[d].split("-")[1])
+
+
+
+
+                    if(date == moment().format("DD/MM/YYYY") && parseInt(moment().format("HH")) < time_end && parseInt(moment().format("HH")) > time_start) {
+                        time_start = parseInt(moment().format("HH")) + 2
+                    }
+
+                    for(i=time_start; i < time_end; i++) {
+
+                        if(i < 10) {
+                            i = "0" + i
+                        }
+                        times.push(i + ":00", i + ":15", i + ":30", i + ":45")
+
+                    }
+
+                    
+                    if(date == moment().format("DD/MM/YYYY") && parseInt(moment().format("HH")) >= time_end) {
+                        times = []
                     }
 
                     for (i=0; i < times.length; i++) {
@@ -133,7 +155,7 @@
             var email = document.getElementById("book-email")
             var additional = document.getElementById("book-info")
 
-            inputs = [name, tel, email]
+            inputs = [name, tel, email, time]
             for(i=0; i<inputs.length; i++) {
                 if(inputs[i].value == "") {
                     inputs[i].style.border= "2px solid red"
@@ -142,7 +164,7 @@
                 }
             }
 
-            if (name.value != "" && email.value != "" && tel.value != "") {
+            if (name.value != "" && email.value != "" && tel.value != "" && time.value != "") {
                 date = date.value.split("/")
                 date = date.reverse().join("-")
                 $('#book-table-btn').prop('disabled', true);
@@ -150,7 +172,8 @@
                     url: '/ajax/10/',
                     data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date, 'name': name.value, 
                         'time': time.value, 'people': people.value, 'taker': "ReserveTable", 
-                        'tel': tel.value, 'additional': additional.value},
+                        'tel': tel.value, 'additional': additional.value, 'userid': '{{ userid }}',
+                        'email': email.value},
                     dataType: 'json',
                     type: 'GET',
                     global: false,

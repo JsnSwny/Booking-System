@@ -2,33 +2,27 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    
-    <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
-    <link href='https://fonts.googleapis.com/css?family=Niconne' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
     <link rel="icon" type="image/png" href="{% static 'media/logo.png' %}" />
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'bookings/login-style.css' %}">
-
     <title>ReserveTable</title>
-
 </head>
+
 <body>
     <div id="login-container">
         <div id="login-box">
@@ -60,7 +54,7 @@
             <h4 class="nav-btn" onclick="openLogin()">Login</h4>
         </div>
     </nav>
-    
+
     <div class="hero">
         <header>
             <div class="title">
@@ -73,7 +67,7 @@
                     <a>Login</a>
                 </div>
                 <div data-scroll="contact-inner" class="demo-btn">
-                    <a >Free Trial</a>
+                    <a>Free Trial</a>
                 </div>
             </div>
         </header>
@@ -84,9 +78,11 @@
             <div class="about-text">
                 <h1>About</h1>
                 <p>ReserveTable aims to make managing your bookings a whole lot easier.
-                View all of your bookings for the day in order, or look ahead and see what bookings you have coming up.
-                Fully customise your table layout to match your restaurant, allowing you to assign tables to your bookings
-                and manage what tables you have available.
+                    View all of your bookings for the day in order, or look ahead and see what bookings you have coming
+                    up.
+                    Fully customise your table layout to match your restaurant, allowing you to assign tables to your
+                    bookings
+                    and manage what tables you have available.
             </div>
         </div>
 
@@ -116,7 +112,7 @@
         <h1>Features</h1>
         <div class="features-container">
             <div class="features-inner">
-                
+
                 <div class="features-text">
                     <i class="fas fa-book fa-5x"></i>
                     <h1>Create, Edit and View Bookings</h1>
@@ -155,8 +151,10 @@
             <div class="contact-text">
                 <h1>Pricing/Contact</h1>
                 <h6>Get access to all features for <span>£40 per month</span></h6>
-                <h6><span>Full support</span> will be provided to make sure you get the best use out of the application</h6>
-                <h6>Try it out and see if it's for you with a <span>1 week free trial</span>, just send a message using the email below.</h6>
+                <h6><span>Full support</span> will be provided to make sure you get the best use out of the application
+                </h6>
+                <h6>Try it out and see if it's for you with a <span>1 week free trial</span>, just send a message using
+                    the email below.</h6>
             </div>
             <h2><a href="mailto:contact@reservetable.co.uk">contact@reservetable.co.uk</a></h2>
             <!-- <div class="contact-container">
@@ -183,84 +181,86 @@
         Designed By Jason Sweeney
     </footer>
 
-        <script>
-            function openLogin() {
-                document.getElementById("login-container").style.zIndex = 2;
-                document.getElementById("login-container").style.opacity = 1;
+    <script>
+        function openLogin() {
+            document.getElementById("login-container").style.zIndex = 2;
+            document.getElementById("login-container").style.opacity = 1;
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById("login-container")) {
+                document.getElementById("login-container").style.zIndex = -1;
+                document.getElementById("login-container").style.opacity = 0;
+            }
+        }
+
+        $(".navbar-items h4, .demo-btn:nth-child(2)").on("click", function () {
+            elem = $(this).data("scroll")
+            $("html, body").animate({
+                scrollTop: $("." + elem).offset().top - 200
+            }, 1000);
+        });
+
+        $(".contact-form .btn-1").on("click", function () {
+            name = $("#name-input").val()
+            email = $("#email-input").val()
+            phone = $("#phone-input").val()
+            address = $("#address-input").val()
+            message = $("#message-input").val()
+
+            $("#name-input").val("")
+            $("#email-input").val("")
+            $("#phone-input").val("")
+            $("#address-input").val("")
+            $("#message-input").val("")
+            $.ajax({
+                url: '/ajax/36/',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'name': name,
+                    'email': email,
+                    'phone': phone,
+                    'address': address,
+                    'message': message,
+                },
+                dataType: 'json',
+                type: 'GET',
+                success: function (data) {
+                    $(".contact-form h3").css("opacity", "1")
+                }
+            });
+        });
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("slide");
+            var slideBtn = document.getElementsByClassName("slide-btn");
+
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < slideBtn.length; i++) {
+                slideBtn[i].className = slideBtn[i].className.replace(" active", "");
             }
 
-            window.onclick = function(event) {
-                if (event.target == document.getElementById("login-container")) {
-                    document.getElementById("login-container").style.zIndex = -1;
-                    document.getElementById("login-container").style.opacity = 0;
-                }
-            }
+            slides[slideIndex - 1].style.display = "block";
+            slideBtn[slideIndex - 1].className += " active";
+        }
+    </script>
 
-            $(".navbar-items h4, .demo-btn:nth-child(2)").on("click", function(){
-                elem = $(this).data("scroll")
-                $("html, body").animate({
-                    scrollTop: $("." + elem).offset().top - 200
-                }, 1000);
-            });
+</body>
 
-            $(".contact-form .btn-1").on("click", function(){
-                name = $("#name-input").val()
-                email = $("#email-input").val()
-                phone = $("#phone-input").val()
-                address = $("#address-input").val()
-                message = $("#message-input").val()
-
-                $("#name-input").val("")
-                $("#email-input").val("")
-                $("#phone-input").val("")
-                $("#address-input").val("")
-                $("#message-input").val("")
-                $.ajax({
-                    url: '/ajax/36/',
-                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 
-                        'name': name,
-                        'email': email,
-                        'phone': phone,
-                        'address': address,
-                        'message': message,
-                    },
-                    dataType: 'json',
-                    type: 'GET',
-                    success: function(data) {
-                        $(".contact-form h3").css("opacity", "1")
-                    }
-                });
-            });
-
-                var slideIndex = 1;
-                showSlides(slideIndex);
-
-                function currentSlide(n) {
-                    showSlides(slideIndex = n);
-                }
-
-                function showSlides(n) {
-                    var i;
-                    var slides = document.getElementsByClassName("slide");
-                    var slideBtn = document.getElementsByClassName("slide-btn");
-
-                    if (n > slides.length) {
-                        slideIndex = 1
-                    }
-                    if (n < 1) {
-                        slideIndex = slides.length
-                    }
-                    for (i = 0; i < slides.length; i++) {
-                        slides[i].style.display = "none";
-                    }
-                    for (i = 0; i < slideBtn.length; i++) {
-                        slideBtn[i].className = slideBtn[i].className.replace(" active", "");
-                    }
-
-                    slides[slideIndex-1].style.display = "block";
-                    slideBtn[slideIndex-1].className += " active";
-                }
-        </script>
-
-    </body>
-    </html>
+</html>

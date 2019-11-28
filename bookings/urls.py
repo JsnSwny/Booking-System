@@ -14,8 +14,9 @@ urlpatterns = [
     path('staff_list', views.stafflist),
     path('table_layout', login_required(views.tablelayout)),
     path('changepassword', login_required(views.changepassword), name='change-password'),
+    path('settings', login_required(views.settings)),
     # AJAX URLS
     path('ajax/<int:id>/', getAjaxRequest, name='ajax_newbooking'),
     path('bookings', login_required(views.bookings), name='booking-home'),
-    path('<username>', views.book)
+    path('<username>', views.book),
 ]

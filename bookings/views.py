@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Booking, Alert, Staff, TableGroup, TableItem
+from .models import Booking, Alert, Staff, TableGroup, TableItem, Settings
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -19,10 +19,6 @@ from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-
-from django.conf import settings
-
-
 
 def getAjaxRequest(request, id):
     data = {}
@@ -152,8 +148,19 @@ def getAjaxRequest(request, id):
             taker = request.GET.get('taker')
             tel = request.GET.get('tel')
             additional = request.GET.get('additional')
-            booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional, user_id=request.user.id)
+            userid = request.GET.get('userid')
+            email = request.GET.get('email')
+            if userid == None:
+                userid = request.user.id
+            booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional, user_id=userid)
             booking.save()
+
+            
+
+            if email != None:
+                restaurant_name = Settings.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
+                full_message = f'You have successfully made a reservation at {restaurant_name} for {people} people at {time} on {date} under the name of {name}'
+                send_mail("Booking Reservation", full_message, "reservetableuk@gmail.com", [email])
 
         elif id == 11:
             id = request.GET.get('id')
@@ -390,7 +397,26 @@ def getAjaxRequest(request, id):
 
             data['hour'] = hour_obj
             data['time'] = obj
-                        
+
+        elif id == 39:
+            monday = request.GET.get('monday') 
+            tuesday = request.GET.get('tuesday') 
+            wednesday = request.GET.get('wednesday') 
+            thursday = request.GET.get('thursday') 
+            friday = request.GET.get('friday') 
+            saturday = request.GET.get('saturday') 
+            sunday = request.GET.get('sunday') 
+            restaurant_name = request.GET.get('restaurant_name') 
+
+            if len(Settings.objects.filter(user=request.user)) > 0:
+                Settings.objects.filter(user=request.user).update(
+                    monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
+                    friday=friday, saturday=saturday, sunday=sunday, 
+                    restaurant_name = restaurant_name)
+            else:
+                setting = Settings(monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
+                friday=friday, saturday=saturday, sunday=sunday, restaurant_name = restaurant_name, user=request.user)
+                setting.save()
     return JsonResponse(data)
 
 def addWalkIn(table, people, userid):
@@ -401,7 +427,7 @@ def addWalkIn(table, people, userid):
 
 def book(request, username):
     u = User.objects.get(username=username).pk
-    return render(request, 'bookings/booking.html', {'username': username})
+    return render(request, 'bookings/booking.html', {'username': username, 'userid': u, 'settings': Settings.objects.filter(user=User.objects.get(username=username)).first()})
 
 def available_tables():
 
@@ -434,6 +460,9 @@ def tablelayout(request):
 
 def changepassword(request):
     return render(request, 'bookings/changepassword.html')
+
+def settings(request):
+    return render(request, 'bookings/settings.html', {'settings': Settings.objects.filter(user=request.user).first()})
 
 def stafflist(request):
     staff = Staff.objects.filter(user_id=request.user.id)

@@ -34,6 +34,7 @@ class Booking(models.Model):
     cleared = models.BooleanField(default=False)
 
     objects = models.Manager()
+    history = HistoricalRecords()
     user_id = models.IntegerField(null=True, blank=True)
     
     def __str__(self):

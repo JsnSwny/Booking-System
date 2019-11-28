@@ -36,6 +36,8 @@ class Booking(models.Model):
     objects = models.Manager()
     history = HistoricalRecords()
     user_id = models.IntegerField(null=True, blank=True)
+
+    online = models.BooleanField(default=False)
     
     def __str__(self):
         d = f'{str(self.date)[8:10]}/{str(self.date)[5:7]}/{str(self.date)[0:4]}' 

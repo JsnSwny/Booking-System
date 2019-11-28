@@ -427,7 +427,8 @@ def addWalkIn(table, people, userid):
 
 def book(request, username):
     u = User.objects.get(username=username).pk
-    return render(request, 'bookings/booking.html', {'username': username, 'userid': u, 'settings': Settings.objects.filter(user=User.objects.get(username=username)).first()})
+    return render(request, 'bookings/booking.html', {'username': username, 'userid': u})
+    # 'settings': Settings.objects.filter(user=User.objects.get(username=username)).first()
 
 def available_tables():
 

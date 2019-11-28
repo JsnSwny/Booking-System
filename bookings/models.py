@@ -3,7 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 import datetime
-from simple_history.models import HistoricalRecords
 
 class TableGroup(models.Model):
     name = models.CharField(max_length=100)
@@ -34,7 +33,6 @@ class Booking(models.Model):
     cleared = models.BooleanField(default=False)
 
     objects = models.Manager()
-    history = HistoricalRecords()
     user_id = models.IntegerField(null=True, blank=True)
     
     def __str__(self):

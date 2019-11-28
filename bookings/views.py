@@ -159,7 +159,7 @@ def getAjaxRequest(request, id):
 
             if email != None:
                 restaurant_name = Settings.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
-                full_message = f'You have successfully made a reservation at {userid} for {people} people at {time} on {date} under the name of {name}'
+                full_message = f'You have successfully made a reservation at { restaurant_name } for {people} people at {time} on {date} under the name of {name}'
                 send_mail("Booking Reservation", full_message, "reservetableuk@gmail.com", [email])
 
         elif id == 11:

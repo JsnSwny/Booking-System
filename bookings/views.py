@@ -409,16 +409,21 @@ def getAjaxRequest(request, id):
             restaurant_name = request.GET.get('restaurant_name') 
             max_at_time = request.GET.get('max-at-time')
             max_at_hour = request.GET.get('max-at-hour')
+            email = request.GET.get('email')
+            phone = request.GET.get('phone')
 
+            print(email)
+            print(phone)
             if len(Settings.objects.filter(user=request.user)) > 0:
                 Settings.objects.filter(user=request.user).update(
                     monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
                     friday=friday, saturday=saturday, sunday=sunday, 
-                    restaurant_name = restaurant_name, max_at_time = max_at_time, max_at_hour = max_at_hour)
+                    restaurant_name = restaurant_name, max_at_time = max_at_time, max_at_hour = max_at_hour,
+                    phone=phone, email=email)
             else:
                 setting = Settings(monday = monday, tuesday = tuesday, wednesday=wednesday, thursday=thursday, 
                 friday=friday, saturday=saturday, sunday=sunday, restaurant_name = restaurant_name, user=request.user,
-                max_at_time = max_at_time, max_at_hour = max_at_hour)
+                max_at_time = max_at_time, max_at_hour = max_at_hour, phone=phone, email=email)
                 setting.save()
     return JsonResponse(data)
 

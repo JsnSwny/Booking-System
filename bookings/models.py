@@ -69,4 +69,7 @@ class Settings(models.Model):
     max_at_time = models.IntegerField(default="15")
     max_at_hour = models.IntegerField(default="50")
 
+    email = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)

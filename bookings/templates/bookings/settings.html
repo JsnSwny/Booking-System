@@ -35,6 +35,12 @@
         <h6>Maximum Bookings per hour</h6>
         <input type="number" value="{{ settings.max_at_hour }}" id="max-at-hour" />
 
+        <h6>Email</h6>
+        <input type="text" value="{{ settings.email }}" id="contact-email" />
+
+        <h6>Phone</h6>
+        <input type="text" value="{{ settings.phone }}" id="contact-phone" />
+
         <btn class="btn-1">Submit</btn>
     </div>
 </div>
@@ -57,6 +63,9 @@
         name = document.getElementById("name").value
         maxattime = document.getElementById("max-at-time").value
         maxathour = document.getElementById("max-at-hour").value
+        email = document.getElementById("contact-email").value
+        phone = document.getElementById("contact-phone").value
+
         monday = document.getElementById("monday_start").value + "-" + document.getElementById("monday_end").value
         tuesday = document.getElementById("tuesday_start").value + "-" + document.getElementById("tuesday_end").value
         wednesday = document.getElementById("wednesday_start").value + "-" + document.getElementById("wednesday_end").value
@@ -67,7 +76,8 @@
         $.ajax({
             url: '/ajax/39/',
             data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'monday': monday, 'tuesday': tuesday, 'wednesday': wednesday, 'thursday': thursday, 
-            'friday': friday, 'saturday': saturday, 'sunday': sunday, 'restaurant_name': name, 'max-at-time': maxattime, 'max-at-hour': maxathour},
+            'friday': friday, 'saturday': saturday, 'sunday': sunday, 'restaurant_name': name, 'max-at-time': maxattime, 'max-at-hour': maxathour,
+            'email': email, 'phone': phone},
             dataType: 'json',
             type: 'GET',
             global: false,

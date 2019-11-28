@@ -68,12 +68,12 @@
             </div>
 
             <div class="contact-btn">
-                <p>Booking for more than 8 people?</p>
+                <p style="margin-bottom: 20px;">Booking for more than 8 people?</p>
                 {% if settings.email %}
-                    <h2><a href="{{ settings.email }}">Email</a></h2>
+                    <p>Email - <a href="mailto:{{ settings.email }}">{{ settings.email }}</a></p>
                 {% endif %}
                 {% if settings.phone %}
-                    <h2>Call on {{ settings.phone }}</h2>
+                    <p>Phone - {{ settings.phone }}</p>
                 {% endif %}
             </div>
             

@@ -540,6 +540,22 @@ input {
   margin-top: 30px;
 }
 
+.booking-title {
+  margin: 0;
+}
+
+
+.footer-text {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.pre-icon i {
+  width: 50px;
+}
+
 @media only screen and (max-width: 720px) {
   #modal-box {
     width: 80%;
@@ -554,5 +570,8 @@ input {
   
   .table-item h6 {
     font-size: 14px;
+  }
+  .booking-title {
+    font-size: 20px;
   }
 }

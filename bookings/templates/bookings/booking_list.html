@@ -269,12 +269,12 @@
 
                         var preIcon = ""
                         if(online == true) {
-                            preIcon = "<span style='margin-right: 20px;'><i class='fas fa-laptop'></i></span>"
+                            preIcon = "<span class='pre-icon'><i class='fas fa-laptop'></i></span>"
                         } else {
                             if(name == "WALK IN") {
-                                preIcon = "<span style='margin-right: 20px;'><i class='fas fa-walking'></i></span>"
+                                preIcon = "<span class='pre-icon'><i class='fas fa-walking'></i></span>"
                             } else {
-                                preIcon = "<span style='margin-right: 20px;'><i class='fas fa-phone'></i></span>"
+                                preIcon = "<span class='pre-icon'><i class='fas fa-phone'></i></span>"
                             }
                         }
 
@@ -290,50 +290,44 @@
                                     </div>\
                                 </div>\
                                 <div class="mx-3 row">\
-                                    <h4 data-strike-id=' + data.objects[i].pk + ' class="title" style="' + lineThrough + '">\
+                                    <h4 data-strike-id=' + data.objects[i].pk + ' class="booking-title" style="' + lineThrough + '">\
                                         ' + preIcon + '<span class="mr-2">' + time + ' - ' + name + ' (' + people + 'ppl)</span>' + assign + '\
                                     </h4>\
                                 </div>\
                                 <div class="mt-2 ml-3">\
                                     ' + info + '\
                                 </div>\
-                                <div id="footerText_'+data.objects[i].pk+'" class="ml-1">\
+                                <p class="ml-2 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>\
+                                <div id="footerText_'+data.objects[i].pk+'" class="footer-text">\
                                 </div>\
                             </div>\
                         </div>');        
 
                         if(data.objects[i].table != "None") {
                             $("#tablelist_" + data.objects[i].pk).append('\
-                                <div class="d-flex flex-row"><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn text-light" style="width: 85%; background: ' + data.objects[i].colour + ';">' + data.objects[i].table + '</h1>\
+                                <div class="d-flex flex-row"><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn text-light" style="background: ' + data.objects[i].colour + ';">' + data.objects[i].table + '</h1>\
                                 </div>');
                         } 
                         else {
                             $("#tablelist_" + data.objects[i].pk).append('\
-                                <div class="d-flex flex-row"><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn btn-danger" style="width: 85%;">Assign Table</h1>\
+                                <div class="d-flex flex-row"><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn btn-danger" style="">Assign Table</h1>\
                                 </div>');  
                         }
 
                         if (today == true) {
                             if(arrived == true && cleared == false) {
                                 $("#footerText_" + data.objects[i].pk).append('\
-                                <p class="ml-2 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>\
-                                <h6 class="btn btn-sm clearedTable text-muted ml-2" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#clearedTable_'+data.objects[i].pk+'">Clear Table</h6>\
-                                <h6 class="btn btn-sm text-muted">|</h6>\
-                                <h6 class="btn btn-sm assignTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#assignTable_'+data.objects[i].pk+'">Assign</h6>\
-                                <h6 class="btn btn-sm text-muted">|</h6>\
-                                <h6 class="btn btn-sm text-muted editFooter" data-id="'+data.objects[i].pk+'" style="cursor: pointer;">Edit</h6>');
+                                    <h6 class="btn btn-sm clearedTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#clearedTable_'+data.objects[i].pk+'">Clear Table</h6>\
+                                    <h6 class="btn btn-sm assignTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#assignTable_'+data.objects[i].pk+'">Assign</h6>\
+                                    <h6 class="btn btn-sm text-muted editFooter" data-id="'+data.objects[i].pk+'" style="cursor: pointer;">Edit</h6>');
                             } else if(arrived == false && cleared == false){
                                 $("#footerText_" + data.objects[i].pk).append('\
-                                <p class="ml-2 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>\
-                                <h6 class="btn btn-sm arrivedTable text-muted ml-2" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#arrivedTable_'+data.objects[i].pk+'">Arrived</h6>\
-                                <h6 class="btn btn-sm text-muted">|</h6>\
-                                <h6 class="btn btn-sm assignTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#assignTable_'+data.objects[i].pk+'">Assign</h6>\
-                                <h6 class="btn btn-sm text-muted">|</h6>\
-                                <h6 class="btn btn-sm text-muted editFooter" data-id="'+data.objects[i].pk+'" style="cursor: pointer;">Edit</h6>');
+                                    <h6 class="btn btn-sm arrivedTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#arrivedTable_'+data.objects[i].pk+'">Arrived</h6>\
+                                    <h6 class="btn btn-sm assignTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#assignTable_'+data.objects[i].pk+'">Assign</h6>\
+                                    <h6 class="btn btn-sm text-muted editFooter" data-id="'+data.objects[i].pk+'" style="cursor: pointer;">Edit</h6>');
                             } else {
                                 $("#footerText_" + data.objects[i].pk).append('\
-                                <p class="ml-2 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>\
-                                <h6 class="undoTable btn btn-sm text-muted ml-2" style="cursor: pointer;" id="#undoTable_'+data.objects[i].pk+'">Undo</h6>');
+                                    <h6 class="undoTable btn btn-sm text-muted" style="cursor: pointer;" id="#undoTable_'+data.objects[i].pk+'">Undo</h6>');
                             }
                         }
                     }

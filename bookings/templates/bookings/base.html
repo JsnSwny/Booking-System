@@ -197,33 +197,20 @@
 
         function openModal(elem) {
             $( ".modal-element" ).hide();
-            document.getElementById("modal-container").style.zIndex = 2;
-            document.getElementById("modal-container").style.opacity = 1;
+            document.getElementById("modal-container").style.display = "flex";
             $( "#" + elem ).show();
         }
 
         $(window).mousedown(function(){
+
             if (event.target == document.getElementById("modal-container")) {
-                document.getElementById("modal-container").style.zIndex = 3;
-                document.getElementById("modal-container").style.opacity = 0;
-                setTimeout(function(){ 
-                    if (document.getElementById("modal-container").style.zIndex != 2) {
-                        document.getElementById("modal-container").style.zIndex = -1;
-                    } 
-                    
-                }, 250);
+                document.getElementById("modal-container").style.display = "none";
                 
             }
         });
 
         function closeModal() {
-            document.getElementById("modal-container").style.zIndex = 3;
-            document.getElementById("modal-container").style.opacity = 0;
-            setTimeout(function(){ 
-                if (document.getElementById("modal-container").style.zIndex != 2) {
-                    document.getElementById("modal-container").style.zIndex = -1;
-                }
-            }, 700);
+            document.getElementById("modal-container").style.display = none;
         }
 
         function printContent(el){

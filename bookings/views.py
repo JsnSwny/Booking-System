@@ -475,13 +475,13 @@ def changepassword(request):
 
 def stats(request):
     stats = {
-        'total_w': len(Booking.objects.filter(walk_in=True)), 
-        'total_o': len(Booking.objects.filter(online=True)),
-        'total_p': len(Booking.objects.filter(walk_in=False, online=False)), 
-        
-        'today_w': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=True)),
-        'today_o': len(Booking.objects.filter(date=datetime.datetime.now(), online=True)), 
-        'today_p': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=False, online=False))
+        'total_w': len(Booking.objects.filter(walk_in=True, user_id=request.user.id)), 
+        'total_o': len(Booking.objects.filter(online=True, user_id=request.user.id)),
+        'total_p': len(Booking.objects.filter(walk_in=False, online=False, user_id=request.user.id)), 
+
+        'today_w': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=True, user_id=request.user.id)),
+        'today_o': len(Booking.objects.filter(date=datetime.datetime.now(), online=True, user_id=request.user.id)), 
+        'today_p': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=False, online=False, user_id=request.user.id))
     }
 
     return render(request, 'bookings/stats.html', stats)

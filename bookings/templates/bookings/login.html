@@ -139,9 +139,9 @@
                     <p>Add alerts to leave messages for your staff with important information</p>
                 </div>
                 <div class="features-text">
-                    <i class="fas fa-chart-line fa-5x"></i>
-                    <h1>Analytics</h1>
-                    <p>See how well your restaurant is doing day by day</p>
+                    <i class="fas fa-laptop fa-5x"></i>
+                    <h1>Online Bookings</h1>
+                    <p>Make it easier for your customers to book with online bookings</p>
                 </div>
             </div>
         </div>
@@ -150,13 +150,15 @@
         <div class="contact-inner">
             <div class="contact-text">
                 <h1>Pricing/Contact</h1>
-                <h6>Get access to all features for <span>£40 per month</span></h6>
+                <h6>Get access to everything except online bookings for only <span>£40 per month</span></h6>
+                <h6>Get access to all features including online bookings for <span>£50 per month</span></h6>
+                <br/>
                 <h6><span>Full support</span> will be provided to make sure you get the best use out of the application
                 </h6>
-                <h6>Try it out and see if it's for you with a <span>1 week free trial</span>, just send a message using
+                <h6>Try it out and see if it's for you with a <span>1 month free trial</span>, just send a message using
                     the email below.</h6>
             </div>
-            <h2><a href="mailto:contact@reservetable.co.uk">contact@reservetable.co.uk</a></h2>
+            <h3><a href="mailto:contact@reservetable.co.uk">contact@reservetable.co.uk</a></h3>
             <!-- <div class="contact-container">
                 <div class="contact-form">
                     <h1>Contact Form</h1>
@@ -187,12 +189,13 @@
             document.getElementById("login-container").style.opacity = 1;
         }
 
-        window.onclick = function (event) {
+        
+        $(window).mousedown(function(){
             if (event.target == document.getElementById("login-container")) {
                 document.getElementById("login-container").style.zIndex = -1;
                 document.getElementById("login-container").style.opacity = 0;
             }
-        }
+        });
 
         $(".navbar-items h4, .demo-btn:nth-child(2)").on("click", function () {
             elem = $(this).data("scroll")

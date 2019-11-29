@@ -474,14 +474,35 @@ def changepassword(request):
     return render(request, 'bookings/changepassword.html')
 
 def stats(request):
-    stats = {
-        'total_w': len(Booking.objects.filter(walk_in=True, user_id=request.user.id)), 
-        'total_o': len(Booking.objects.filter(online=True, user_id=request.user.id)),
-        'total_p': len(Booking.objects.filter(walk_in=False, online=False, user_id=request.user.id)), 
+    tot = 0
+    for i in Booking.objects.filter(walk_in=True, user_id=request.user.id).values('people'):
+        tot += i['people']
+    total_w_people = tot
 
-        'today_w': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=True, user_id=request.user.id)),
-        'today_o': len(Booking.objects.filter(date=datetime.datetime.now(), online=True, user_id=request.user.id)), 
-        'today_p': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=False, online=False, user_id=request.user.id))
+    print(total_w_people)
+
+    tot = 0
+    for i in Booking.objects.filter(online=True, user_id=request.user.id).values('people'):
+        tot += i['people']
+    total_o_people = tot
+
+    tot = 0
+    for i in Booking.objects.filter(walk_in=False, online=False, user_id=request.user.id).values('people'):
+        tot += i['people']
+    total_p_people = tot
+
+    stats = {
+        'total_w_people': total_w_people, 
+        'total_o_people': total_o_people, 
+        'total_p_people': total_p_people, 
+    
+        'total_w_table': len(Booking.objects.filter(walk_in=True, user_id=request.user.id)), 
+        'total_o_table': len(Booking.objects.filter(online=True, user_id=request.user.id)),
+        'total_p_table': len(Booking.objects.filter(walk_in=False, online=False, user_id=request.user.id)),  
+
+        'today_w_table': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=True, user_id=request.user.id)),
+        'today_o_table': len(Booking.objects.filter(date=datetime.datetime.now(), online=True, user_id=request.user.id)), 
+        'today_p_table': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=False, online=False, user_id=request.user.id))
     }
 
     return render(request, 'bookings/stats.html', stats)

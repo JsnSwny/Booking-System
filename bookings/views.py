@@ -433,7 +433,7 @@ def getAjaxRequest(request, id):
 
 def addWalkIn(table, people, userid):
     table = TableItem.objects.filter(pk=table).first()
-    booking = Booking(name = 'Walk In', arrived = 'True', people = people, time = datetime.datetime.now().time(), date = datetime.datetime.now(), table = table, user_id=userid)
+    booking = Booking(name = 'Walk In', arrived = 'True', people = people, time = datetime.datetime.now().time(), date = datetime.datetime.now(), table = table, user_id=userid, walk_in=True)
     booking.save()
     Booking.history.filter(name="Walk In").delete()
 

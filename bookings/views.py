@@ -289,18 +289,20 @@ def getAjaxRequest(request, id):
                 for a in table:
                     a.delete()
         elif id == 24:
-            span = request.GET.get('span')
-            no_of_walk_in = 1
-            no_of_booking = 1
-            if span == "today":
-                bookings = Booking.objects.filter(date=datetime.datetime.now())
-                for i in bookings:
-                    if i.name == "Walk In":
-                        no_of_walk_in += 1
-                    else:
-                        no_of_booking += 1
-            data['walk_in'] = no_of_walk_in
-            data['booking'] = no_of_booking
+            total_walkins = len(Booking.objects.filter(walk_in=True))
+            total_online = len(Booking.objects.filter(online=True))
+            total_phone = len(Booking.objects.filter(walk_in=False, online=False))
+
+
+            # bookings = Booking.objects.filter(date=datetime.datetime.now())
+            # for i in bookings:
+            #     if i.name == "Walk In":
+            #         no_of_walk_in += 1
+            #     else:
+            #         no_of_booking += 1
+            data['total_walkin'] = total_walkins
+            data['total_online'] = total_online
+            data['total_phone'] = total_phone
         elif id == 25:
             name = request.GET.get('name')
             booking = request.GET.get('booking')
@@ -470,6 +472,20 @@ def tablelayout(request):
 
 def changepassword(request):
     return render(request, 'bookings/changepassword.html')
+
+def stats(request):
+    stats = {
+        'total_w': len(Booking.objects.filter(walk_in=True)), 
+        'total_o': len(Booking.objects.filter(online=True)),
+        'total_p': len(Booking.objects.filter(walk_in=False, online=False)), 
+        
+        'today_w': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=True)),
+        'today_o': len(Booking.objects.filter(date=datetime.datetime.now(), online=True)), 
+        'today_p': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=False, online=False))
+    }
+
+    return render(request, 'bookings/stats.html', stats)
+
 
 def settings(request):
     return render(request, 'bookings/settings.html', {'settings': Settings.objects.filter(user=request.user).first()})

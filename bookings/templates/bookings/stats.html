@@ -2,65 +2,51 @@
 {% load static %}
 {% block other %}
 
+<div class="stats-container">
+  <h1>All-Time Stats</h1>
+  <div class="stats-box">
+      <div class="stats-content">
+          <h4><i class='fas fa-walking fa-2x'></i></h4>
+          <h3>{{ total_w }}</h3>
+      </div>
 
-<div class="container">
-  <h1 style="font-family: Niconne;" class="text-center p-2">Statistics</h1>
-  <div class="row align-items-center justify-content-center">
-  
-  <select id="span" class="form-control col-5">
-      <option disabled selected>Select data...</option>
-      <option>Walk-In vs Booking Comparison</option>
-  </select>
-  <div class="p-2"></div>
-  <select id="span" class="form-control col-5">
-    <option disabled selected>Select a time span...</option>
-    <option>Today</option>
-    <option>This Week</option>
-    <option>This Month</option>
-  </select>
+      <div class="stats-content">
+          <h4><i class='fas fa-phone fa-2x'></i></h4>
+        <h3>{{ total_p }}</h3>
+      </div>
+
+      <div class="stats-content">
+        <h4><i class='fas fa-laptop fa-2x'></i></h4>
+        <h3>{{ total_o }}</h3>
+      </div>
+  </div>
+
+  <h1>Today's Stats</h1>
+  <div class="stats-box">
+      <div class="stats-content">
+          <h4><i class='fas fa-walking fa-2x'></i></h4>
+          <h3>{{ today_w }}</h3>
+      </div>
+
+      <div class="stats-content">
+          <h4><i class='fas fa-phone fa-2x'></i></h4>
+        <h3>{{ today_p }}</h3>
+      </div>
+
+      <div class="stats-content">
+        <h4><i class='fas fa-laptop fa-2x'></i></h4>
+        <h3>{{ today_o }}</h3>
+      </div>
+  </div>
 
 </div>
-  <div class="row">
-    <div class="col">
-      <canvas id="pie-chart"></canvas>
-    </div>
-  </div>  
-</div>  
+  
+
  
 
 <script>
 Chart.defaults.global.defaultFontColor = 'black';
 Chart.defaults.global.defaultFontSize = 16;
-
-$(document).ready(function() {
-  walkInStats()
-});
-
-function walkInStats() {
-  $.ajax({
-    url: '/ajax/24/',
-    data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'span': 'today'},
-    dataType: 'json',
-    type: 'GET',
-    success: function(data) {
-      new Chart(document.getElementById("pie-chart"), {
-          type: 'pie',
-          data: {
-            labels: ["Walk Ins", "Bookings"],
-            datasets: [{
-              backgroundColor: ["#3e95cd", "#8e5ea2"],
-              data: [data.walk_in,data.booking]
-            }]
-          },
-          options: {
-            title: {
-              display: true,
-            }
-          }
-      });
-    }
-  });
-}
 
 </script>
 {% endblock other %}

@@ -8,7 +8,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', auth_views.LoginView.as_view(template_name='bookings/login.html'), name='login'),
     path('logout', auth_views.LogoutView.as_view(template_name='bookings/login.html'), name='logout'),
-    path('stats', login_required(TemplateView.as_view(template_name='bookings/stats.html'))),
+    path('stats', login_required(views.stats)),
     path('create', login_required(views.create)),
     path('history', login_required(views.history)),
     path('staff_list', views.stafflist),

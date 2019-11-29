@@ -267,15 +267,20 @@
                             topBooking = ""
                         }
 
-                        var onlineText = ""
+                        var preIcon = ""
                         if(online == true) {
-                            onlineText = "<h6 style='color: green;'>[Online]</h6>"
+                            preIcon = "<span style='margin-right: 20px;'><i class='fas fa-laptop'></i></span>"
+                        } else {
+                            if(name == "WALK IN") {
+                                preIcon = "<span style='margin-right: 20px;'><i class='fas fa-walking'></i></span>"
+                            } else {
+                                preIcon = "<span style='margin-right: 20px;'><i class='fas fa-phone'></i></span>"
+                            }
                         }
 
 
                         $("#" + div).append('\
                         <div class="ml-3 mr-3 mb-4">\
-                            ' + onlineText + '\
                             <div ' + topBooking + 'class="content-section p-2" style="' + contentStyle + '">\
                                 <div class="time_to float-right">\
                                     <small class=' + time_text + '</small>\
@@ -286,7 +291,7 @@
                                 </div>\
                                 <div class="mx-3 row">\
                                     <h4 data-strike-id=' + data.objects[i].pk + ' class="title" style="' + lineThrough + '">\
-                                        <span class="mr-2">' + time + ' - ' + name + ' (' + people + 'ppl)</span>' + assign + '\
+                                        ' + preIcon + '<span class="mr-2">' + time + ' - ' + name + ' (' + people + 'ppl)</span>' + assign + '\
                                     </h4>\
                                 </div>\
                                 <div class="mt-2 ml-3">\

@@ -91,7 +91,7 @@ def getAjaxRequest(request, id):
             time = request.GET.get('time')
             date = datetime.datetime.now().date()
             bookings = Booking.objects.filter(date=date, user_id=request.user.id)
-            tables = TableItem.objects.filter(user_id=request.user.id).order_by('group', 'pk')
+            tables = TableItem.objects.filter(user_id=request.user.id).order_by('group', 'name')
             available = []
             unavailable = []
 
@@ -349,10 +349,8 @@ def getAjaxRequest(request, id):
             for i in table_group:
                 table_groups[i.name] = [i.pk]
 
-            for i in TableItem.objects.filter(user_id=request.user.id).order_by('pk'):
+            for i in TableItem.objects.filter(user_id=request.user.id).order_by('name'):
                 table_groups[i.group.name].append([i.name, i.pk, i.people, i.group.colour])
-
-            print(table_groups)
             data['tables'] = table_groups
 
         elif id == 35:

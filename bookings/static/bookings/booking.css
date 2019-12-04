@@ -147,7 +147,7 @@ header {
         width: 90%;
     }
     .date-time-people {
-        display: inline-block;
+        margin: 0 80px;
     }
     .book-input {
         width: 80%;
@@ -164,6 +164,13 @@ header {
     .header-inner img {
         width: 120px;
         height: 120px;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .date-time-people {
+        margin: 0;
+        display: inline-block;
     }
 }
 

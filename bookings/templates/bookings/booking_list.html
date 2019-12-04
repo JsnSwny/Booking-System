@@ -290,7 +290,7 @@
                                     </div>\
                                 </div>\
                                 <div class="mx-3 row">\
-                                    <h4 data-strike-id=' + data.objects[i].pk + ' class="booking-title" style="' + lineThrough + '">\
+                                    <h4 data-strike-id=' + data.objects[i].pk + ' class="booking-name" style="' + lineThrough + '">\
                                         ' + preIcon + '<span class="mr-2">' + time + ' - ' + name + ' (' + people + 'ppl)</span>' + assign + '\
                                     </h4>\
                                 </div>\
@@ -305,12 +305,12 @@
 
                         if(data.objects[i].table != "None") {
                             $("#tablelist_" + data.objects[i].pk).append('\
-                                <div class="d-flex flex-row"><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn text-light" style="background: ' + data.objects[i].colour + ';">' + data.objects[i].table + '</h1>\
+                                <div><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn text-light" style="background: ' + data.objects[i].colour + ';">' + data.objects[i].table + '</h1>\
                                 </div>');
                         } 
                         else {
                             $("#tablelist_" + data.objects[i].pk).append('\
-                                <div class="d-flex flex-row"><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn btn-danger" style="">Assign Table</h1>\
+                                <div><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn btn-danger" style="">Assign Table</h1>\
                                 </div>');  
                         }
 

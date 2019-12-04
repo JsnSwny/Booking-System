@@ -538,10 +538,6 @@ input {
   margin-top: 30px;
 }
 
-.booking-title {
-  margin: 0;
-}
-
 
 .footer-text {
   width: 100%;
@@ -609,7 +605,21 @@ input {
   .table-item h6 {
     font-size: 14px;
   }
-  .booking-title {
+  .booking-name {
     font-size: 20px;
+    text-align: left;
+  }
+  .pre-icon i {
+    width: 30px;
+  }
+  .bookingTable {
+    font-size: 10px;
+    width: 90px;
+  }
+  .time_to {
+    font-size: 10px;
+  }
+  .footer-text h6 {
+    font-size: 12px;
   }
 }

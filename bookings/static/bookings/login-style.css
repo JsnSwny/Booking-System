@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,700&display=swap");
 
 
-body {
+body, html {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Montserrat";
   background-color: rgb(32, 32, 32);
 }
@@ -83,15 +85,6 @@ nav {
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-footer {
-  width: 100%;
-  text-align: center;
-  background-color: black;
-  padding: 20px 0;
-  color: white;
-
 }
 
 .title {
@@ -440,6 +433,34 @@ header {
 
 .active, .slide-btn:hover {
   background-color: rgb(255, 81, 0);
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.social i, .social a {
+  margin: 0 10px;
+}
+
+.social i {
+  color: white;
+}
+
+footer {
+  background-color: rgb(19, 19, 19);
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
+footer a {
+  text-decoration: none;
+  color: rgb(255, 115, 50);
 }
 
 

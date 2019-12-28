@@ -19,6 +19,7 @@ from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from django.utils.html import strip_tags
 
 
 def getAjaxRequest(request, id):
@@ -158,8 +159,10 @@ def getAjaxRequest(request, id):
                 booking = Booking(initials = taker, name = name, people = people, time = time, date = date, tel=tel, info=additional, user_id=userid, online=True)
                 user = User.objects.get(id=userid)
                 restaurant_name = Settings.objects.filter(user=User.objects.get(id=userid)).first().restaurant_name
-                full_message = f'You have successfully made a reservation at { restaurant_name } for {people} people at {time} on {date} under the name of "{name}"'
-                send_mail("Table Reservation", full_message, "reservetableuk@gmail.com", [email])
+                html_message = render_to_string('bookings/mail_template.html', {'restaurant': restaurant_name, 'date': date, 'time': time, 'name': name, 'people': people})
+                plain_message = strip_tags(html_message)
+                send_mail("Table Reservation", plain_message, "reservetableuk@gmail.com", [email], html_message=html_message)
+
 
                 full_message = f'Reservation made online at { time } for {people} on {date} under the name of "{name}"'
                 send_mail("Table Reservation", full_message, "reservetableuk@gmail.com", [user.usersettings.email])

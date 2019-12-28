@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,700&display=swap");
 
-body {
+body, html {
     margin: 0;
     height: 100vh;
     font-family: Montserrat;
@@ -139,7 +139,11 @@ header {
 
 .contact-btn p {
     font-size: 18px;
-    margin: 0;
+    margin: 5px;
+}
+
+.contact-btn a {
+    color: rgb(255, 115, 50);
 }
 
 @media only screen and (max-width: 1024px) {

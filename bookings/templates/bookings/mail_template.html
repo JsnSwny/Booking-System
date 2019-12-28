@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ReserveTable</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Montserrat:300,700&display=swap");
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+        img {
+            text-align: center;
+        }
+        h1, p, h3 {
+            text-align: center;
+            color: black;
+            line-height: 10px;
+        }
+        h1 {
+            background-color: rgb(29, 29, 29);
+            color: white;
+            width: 100%;
+            padding: 35px 0;
+            margin-bottom: 30px;
+        }
+        h1 span {
+            color: rgb(255, 115, 50)
+        }
+        p span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1><span>Reserve</span>Table</h1>
+    <h3>Hi {{ name }}, you have successfully made a booking using ReserveTable.</h3>
+    <h3 style="margin-bottom: 30px;">Here are the details of your reservation:</h3>
+    <p style="margin-bottom: 20px;"><span>Restaurant:</span> {{ restaurant }}</p>
+    <p><span>Date:</span> {{ date }}</p>
+    <p><span>Time:</span> {{ time }}</p>
+    <p><span>People:</span> {{ people }}</p>
+    
+</body>
+</html>

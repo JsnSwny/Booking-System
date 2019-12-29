@@ -21,7 +21,9 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
 import csv
-
+from django.contrib.auth import authenticate, login
+from .forms import LoginForm
+from django.contrib.auth.views import LoginView
 
 def getAjaxRequest(request, id):
     data = {}
@@ -434,6 +436,27 @@ def getAjaxRequest(request, id):
                 setting.save()
     return JsonResponse(data)
 
+
+
+# def logincheck(request):
+
+#     if request.user.is_authenticated:
+#         return HttpResponseRedirect('/bookings')
+    
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             username = data['username']
+#             password = data['password']
+#             user = authenticate(request, username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return HttpResponseRedirect('/bookings')
+#     else:
+#         form = LoginForm()
+#     return render(request, 'bookings/login.html', {'form': form})
+
 def download(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="bookings.csv"'
@@ -441,7 +464,7 @@ def download(request):
     writer = csv.writer(response)
 
     writer.writerow(['ID', 'Date', 'Time', 'Name', 'People', 'Contact', 'Info', 'Taker'])
-    for i in Booking.objects.filter(user_id=request.user.id):
+    for i in Booking.objects.filter(user_id=request.user.id).order_by('id'):
         writer.writerow([i.id, i.date, i.time, i.name, i.people, i.tel, i.info, i.initials])
     return response
 

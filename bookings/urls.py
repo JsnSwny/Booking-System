@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('', auth_views.LoginView.as_view(template_name='bookings/login.html'), name='login'),
+    path('', auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='bookings/login.html'), name='login'),
     path('logout', auth_views.LogoutView.as_view(template_name='bookings/login.html'), name='logout'),
     path('stats', login_required(views.stats)),
     path('create', login_required(views.create)),

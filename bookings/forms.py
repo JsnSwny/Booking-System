@@ -26,3 +26,7 @@ class AlertForm(forms.Form):
     date = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y'),
         input_formats=('%d/%m/%Y', ))
     message = forms.CharField(widget=forms.Textarea(attrs={"rows":2, "cols":40}))
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length = 100)
+    password = forms.CharField(max_length = 100)

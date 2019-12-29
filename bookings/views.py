@@ -465,7 +465,9 @@ def download(request):
 
     writer.writerow(['ID', 'Date', 'Time', 'Name', 'People', 'Contact', 'Info', 'Taker'])
     for i in Booking.objects.filter(user_id=request.user.id).order_by('id'):
-        writer.writerow([i.id, i.date, i.time, i.name, i.people, i.tel, i.info, i.initials])
+        if i.date > datetime.datetime.now().date():
+            writer.writerow([i.id, i.date, i.time, i.name, i.people, i.tel, i.info, i.initials])
+
     return response
 
 def addWalkIn(table, people, userid):

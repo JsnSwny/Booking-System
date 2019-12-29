@@ -551,43 +551,50 @@ input {
 }
 
 .stats-container {
+  display: flex;
+}
+
+.stats-profile-container, .stats-report-container {
+  background-color: rgb(26, 26, 26);
+  color: white;
+  width: 400px;
+  margin-left: 50px;
+  padding: 50px 20px;
   text-align: center;
 }
 
-.stats-container h1 {
-  font-weight: bold;
-  margin-top: 60px;
-}
-
-.stats-box h4 {
-  font-weight: bold;
-  margin: 0;
-}
-
-.stats-box h4 {
-  color: rgb(255, 115, 50);
-  margin-bottom: 45px;
-}
-
-.stats-box h3 {
+.stats-profile-container h1, .stats-profile-container p {
   color: white;
-  margin-top: 20px;
-  font-weight: bold;
-  
 }
 
-.stats-box {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 40%;
-  margin: 0 auto;
-  background-color: rgb(27, 27, 27);
-  padding: 30px 0;
+.stats-report-container {
+  background-color: lightgray;
+  margin-top: 20px;
+  padding: 20px 20px;
+  width: 400px;
+}
 
-  -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-  -moz-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-  box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+.stats-report-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.stats-report-content span, .stats-report-content p {
+  color: rgb(44, 44, 44);
+  margin: 0 5px;
+}
+
+.stats-report-content span {
+  width: 50px;
+}
+
+
+.stats-graph {
+  width: 70%;
+  background-color: rgb(83, 83, 83);
+  margin: 0 auto;
 }
 
 @media only screen and (max-width: 720px) {

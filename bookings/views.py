@@ -7,6 +7,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 import datetime
+from datetime import date
 import random
 import time
 from collections import Counter
@@ -24,6 +25,7 @@ import csv
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm
 from django.contrib.auth.views import LoginView
+import calendar
 
 def getAjaxRequest(request, id):
     data = {}
@@ -514,39 +516,51 @@ def changepassword(request):
     return render(request, 'bookings/changepassword.html')
 
 def stats(request):
-    tot = 0
-    for i in Booking.objects.filter(walk_in=True, user_id=request.user.id).values('people'):
-        tot += i['people']
-    total_w_people = tot
+    first_date = Booking.objects.all().first().date
+    calendar.monthrange(date.today().year, date.today().month)
 
-    print(total_w_people)
-
-    tot = 0
-    for i in Booking.objects.filter(online=True, user_id=request.user.id).values('people'):
-        tot += i['people']
-    total_o_people = tot
-
-    tot = 0
-    for i in Booking.objects.filter(walk_in=False, online=False, user_id=request.user.id).values('people'):
-        tot += i['people']
-    total_p_people = tot
-
-    stats = {
-        'total_w_people': total_w_people, 
-        'total_o_people': total_o_people, 
-        'total_p_people': total_p_people, 
     
-        'total_w_table': len(Booking.objects.filter(walk_in=True, user_id=request.user.id)), 
-        'total_o_table': len(Booking.objects.filter(online=True, user_id=request.user.id)),
-        'total_p_table': len(Booking.objects.filter(walk_in=False, online=False, user_id=request.user.id)),  
+    month = date.today().month
+    year = date.today().year
+    _, num_days = calendar.monthrange(year, month)
+    print(datetime.timedelta(days=date.today().weekday()))
 
-        'today_w_table': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=True, user_id=request.user.id)),
-        'today_o_table': len(Booking.objects.filter(date=datetime.datetime.now(), online=True, user_id=request.user.id)), 
-        'today_p_table': len(Booking.objects.filter(date=datetime.datetime.now(), walk_in=False, online=False, user_id=request.user.id))
-    }
+    week_start = date.today() - datetime.timedelta(days=date.today().weekday())
+    week_end = week_start + datetime.timedelta(days=6)
+    
+    return render(request, 'bookings/stats.html', 
+    {'year': get_booking_stats(date(year, 1, 1), date(year, 12, 31), request.user.id), 
+    'month': get_booking_stats(date(year, month, 1), date(year, month, num_days), request.user.id),
+    'week': get_booking_stats(week_start, week_end, request.user.id),
+    'name': request.user, 'first_date': first_date})
 
-    return render(request, 'bookings/stats.html', stats)
+def get_booking_stats(date_from, date_to, user_id):
 
+    # date_from_obj = datetime.datetime.strptime(date_from, '%Y-%m-%d').date()
+    # date_to_obj = datetime.datetime.strptime(date_to, '%Y-%m-%d').date()
+
+    total_walk_p = 0
+    total_book_p = 0
+    total_online_p = 0
+
+    total_walk_t = 0
+    total_book_t = 0
+    total_online_t = 0
+
+    for i in Booking.objects.filter(user_id=user_id):
+        if i.date >= date_from and i.date <= date_to:
+            if i.walk_in == True:
+                total_walk_p += i.people
+                total_walk_t += 1
+            elif i.online == True:
+                total_online_p += i.people
+                total_online_t += 1
+            else:
+                total_book_p += i.people
+                total_book_t += 1
+
+    return {'total_walk_p': total_walk_p, 'total_online_p': total_online_p, 'total_book_p': total_book_p, 
+            'total_walk_t': total_walk_t, 'total_online_t': total_online_t, 'total_book_t': total_book_t}
 
 def settings(request):
     return render(request, 'bookings/settings.html', {'settings': Settings.objects.filter(user=request.user).first()})

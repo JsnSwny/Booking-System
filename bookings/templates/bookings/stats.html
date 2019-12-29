@@ -2,54 +2,70 @@
 {% load static %}
 {% block other %}
 
+
 <div class="stats-container">
-  <h1>All-Time Stats</h1>
-  
-  <div class="stats-box">
-      <div class="stats-content">
-          <h4><i class='fas fa-walking fa-2x'></i></h4>
-          <h3>{{ total_w_table }} Tables</h3>
-          <h3>{{ total_w_people }} People</h3>
+  <div class="stats-report">
+    <div class="stats-profile-container">
+      <h1>{{ name }}</h1>
+      <div class="stats-profile-content">
+        <p>First Booking: {{ first_date }}</p>
       </div>
-
-      <div class="stats-content">
-          <h4><i class='fas fa-phone fa-2x'></i></h4>
-          <h3>{{ total_p_table }} Tables</h3>
-          <h3>{{ total_p_people }} People</h3>
-      </div>
-
-      <div class="stats-content">
-        <h4><i class='fas fa-laptop fa-2x'></i></h4>
-        <h3>{{ total_o_table }} Tables</h3>
-        <h3>{{ total_o_people }} People</h3>
-      </div>
+    </div>
+    
+    <div class="stats-report-container">
+        <h2>Yearly Report</h2>
+        <div class="stats-report-content">
+          <span><i class='fas fa-walking fa-2x'></i></span>
+          <p>{{ year.total_walk_p }} people / {{ year.total_walk_t }} tables</p>
+        </div>
+        <div class="stats-report-content">
+          <span><i class='fas fa-phone fa-2x'></i></span>
+          <p>{{ year.total_book_p }} people / {{ year.total_book_t }} tables</p>
+        </div>
+        <div class="stats-report-content">
+          <span><i class='fas fa-laptop fa-2x'></i></span>
+          <p>{{ year.total_online_p }} people / {{ year.total_online_t }} tables</p>
+        </div>
+    </div>
+    <div class="stats-report-container">
+        <h2>Monthly Report</h2>
+        <div class="stats-report-content">
+          <span><i class='fas fa-walking fa-2x'></i></span>
+          <p>{{ month.total_walk_p }} people / {{ month.total_walk_t }} tables</p>
+        </div>
+        <div class="stats-report-content">
+          <span><i class='fas fa-phone fa-2x'></i></span>
+          <p>{{ month.total_book_p }} people / {{ month.total_book_t }} tables</p>
+        </div>
+        <div class="stats-report-content">
+          <span><i class='fas fa-laptop fa-2x'></i></span>
+          <p>{{ month.total_online_p }} people / {{ month.total_online_t }} tables</p>
+        </div>
+    </div>
+    <div class="stats-report-container">
+        <h2>Weekly Report</h2>
+        <div class="stats-report-content">
+          <span><i class='fas fa-walking fa-2x'></i></span>
+          <p>{{ week.total_walk_p }} people / {{ week.total_walk_t }} tables</p>
+        </div>
+        <div class="stats-report-content">
+          <span><i class='fas fa-phone fa-2x'></i></span>
+          <p>{{ week.total_book_p }} people / {{ week.total_book_t }} tables</p>
+        </div>
+        <div class="stats-report-content">
+          <span><i class='fas fa-laptop fa-2x'></i></span>
+          <p>{{ week.total_online_p }} people / {{ week.total_online_t }} tables</p>
+        </div>
+    </div>
   </div>
 
-  <h1>Today's Stats</h1>
-  <div class="stats-box">
-      <div class="stats-content">
-          <h4><i class='fas fa-walking fa-2x'></i></h4>
-          <h3>{{ today_w_table }}</h3>
-
-      </div>
-
-      <div class="stats-content">
-          <h4><i class='fas fa-phone fa-2x'></i></h4>
-          <h3>{{ today_p_table }}</h3>
-
-      </div>
-
-      <div class="stats-content">
-        <h4><i class='fas fa-laptop fa-2x'></i></h4>
-        <h3>{{ today_o_table }}</h3>
-
-      </div>
+  <div class="stats-graph">
+    <h1>Graph</h1>
   </div>
-
 </div>
-  
 
- 
+
+
 
 <script>
 Chart.defaults.global.defaultFontColor = 'black';

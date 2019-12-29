@@ -587,7 +587,12 @@ input {
 }
 
 .stats-report-content span {
-  width: 50px;
+  width: 60px;
+}
+
+.stats-report-content p {
+  width: 200px;
+  text-align: left;
 }
 
 

@@ -464,9 +464,8 @@ def download(request):
     writer = csv.writer(response)
 
     writer.writerow(['ID', 'Date', 'Time', 'Name', 'People', 'Contact', 'Info', 'Taker'])
-    for i in Booking.objects.filter(user_id=request.user.id).order_by('id'):
-        if i.date > datetime.datetime.now().date():
-            writer.writerow([i.id, i.date, i.time, i.name, i.people, i.tel, i.info, i.initials])
+    for i in Booking.objects.filter(user_id=request.user.id).order_by('-date', '-time'):
+        writer.writerow([i.id, i.date, i.time, i.name, i.people, i.tel, i.info, i.initials])
 
     return response
 

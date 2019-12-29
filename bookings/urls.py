@@ -18,5 +18,7 @@ urlpatterns = [
     # AJAX URLS
     path('ajax/<int:id>/', getAjaxRequest, name='ajax_newbooking'),
     path('bookings', login_required(views.bookings), name='booking-home'),
+    path('download', views.download),
     path('<username>', views.book),
+    
 ]

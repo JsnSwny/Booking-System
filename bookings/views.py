@@ -20,6 +20,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
+import csv
 
 
 def getAjaxRequest(request, id):
@@ -433,6 +434,16 @@ def getAjaxRequest(request, id):
                 setting.save()
     return JsonResponse(data)
 
+def download(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="bookings.csv"'
+
+    writer = csv.writer(response)
+
+    writer.writerow(['ID', 'Date', 'Time', 'Name', 'People', 'Contact', 'Info', 'Taker'])
+    for i in Booking.objects.filter(user_id=request.user.id):
+        writer.writerow([i.id, i.date, i.time, i.name, i.people, i.tel, i.info, i.initials])
+    return response
 
 def addWalkIn(table, people, userid):
     table = TableItem.objects.filter(pk=table).first()

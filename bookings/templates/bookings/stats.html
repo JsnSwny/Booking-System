@@ -60,7 +60,8 @@
   </div>
 
   <div class="stats-graph">
-    <h1>Graph</h1>
+    
+      <canvas id="myChart" width="400" height="250"></canvas>
   </div>
 </div>
 
@@ -70,6 +71,28 @@
 <script>
 Chart.defaults.global.defaultFontColor = 'black';
 Chart.defaults.global.defaultFontSize = 16;
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ month_list|safe }},
+        datasets: [{
+            label: '# of Bookings',
+            data: {{ month_bookings|safe }},
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
 
 </script>
 {% endblock other %}

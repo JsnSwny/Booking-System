@@ -26,6 +26,8 @@ from django.contrib.auth import authenticate, login
 from .forms import LoginForm
 from django.contrib.auth.views import LoginView
 import calendar
+from collections import OrderedDict
+import pandas as pd
 
 def getAjaxRequest(request, id):
     data = {}
@@ -523,21 +525,32 @@ def stats(request):
     month = date.today().month
     year = date.today().year
     _, num_days = calendar.monthrange(year, month)
-    print(datetime.timedelta(days=date.today().weekday()))
 
     week_start = date.today() - datetime.timedelta(days=date.today().weekday())
     week_end = week_start + datetime.timedelta(days=6)
-    
+
+    month_list = pd.date_range((first_date - datetime.timedelta(days=29)).strftime("%Y-%m-%d"),date.today().strftime("%Y-%m-%d"), 
+              freq='MS').strftime("%Y-%b").tolist()
+
+    month_bookings = []
+
+    for i in month_list:
+        month_date = datetime.datetime.strptime(i, '%Y-%b').date()
+        _, num_days_month = calendar.monthrange(month_date.year, month_date.month)
+        
+        month_bookings.append(get_booking_stats(month_date, date(month_date.year, month_date.month, num_days_month), request.user.id)['total_people'])
     return render(request, 'bookings/stats.html', 
     {'year': get_booking_stats(date(year, 1, 1), date(year, 12, 31), request.user.id), 
     'month': get_booking_stats(date(year, month, 1), date(year, month, num_days), request.user.id),
     'week': get_booking_stats(week_start, week_end, request.user.id),
-    'name': request.user, 'first_date': first_date})
+    'name': request.user, 'first_date': first_date,
+    'month_list': month_list, 'month_bookings': month_bookings})
 
 def get_booking_stats(date_from, date_to, user_id):
 
     # date_from_obj = datetime.datetime.strptime(date_from, '%Y-%m-%d').date()
     # date_to_obj = datetime.datetime.strptime(date_to, '%Y-%m-%d').date()
+    total_people = 0
 
     total_walk_p = 0
     total_book_p = 0
@@ -549,6 +562,7 @@ def get_booking_stats(date_from, date_to, user_id):
 
     for i in Booking.objects.filter(user_id=user_id):
         if i.date >= date_from and i.date <= date_to:
+            total_people += i.people
             if i.walk_in == True:
                 total_walk_p += i.people
                 total_walk_t += 1
@@ -560,7 +574,8 @@ def get_booking_stats(date_from, date_to, user_id):
                 total_book_t += 1
 
     return {'total_walk_p': total_walk_p, 'total_online_p': total_online_p, 'total_book_p': total_book_p, 
-            'total_walk_t': total_walk_t, 'total_online_t': total_online_t, 'total_book_t': total_book_t}
+            'total_walk_t': total_walk_t, 'total_online_t': total_online_t, 'total_book_t': total_book_t,
+            'total_people': total_people}
 
 def settings(request):
     return render(request, 'bookings/settings.html', {'settings': Settings.objects.filter(user=request.user).first()})

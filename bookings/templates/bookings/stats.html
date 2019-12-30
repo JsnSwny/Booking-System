@@ -14,6 +14,7 @@
     
     <div class="stats-report-container">
         <h2>Yearly Report</h2>
+        <h5>{{ year_num }}</h5>
         <div class="stats-report-content">
           <span><i class='fas fa-walking fa-2x'></i></span>
           <p>{{ year.total_walk_p }} people / {{ year.total_walk_t }} tables</p>
@@ -29,6 +30,7 @@
     </div>
     <div class="stats-report-container">
         <h2>Monthly Report</h2>
+        <h5>{{ month_num }}</h5>
         <div class="stats-report-content">
           <span><i class='fas fa-walking fa-2x'></i></span>
           <p>{{ month.total_walk_p }} people / {{ month.total_walk_t }} tables</p>
@@ -42,8 +44,9 @@
           <p>{{ month.total_online_p }} people / {{ month.total_online_t }} tables</p>
         </div>
     </div>
-    <div class="stats-report-container">
+    <!-- <div class="stats-report-container">
         <h2>Weekly Report</h2>
+        <h5>Week {{ week_num }}</h5>
         <div class="stats-report-content">
           <span><i class='fas fa-walking fa-2x'></i></span>
           <p>{{ week.total_walk_p }} people / {{ week.total_walk_t }} tables</p>
@@ -56,7 +59,7 @@
           <span><i class='fas fa-laptop fa-2x'></i></span>
           <p>{{ week.total_online_p }} people / {{ week.total_online_t }} tables</p>
         </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="stats-graph">

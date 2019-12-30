@@ -533,7 +533,6 @@ def stats(request):
               freq='MS').strftime("%Y-%b").tolist()
 
     month_bookings = []
-
     for i in month_list:
         month_date = datetime.datetime.strptime(i, '%Y-%b').date()
         _, num_days_month = calendar.monthrange(month_date.year, month_date.month)
@@ -544,7 +543,9 @@ def stats(request):
     'month': get_booking_stats(date(year, month, 1), date(year, month, num_days), request.user.id),
     'week': get_booking_stats(week_start, week_end, request.user.id),
     'name': request.user, 'first_date': first_date,
-    'month_list': month_list, 'month_bookings': month_bookings})
+    'month_list': month_list, 'month_bookings': month_bookings,
+    'week_num': datetime.date(date.today().year, date.today().month, date.today().day).isocalendar()[1],
+    'year_num': date.today().year, 'month_num': date.today().strftime("%B")})
 
 def get_booking_stats(date_from, date_to, user_id):
 

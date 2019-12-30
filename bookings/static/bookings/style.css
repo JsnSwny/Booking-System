@@ -616,6 +616,14 @@ input {
   }
   canvas{
     width:100% !important;
+    
+  }
+
+  .stats-container h2 {
+    font-size: 24px;
+  }
+  .stats-container h1 {
+    font-size: 28px;
   }
 
 }

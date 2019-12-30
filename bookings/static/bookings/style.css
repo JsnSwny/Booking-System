@@ -597,9 +597,29 @@ input {
 
 
 .stats-graph {
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
 }
+
+
+
+@media only screen and (max-width: 1400px) {
+  .stats-container {
+    display: block;
+  }
+  .stats-profile-container, .stats-report-container {
+    margin: 20px auto;
+    width: 80%;
+  }
+  .stats-graph {
+    width: 90%;
+  }
+  canvas{
+    width:100% !important;
+  }
+
+}
+
 
 @media only screen and (max-width: 720px) {
   #modal-box {

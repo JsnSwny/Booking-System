@@ -64,7 +64,7 @@
 
   <div class="stats-graph">
     
-      <canvas id="myChart" width="400" height="250"></canvas>
+      <canvas id="stats_chart" height="250px" width="400px"></canvas>
   </div>
 </div>
 
@@ -75,7 +75,7 @@
 Chart.defaults.global.defaultFontColor = 'black';
 Chart.defaults.global.defaultFontSize = 16;
 
-var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('stats_chart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {

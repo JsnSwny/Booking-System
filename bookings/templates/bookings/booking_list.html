@@ -96,6 +96,12 @@
             <h1 id="booking-title-1"></h1>
             <h2 id="booking-title-2"></h2>
         </div>    
+        <div class="current-stats">
+            
+            <p>{{ today_tables }} Table(s) Today</p>
+            <!-- <span><i class="fas fa-chart-bar fa-3x"></i></span> -->
+            <p>{{ today_people }} People Today</p>
+        </div>
         <div class="row justify-content-center">
             <div class="mb-4">    
                 <input onkeydown="return false;" readonly type="text" class="form-control text-center" id="main_datepicker" autocomplete="off" required>
@@ -169,6 +175,11 @@
 
         function updateBookings() {
             date = document.getElementById("main_datepicker").value
+            if (date == moment().format("DD/MM/YYYY")) {
+                $(".current-stats").show();
+            } else {
+                $(".current-stats").hide();
+            }
             $.ajax({
                 url: '/ajax/1/',
                 data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date},
@@ -206,7 +217,6 @@
                         var arrived = bookingField.arrived
                         var cleared = bookingField.cleared
                         var online = bookingField.online
-                        console.log(online)
                         if(info != "") {
                             info = '<small class="mb-2"><span class="h6">Additional Info: </span> <br> <span style="white-space: pre-wrap;">' + bookingField.info + '</span></small>'
                         }

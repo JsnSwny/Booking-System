@@ -592,7 +592,11 @@ def stafflist(request):
 
 def bookings(request):
     staff = Staff.objects.filter(user_id=request.user.id)
-    return render(request, 'bookings/booking_list.html', {'staff': staff, 'groups': TableGroup.objects.all()})
+    return render(request, 'bookings/booking_list.html', {
+        'staff': staff, 
+        'groups': TableGroup.objects.all(), 
+        'today_people': sum([x['people'] for x in Booking.objects.filter(user_id=request.user.id, date=datetime.datetime.now()).values('people')]),
+        'today_tables': len(Booking.objects.filter(user_id=request.user.id, date=datetime.datetime.now()))})
 
 def history(request):
     if request.is_ajax():

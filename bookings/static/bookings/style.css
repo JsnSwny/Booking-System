@@ -35,9 +35,6 @@ body {
   font-weight: bold;
 }
 
-
-
-
 html { 
 	overflow-y: scroll; 
 }
@@ -48,6 +45,20 @@ input[readonly] {
 	
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
+}
+
+.current-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.current-stats p {
+  line-height: 10px;
+
 }
 
 .close { 
@@ -266,7 +277,6 @@ input {
 
 .booking-title {
   text-align: center;
-  margin-bottom: 30px;
 }
 
 .booking-title h1 {

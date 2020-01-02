@@ -532,6 +532,8 @@ def stats(request):
     month_list = pd.date_range((first_date - datetime.timedelta(days=29)).strftime("%Y-%m-%d"),date.today().strftime("%Y-%m-%d"), 
               freq='MS').strftime("%Y-%b").tolist()
 
+    total_people = sum([x['people'] for x in Booking.objects.all().values('people')])
+
     month_bookings = []
     for i in month_list:
         month_date = datetime.datetime.strptime(i, '%Y-%b').date()
@@ -547,7 +549,8 @@ def stats(request):
     'week_num': datetime.date(date.today().year, date.today().month, date.today().day).isocalendar()[1],
     'year_num': date.today().year, 'month_num': date.today().strftime("%B"),
     'total_bookings': len(Booking.objects.all()),
-    'total_people': sum([x['people'] for x in Booking.objects.all().values('people')])})
+    'total_people': total_people,
+    'average_people': "{0:.2f}".format(total_people/len(Booking.objects.all()))})
 
 def get_booking_stats(date_from, date_to, user_id):
 

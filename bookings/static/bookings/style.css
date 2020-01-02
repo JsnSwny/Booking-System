@@ -554,6 +554,10 @@ input {
   display: flex;
 }
 
+.stats-container p {
+  line-height: 10px;
+}
+
 .stats-profile-container, .stats-report-container {
   background-color: rgb(26, 26, 26);
   color: white;

@@ -545,7 +545,9 @@ def stats(request):
     'name': request.user, 'first_date': first_date,
     'month_list': month_list, 'month_bookings': month_bookings,
     'week_num': datetime.date(date.today().year, date.today().month, date.today().day).isocalendar()[1],
-    'year_num': date.today().year, 'month_num': date.today().strftime("%B")})
+    'year_num': date.today().year, 'month_num': date.today().strftime("%B"),
+    'total_bookings': len(Booking.objects.all()),
+    'total_people': sum([x['people'] for x in Booking.objects.all().values('people')])})
 
 def get_booking_stats(date_from, date_to, user_id):
 

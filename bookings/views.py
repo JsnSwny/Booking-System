@@ -548,8 +548,8 @@ def stats(request):
     'month_list': month_list, 'month_bookings': month_bookings,
     'week_num': datetime.date(date.today().year, date.today().month, date.today().day).isocalendar()[1],
     'year_num': date.today().year, 'month_num': date.today().strftime("%B"),
-    'total_bookings': len(Booking.objects.all()),
-    'total_people': total_people,
+    'total_bookings': f'{len(Booking.objects.all()):,}',
+    'total_people': f'{total_people:,}',
     'average_people': "{0:.2f}".format(total_people/len(Booking.objects.all()))})
 
 def get_booking_stats(date_from, date_to, user_id):

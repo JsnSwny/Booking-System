@@ -1,455 +1,634 @@
-{% extends "bookings/base.html" %}
-{% load static %}
-{% block other %}
-
+{% extends "bookings/base.html" %} {% load static %} {% block other %}
 
 <div class="container-fluid">
-
-<div class="row">
-
+  <div class="row">
     <div class="text-center col-md-5 col-sm-12 col-xs-12">
-        <h2 class="mb-2">Create Booking</h2>
-        <div class="row align-items-center justify-content-center">
-            <p class="col-8" style="border-bottom: 1px solid #dddddd;"></p>
+      <h2 class="mb-2">Create Booking</h2>
+      <div class="row align-items-center justify-content-center">
+        <p class="col-8" style="border-bottom: 1px solid #dddddd;"></p>
+      </div>
+
+      <form id="addBookingForm">
+        <div class="form-group col-md-12">
+          <h6 class="float-left">Date</h6>
+          <input
+            type="text"
+            class="form-control"
+            id="datepicker"
+            disabled="disabled"
+            autocomplete="off"
+            required
+          />
         </div>
-        
-        <form id="addBookingForm">
-            <div class="form-group col-md-12">
-                <h6 class="float-left">Date</h6>
-                <input type="text" class="form-control" id="datepicker" disabled="disabled" autocomplete="off" required>
-            </div>
-            <div class="form-group col-md-12">
-                <h6 class="float-left">Time</h6>
-                <div class="wrapper"><select name="" id="time_dropdown" class="form-control" onfocus='this.size=15;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required>
-                </select>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <h6 id="cap_at_time_now" class="alert text-dark text-center text-uppercase font-weight-bold"></h6>
-            </div>
-            <div class="col-md-12">
-                <h6 id="cap_at_time" class="alert text-dark text-center text-uppercase font-weight-bold"></h6>
-            </div>
-            <div class="form-group col-md-12">
-                <h6 class="float-left">Name</h6>
-                <input type="text" class="form-control" id="booking_name" autocomplete="off" required>
-            </div>
-            <div class="form-group col-md-12">
-                <h6 class="float-left">People</h6>
-                <input type="number" class="form-control" id="booking_people" value="2" autocomplete="off" required>
-            </div>
-            <div class="form-group col-md-12">
-                <h6 class="float-left">Contact</h6>
-                <input type="text" class="form-control" value="" id="booking_tel" autocomplete="off">
-            </div>
-            <div class="form-group col-md-12">
-                <h6 class="float-left">Booking Taker</h6>
-                <input type="text" class="form-control" id="booking_taker" autocomplete="off" required>
+        <div class="form-group col-md-12">
+          <h6 class="float-left">Time</h6>
+          <div class="wrapper">
+            <select
+              name=""
+              id="time_dropdown"
+              class="form-control"
+              onfocus="this.size=15;"
+              onblur="this.size=1;"
+              onchange="this.size=1; this.blur();"
+              required
+            >
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <h6
+            id="cap_at_time_now"
+            class="alert text-dark text-center text-uppercase font-weight-bold"
+          ></h6>
+        </div>
+        <div class="col-md-12">
+          <h6
+            id="cap_at_time"
+            class="alert text-dark text-center text-uppercase font-weight-bold"
+          ></h6>
+        </div>
+        <div class="form-group col-md-12">
+          <h6 class="float-left">Name</h6>
+          <input
+            type="text"
+            class="form-control"
+            id="booking_name"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <h6 class="float-left">People</h6>
+          <input
+            type="number"
+            class="form-control"
+            id="booking_people"
+            value="2"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <h6 class="float-left">Contact</h6>
+          <input
+            type="text"
+            class="form-control"
+            value=""
+            id="booking_tel"
+            autocomplete="off"
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <h6 class="float-left">Booking Taker</h6>
+          <input
+            type="text"
+            class="form-control"
+            id="booking_taker"
+            autocomplete="off"
+            required
+          />
 
-                <div class="row align-items-center justify-content-center mt-3">
-                    {% for i in staff %}
-                        <div><h1 class="bookingTakerPicker btn btn-dark mx-2">{{ i.name }}</h1></div>
-                    {% endfor %}
-                    
-                </div>
-
+          <div class="row align-items-center justify-content-center mt-3">
+            {% for i in staff %}
+            <div>
+              <h1 class="bookingTakerPicker btn btn-dark mx-2">{{ i.name }}</h1>
             </div>
-            <div class="form-group col-md-12">
-                <h6 class="float-left">Extra Information</h6>
-                <textarea class="form-control" value="" id="booking_additional" rows="3" style="resize: none;"></textarea>
-            </div>             
-            <small class="col-md-8 form-group text-left text-muted ml-1" id="booking_timetaken" hidden="true"></small>
-        
-            <button type="submit" class="btn btn-success mb-2 mt-3 col-md-8" id="addBooking" hidden="true">Add Booking</button>
-            <button type="submit" class="btn btn-info mb-2 mt-3 col-md-12" data-id="" id="updateBooking" hidden="true">Update</button>
-            <button type="button" class="btn btn-danger text-light mb-2 col-md-12" id="deleteBooking" hidden="true">Delete</button>
-        </form>                     
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <h6 class="float-left">Extra Information</h6>
+          <textarea
+            class="form-control"
+            value=""
+            id="booking_additional"
+            rows="3"
+            style="resize: none;"
+          ></textarea>
+        </div>
+        <small
+          class="col-md-8 form-group text-left text-muted ml-1"
+          id="booking_timetaken"
+          hidden="true"
+        ></small>
 
+        <button
+          type="submit"
+          class="btn btn-success mb-2 mt-3 col-md-8"
+          id="addBooking"
+          hidden="true"
+        >
+          Add Booking
+        </button>
+        <button
+          type="submit"
+          class="btn btn-info mb-2 mt-3 col-md-12"
+          data-id=""
+          id="updateBooking"
+          hidden="true"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger text-light mb-2 col-md-12"
+          id="deleteBooking"
+          hidden="true"
+        >
+          Delete
+        </button>
+      </form>
     </div>
-    <div class="col-md-7 col-sm-12 col-xs-12 text-center" style="margin-top: 50px;">
-        <div class="row justify-content-center mb-3">
-            <button class="col mx-2 btn btn-secondary" onclick="addDay(-1)">Previous Day</button>
-            <button class="col mx-2 btn btn-success" onclick="today()">Today</button>
-            <button class="col mx-2 btn btn-secondary" onclick="addDay(1)">Next Day</button>
-        </div>
+    <div
+      class="col-md-7 col-sm-12 col-xs-12 text-center"
+      style="margin-top: 50px;"
+    >
+      <div class="row justify-content-center mb-3">
+        <button class="col mx-2 btn btn-secondary" onclick="addDay(-1)">
+          Previous Day
+        </button>
+        <button class="col mx-2 btn btn-success" onclick="today()">
+          Today
+        </button>
+        <button class="col mx-2 btn btn-secondary" onclick="addDay(1)">
+          Next Day
+        </button>
+      </div>
 
-        <div class="p-3" style="background-color: hsl(0, 0%, 95%); border: 1px solid #d3d3d3;">
-            <h2 id="booking_full_date"></h2>   
-            <h6 class="mb-3" id="all_day_people"></h6>
-            <p class="col-md-12" style="border-bottom: 1px solid #dddddd;"></p>
-            <div class="modal_alerts"></div>    
-                                        
-            <div class="booking_list_names">
-            </div>
-        </div>
+      <div
+        class="p-3"
+        style="background-color: hsl(0, 0%, 95%); border: 1px solid #d3d3d3;"
+      >
+        <h2 id="booking_full_date"></h2>
+        <h6 class="mb-3" id="all_day_people"></h6>
+        <p class="col-md-12" style="border-bottom: 1px solid #dddddd;"></p>
+        <div class="modal_alerts"></div>
+
+        <div class="booking_list_names"></div>
+      </div>
     </div>
-</div>
+  </div>
 </div>
 <script>
-
-$("#addBooking").on("click", function(){
-
-    var name = document.getElementById("booking_name").value
-    var date = document.getElementById("datepicker").value
-    var time = document.getElementById("time_dropdown").value
-    var people = document.getElementById("booking_people").value
-    var taker = document.getElementById("booking_taker").value
-    var tel = document.getElementById("booking_tel").value
-    var additional = document.getElementById("booking_additional").value
+  $("#addBooking").on("click", function () {
+    var name = document.getElementById("booking_name").value;
+    var date = document.getElementById("datepicker").value;
+    var time = document.getElementById("time_dropdown").value;
+    var people = document.getElementById("booking_people").value;
+    var taker = document.getElementById("booking_taker").value;
+    var tel = document.getElementById("booking_tel").value;
+    var additional = document.getElementById("booking_additional").value;
     if (name != "" && time != "" && taker != "") {
-        date = date.split("/")
-        date = date.reverse().join("-")
-        $('#addBooking').prop('disabled', true);
-        $.ajax({
-            url: '/ajax/10/',
-            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date, 'name': name, 'time': time, 'people': people, 'taker': taker, 'tel': tel, 'additional': additional},
-            dataType: 'json',
-            type: 'GET',
-            global: false,
-            success: function(data) {
-                document.getElementById("booking_name").value = ""
-                document.getElementById("booking_people").value = "2"
-                document.getElementById("booking_tel").value = ""
-                document.getElementById("booking_additional").value = ""
-                document.getElementById("booking_taker").value = ""
-                document.getElementById("time_dropdown").value = ""
-                document.getElementById("booking_timetaken").hidden = true 
-                $('#addBooking').prop('disabled', false);  
-                bookingsList(document.getElementById("datepicker").value)
-            }
-        });
-    }
-});
-
-$("#updateBooking").on("click", function(){
-    var name = document.getElementById("booking_name").value
-    var date = document.getElementById("datepicker").value
-    var time = document.getElementById("time_dropdown").value
-    var people = document.getElementById("booking_people").value
-    var taker = document.getElementById("booking_taker").value
-    var tel = document.getElementById("booking_tel").value
-    var additional = document.getElementById("booking_additional").value
-    var id = $(this).data("id")
-    date = date.split("/").reverse().join("-")
-    $(".editBookings").css("color", "black")
-    $.ajax({
-        url: '/ajax/12/',
-        data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id, 'date': date, 'name': name, 'time': time, 'people': people, 'taker': taker, 'tel': tel, 'additional': additional},
-        dataType: 'json',
-        type: 'GET',
+      date = date.split("/");
+      date = date.reverse().join("-");
+      $("#addBooking").prop("disabled", true);
+      $.ajax({
+        url: "/ajax/10/",
+        data: {
+          csrfmiddlewaretoken: "{{ csrf_token }}",
+          date: date,
+          name: name,
+          time: time,
+          people: people,
+          taker: taker,
+          tel: tel,
+          additional: additional,
+        },
+        dataType: "json",
+        type: "GET",
         global: false,
-        success: function(data) { 
-            document.getElementById("addBooking").hidden = false
-            document.getElementById("updateBooking").hidden = true
-            document.getElementById("deleteBooking").hidden = true
-            document.getElementById("booking_name").value = ""
-            document.getElementById("booking_people").value = "2"
-            document.getElementById("booking_tel").value = ""
-            document.getElementById("booking_additional").value = ""
-            document.getElementById("booking_taker").value = ""
-            document.getElementById("time_dropdown").value = ""
-            document.getElementById("booking_timetaken").hidden = true    
-            bookingsList(document.getElementById("datepicker").value)            
-        }
+        success: function (data) {
+          document.getElementById("booking_name").value = "";
+          document.getElementById("booking_people").value = "2";
+          document.getElementById("booking_tel").value = "";
+          document.getElementById("booking_additional").value = "";
+          document.getElementById("booking_taker").value = "";
+          document.getElementById("time_dropdown").value = "";
+          document.getElementById("booking_timetaken").hidden = true;
+          $("#addBooking").prop("disabled", false);
+          bookingsList(document.getElementById("datepicker").value);
+        },
+      });
+    }
+  });
+
+  $("#updateBooking").on("click", function () {
+    var name = document.getElementById("booking_name").value;
+    var date = document.getElementById("datepicker").value;
+    var time = document.getElementById("time_dropdown").value;
+    var people = document.getElementById("booking_people").value;
+    var taker = document.getElementById("booking_taker").value;
+    var tel = document.getElementById("booking_tel").value;
+    var additional = document.getElementById("booking_additional").value;
+    var id = $(this).data("id");
+    date = date.split("/").reverse().join("-");
+    $(".editBookings").css("color", "black");
+    $.ajax({
+      url: "/ajax/12/",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        id: id,
+        date: date,
+        name: name,
+        time: time,
+        people: people,
+        taker: taker,
+        tel: tel,
+        additional: additional,
+      },
+      dataType: "json",
+      type: "GET",
+      global: false,
+      success: function (data) {
+        document.getElementById("addBooking").hidden = false;
+        document.getElementById("updateBooking").hidden = true;
+        document.getElementById("deleteBooking").hidden = true;
+        document.getElementById("booking_name").value = "";
+        document.getElementById("booking_people").value = "2";
+        document.getElementById("booking_tel").value = "";
+        document.getElementById("booking_additional").value = "";
+        document.getElementById("booking_taker").value = "";
+        document.getElementById("time_dropdown").value = "";
+        document.getElementById("booking_timetaken").hidden = true;
+        bookingsList(document.getElementById("datepicker").value);
+      },
     });
     return false;
-});
+  });
 
-
-function cap_at_time() {
-    date = document.getElementById("datepicker").value
-    time = document.getElementById("time_dropdown").value
+  function cap_at_time() {
+    date = document.getElementById("datepicker").value;
+    time = document.getElementById("time_dropdown").value;
     if (time == "") {
-        time = moment().format("HH:MM")
+      time = moment().format("HH:MM");
     }
     $.ajax({
-        url: '/ajax/17/',
-        data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date, 'time': time},
-        dataType: 'json',
-        type: 'GET',
-        global: false,
-        success: function(data) { 
-            var timeBefore = moment(time, 'HH:mm').add(-3, 'hours').format("HH:mm")
-            var timeAfter = moment(time, 'HH:mm').add(3, 'hours').format("HH:mm")
-            if (data.total_people <= 55) {
-                $("#cap_at_time").css("background-color", "rgb(0, 255, 0, 0.4)")
-                document.getElementById("cap_at_time").innerHTML = 'Around Time: ' + data.total_people + ' people booked'
-            } else if (data.total_people < 70) {
-                $("#cap_at_time").css("background-color", "rgb(255, 165, 0, 0.4)")
-                document.getElementById("cap_at_time").innerHTML = 'Around Time: ' + data.total_people + ' people booked</h6>'
-            } else {
-                $("#cap_at_time").css("background-color", "rgb(255, 0, 0, 0.4)")
-                document.getElementById("cap_at_time").innerHTML = 'Around Time: ' + data.total_people + ' people booked</h6>'
-            }
-
-            if (data.total_people_now <= 5) {
-                $("#cap_at_time_now").css("background-color", "rgb(0, 255, 0, 0.4)")
-                document.getElementById("cap_at_time_now").innerHTML = 'At Time: ' + data.total_people_now + ' people booked'
-            } else if (data.total_people_now < 12) {
-                $("#cap_at_time_now").css("background-color", "rgb(255, 165, 0, 0.4)")
-                document.getElementById("cap_at_time_now").innerHTML = 'At Time: ' + data.total_people_now + ' people booked'
-            } else {
-                $("#cap_at_time_now").css("background-color", "rgb(255, 0, 0, 0.4)")
-                document.getElementById("cap_at_time_now").innerHTML = 'At Time: ' + data.total_people_now + ' people booked'
-            }
+      url: "/ajax/17/",
+      data: { csrfmiddlewaretoken: "{{ csrf_token }}", date: date, time: time },
+      dataType: "json",
+      type: "GET",
+      global: false,
+      success: function (data) {
+        var timeBefore = moment(time, "HH:mm").add(-3, "hours").format("HH:mm");
+        var timeAfter = moment(time, "HH:mm").add(3, "hours").format("HH:mm");
+        if (data.total_people <= 55) {
+          $("#cap_at_time").css("background-color", "rgb(0, 255, 0, 0.4)");
+          document.getElementById("cap_at_time").innerHTML =
+            "Around Time: " + data.total_people + " people booked";
+        } else if (data.total_people < 70) {
+          $("#cap_at_time").css("background-color", "rgb(255, 165, 0, 0.4)");
+          document.getElementById("cap_at_time").innerHTML =
+            "Around Time: " + data.total_people + " people booked</h6>";
+        } else {
+          $("#cap_at_time").css("background-color", "rgb(255, 0, 0, 0.4)");
+          document.getElementById("cap_at_time").innerHTML =
+            "Around Time: " + data.total_people + " people booked</h6>";
         }
-    });          
-}
 
-$(".bookingTakerPicker").on("click", function(){
-    var name = $(this).html()
-    document.getElementById("booking_taker").value = name
-});
-$("#deleteBooking").on("click", function(){
-    var confirm_del = confirm("Are you sure you want to delete this booking?")
-    var id = $("#updateBooking").data("id")
+        if (data.total_people_now <= 5) {
+          $("#cap_at_time_now").css("background-color", "rgb(0, 255, 0, 0.4)");
+          document.getElementById("cap_at_time_now").innerHTML =
+            "At Time: " + data.total_people_now + " people booked";
+        } else if (data.total_people_now < 12) {
+          $("#cap_at_time_now").css(
+            "background-color",
+            "rgb(255, 165, 0, 0.4)"
+          );
+          document.getElementById("cap_at_time_now").innerHTML =
+            "At Time: " + data.total_people_now + " people booked";
+        } else {
+          $("#cap_at_time_now").css("background-color", "rgb(255, 0, 0, 0.4)");
+          document.getElementById("cap_at_time_now").innerHTML =
+            "At Time: " + data.total_people_now + " people booked";
+        }
+      },
+    });
+  }
+
+  $(".bookingTakerPicker").on("click", function () {
+    var name = $(this).html();
+    document.getElementById("booking_taker").value = name;
+  });
+  $("#deleteBooking").on("click", function () {
+    var confirm_del = confirm("Are you sure you want to delete this booking?");
+    var id = $("#updateBooking").data("id");
     if (confirm_del == true) {
-        $.ajax({
-            url: '/ajax/9/',
-            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
-            dataType: 'json',
-            type: 'GET',
-            global: false,
-            success: function(data) {
-                document.getElementById("addBooking").hidden = false
-                document.getElementById("updateBooking").hidden = true
-                document.getElementById("deleteBooking").hidden = true
-                document.getElementById("booking_name").value = ""
-                document.getElementById("booking_people").value = "2"
-                document.getElementById("booking_tel").value = ""
-                document.getElementById("booking_additional").value = ""
-                document.getElementById("booking_taker").value = ""
-                document.getElementById("time_dropdown").value = ""
-                document.getElementById("booking_timetaken").hidden = true          
-                bookingsList(document.getElementById("datepicker").value)    
-            }
-        });
+      $.ajax({
+        url: "/ajax/9/",
+        data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+        dataType: "json",
+        type: "GET",
+        global: false,
+        success: function (data) {
+          document.getElementById("addBooking").hidden = false;
+          document.getElementById("updateBooking").hidden = true;
+          document.getElementById("deleteBooking").hidden = true;
+          document.getElementById("booking_name").value = "";
+          document.getElementById("booking_people").value = "2";
+          document.getElementById("booking_tel").value = "";
+          document.getElementById("booking_additional").value = "";
+          document.getElementById("booking_taker").value = "";
+          document.getElementById("time_dropdown").value = "";
+          document.getElementById("booking_timetaken").hidden = true;
+          bookingsList(document.getElementById("datepicker").value);
+        },
+      });
     }
-});
+  });
 
+  $("#time_dropdown").on("input", function () {
+    cap_at_time();
+  });
 
-
-
-$("#time_dropdown").on("input", function(){
-    cap_at_time()
-});
-
-$( document ).ready(function() {
-
+  $(document).ready(function () {
     if (window.location.hash) {
-        var id = window.location.hash.substr(1, )
-        $.ajax({
-            url: '/ajax/11/',
-            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
-            dataType: 'json',
-            type: 'GET',
-            success: function(data) {
-                var booking = data.booking[0].fields
-                document.getElementById("addBooking").hidden = true
-                document.getElementById("updateBooking").hidden = false
-                document.getElementById("deleteBooking").hidden = false
-                $("#updateBooking").data("id", id)
-                document.getElementById("booking_name").value = booking.name
-                document.getElementById("booking_people").value = booking.people
-                document.getElementById("booking_tel").value = booking.tel
-                document.getElementById("booking_taker").value = booking.initials
-                document.getElementById("booking_additional").value = booking.info
-                document.getElementById("time_dropdown").value = booking.time.substr(0, 5)
-                document.getElementById("booking_timetaken").hidden = false
-                var time_taken = moment(booking.created_date)
-                time_taken = time_taken.format("DD/MM/YYYY") + " at " + time_taken.format("HH:mm")
-                document.getElementById("booking_timetaken").innerHTML = "Booking taken on " + time_taken
+      var id = window.location.hash.substr(1);
+      $.ajax({
+        url: "/ajax/11/",
+        data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+        dataType: "json",
+        type: "GET",
+        success: function (data) {
+          var booking = data.booking[0].fields;
+          document.getElementById("addBooking").hidden = true;
+          document.getElementById("updateBooking").hidden = false;
+          document.getElementById("deleteBooking").hidden = false;
+          $("#updateBooking").data("id", id);
+          document.getElementById("booking_name").value = booking.name;
+          document.getElementById("booking_people").value = booking.people;
+          document.getElementById("booking_tel").value = booking.tel;
+          document.getElementById("booking_taker").value = booking.initials;
+          document.getElementById("booking_additional").value = booking.info;
+          document.getElementById("time_dropdown").value = booking.time.substr(
+            0,
+            5
+          );
+          document.getElementById("booking_timetaken").hidden = false;
+          var time_taken = moment(booking.created_date);
+          time_taken =
+            time_taken.format("DD/MM/YYYY") +
+            " at " +
+            time_taken.format("HH:mm");
+          document.getElementById("booking_timetaken").innerHTML =
+            "Booking taken on " + time_taken;
 
-                cap_at_time()
-            },
-        });
+          cap_at_time();
+        },
+      });
     }
-    history.pushState("", document.title, window.location.pathname
-                                                       + window.location.search);
+    history.pushState(
+      "",
+      document.title,
+      window.location.pathname + window.location.search
+    );
     $("#time_dropdown").html("");
-    $("#time_dropdown").append('<option value="" disabled selected>Select a time</option>')
-    var times = []
-    for(i=10; i < 21; i++) {
-        times.push(i + ":00")
-        times.push(i + ":15")
-        times.push(i + ":30")
-        times.push(i + ":45")
+    $("#time_dropdown").append(
+      '<option value="" disabled selected>Select a time</option>'
+    );
+    var times = [];
+    for (i = 0; i < 24; i++) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      times.push(i + ":00");
+      times.push(i + ":15");
+      times.push(i + ":30");
+      times.push(i + ":45");
     }
-    for (i=0; i < times.length; i++) {
-        $("#time_dropdown").append('<option style="padding: 8px;" data-time=' + times[i] + '>' + times[i] + '</option>')
+    for (i = 0; i < times.length; i++) {
+      $("#time_dropdown").append(
+        '<option style="padding: 8px;" data-time=' +
+          times[i] +
+          ">" +
+          times[i] +
+          "</option>"
+      );
     }
-    
 
-    document.getElementById("addBooking").hidden = false
-    document.getElementById("updateBooking").hidden = true
-    document.getElementById("deleteBooking").hidden = true
-    document.getElementById("booking_timetaken").hidden = true
-    var date = moment().format("DD/MM/YYYY")
-    document.getElementById("datepicker").value = date
-    var full_date = moment(date, "DD/MM/YYYY").format("dddd, Do MMMM YYYY")
-    document.getElementById("booking_full_date").innerHTML = full_date
-    document.getElementById("booking_name").value = ""
-    document.getElementById("booking_taker").value = ""
-    document.getElementById("booking_tel").value = ""
-    document.getElementById("booking_additional").value = ""
-    document.getElementById("booking_people").value = ""
-    bookingsList(date)
+    document.getElementById("addBooking").hidden = false;
+    document.getElementById("updateBooking").hidden = true;
+    document.getElementById("deleteBooking").hidden = true;
+    document.getElementById("booking_timetaken").hidden = true;
+    var date = moment().format("DD/MM/YYYY");
+    document.getElementById("datepicker").value = date;
+    var full_date = moment(date, "DD/MM/YYYY").format("dddd, Do MMMM YYYY");
+    document.getElementById("booking_full_date").innerHTML = full_date;
+    document.getElementById("booking_name").value = "";
+    document.getElementById("booking_taker").value = "";
+    document.getElementById("booking_tel").value = "";
+    document.getElementById("booking_additional").value = "";
+    document.getElementById("booking_people").value = "";
+    bookingsList(date);
     $("#time_dropdown").prop("selectedIndex", 0);
-    cap_at_time()
-    
+    cap_at_time();
 
-
-    $('#datepicker').on('change', function() {
-        dateChange()
+    $("#datepicker").on("change", function () {
+      dateChange();
     });
 
-    $('#datepicker').on('input', function() {
-        dateChange()
+    $("#datepicker").on("input", function () {
+      dateChange();
     });
-});
+  });
 
-function dateChange() {
-    date = document.getElementById("datepicker").value
-    var full_date = moment(date, "DD/MM/YYYY")
-    document.getElementById("booking_full_date").innerHTML = full_date.format("dddd, Do MMMM YYYY")
-    bookingsList(date)
-    cap_at_time()
-}
+  function dateChange() {
+    date = document.getElementById("datepicker").value;
+    var full_date = moment(date, "DD/MM/YYYY");
+    document.getElementById("booking_full_date").innerHTML = full_date.format(
+      "dddd, Do MMMM YYYY"
+    );
+    bookingsList(date);
+    cap_at_time();
+  }
 
-function addDay(num) {
-    var date = document.getElementById("datepicker").value
-    date = moment(date, "DD/MM/YYYY")
-    var newDate = moment(date).add(num, 'd')
-    document.getElementById("datepicker").value = newDate.format("DD/MM/YYYY")
-    dateChange()
-}
+  function addDay(num) {
+    var date = document.getElementById("datepicker").value;
+    date = moment(date, "DD/MM/YYYY");
+    var newDate = moment(date).add(num, "d");
+    document.getElementById("datepicker").value = newDate.format("DD/MM/YYYY");
+    dateChange();
+  }
 
-function today() {
-    document.getElementById("datepicker").value = moment().format("DD/MM/YYYY")
-    dateChange()
-}
+  function today() {
+    document.getElementById("datepicker").value = moment().format("DD/MM/YYYY");
+    dateChange();
+  }
 
-function bookingsList(date) {
-    times = []
-    document.getElementById("all_day_people").innerHTML = "0 Total People"
-    $("#time_dropdown > option").each(function() {
-        if (this.text.length == 5) {
-            $('option[data-time="' + this.text + '"]').css('background-color', '');
-            times.push(this.text)
-        }     
+  function bookingsList(date) {
+    times = [];
+    document.getElementById("all_day_people").innerHTML = "0 Total People";
+    $("#time_dropdown > option").each(function () {
+      if (this.text.length == 5) {
+        $('option[data-time="' + this.text + '"]').css("background-color", "");
+        times.push(this.text);
+      }
     });
     $.ajax({
-        url: '/ajax/22/',
-        data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date, 'times': times},
-        dataType: 'json',
-        type: 'GET',
-        global: false,
-        success: function(data) {
-            for (i=0; i < times.length; i++) {
-                if (data.times_people[i] < 70 && data.times_people[i] >= 55) {
-                    $('option[data-time="' + times[i] + '"]').css('background-color', 'rgb(255, 165, 0, 0.4)');
-                } else if (data.times_people[i] >= 70) {
-                    $('option[data-time="' + times[i] + '"]').css('background-color', 'rgb(255, 0, 0, 0.4)');
-                }
-            }
+      url: "/ajax/22/",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        date: date,
+        times: times,
+      },
+      dataType: "json",
+      type: "GET",
+      global: false,
+      success: function (data) {
+        for (i = 0; i < times.length; i++) {
+          if (data.times_people[i] < 70 && data.times_people[i] >= 55) {
+            $('option[data-time="' + times[i] + '"]').css(
+              "background-color",
+              "rgb(255, 165, 0, 0.4)"
+            );
+          } else if (data.times_people[i] >= 70) {
+            $('option[data-time="' + times[i] + '"]').css(
+              "background-color",
+              "rgb(255, 0, 0, 0.4)"
+            );
+          }
         }
-    });    
+      },
+    });
 
     $.ajax({
-        url: '/ajax/1/',
-        data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date},
-        dataType: 'json',
-        type: 'GET',
-        global: false,
-        success: function(data) {
-            $(".booking_list_names").html("");
-            $(".modal_alerts").html("");
+      url: "/ajax/1/",
+      data: { csrfmiddlewaretoken: "{{ csrf_token }}", date: date },
+      dataType: "json",
+      type: "GET",
+      global: false,
+      success: function (data) {
+        $(".booking_list_names").html("");
+        $(".modal_alerts").html("");
 
-            for (i = 0; i < data.alerts.length; i++) {
-                $(".modal_alerts").append('\
-                    <div class="alert alert-danger text-dark text-center text-uppercase font-weight-bold" id="alert_'+data.alerts[i].pk + '" style="white-space: pre-wrap;">' + data.alerts[i].fields.message + '</div>');
-            }
-            if(data.objects.length == 0) {
-                
-                $(".booking_list_names").append('<h5>No Bookings Found</h5>')
-            }
-            var all_day_people = 0
-            for (i = 0; i < data.objects.length; i++) {
-                var bookingField = data.objects[i].fields;
-                var name = bookingField.name.toUpperCase();
-                var people = bookingField.people;
-                var time = moment(bookingField.time.substring(0, 5), "HH:mm").format("HH:mm");
-                var timeA = moment(time, "HH:mm").format("h A")
-                var info = bookingField.info;
-                all_day_people += people
-                if(info != "") {
-                    info = '<small class="text-muted"><span style="white-space: pre-wrap;">' + bookingField.info + '</span></small>'
-                }
-                if(!$("#time_" + time.substr(0,2)).length){
-                    var total_people = people
-                    $(".booking_list_names").append('<h6 class="mt-3" id="time_' + time.substr(0,2) + '">' + timeA + ' - <span id="time_people_' + time.substr(0,2) + '">' + total_people + '</span> People</span></h6>')
-                } else {
-                    total_people += people
-                    document.getElementById("time_people_" + time.substr(0,2)).innerHTML = total_people
-                }
-                document.getElementById("all_day_people").innerHTML = all_day_people + " Total People"
-                $(".booking_list_names").append('\
+        for (i = 0; i < data.alerts.length; i++) {
+          $(".modal_alerts").append(
+            '\
+                    <div class="alert alert-danger text-dark text-center text-uppercase font-weight-bold" id="alert_' +
+              data.alerts[i].pk +
+              '" style="white-space: pre-wrap;">' +
+              data.alerts[i].fields.message +
+              "</div>"
+          );
+        }
+        if (data.objects.length == 0) {
+          $(".booking_list_names").append("<h5>No Bookings Found</h5>");
+        }
+        var all_day_people = 0;
+        for (i = 0; i < data.objects.length; i++) {
+          var bookingField = data.objects[i].fields;
+          var name = bookingField.name.toUpperCase();
+          var people = bookingField.people;
+          var time = moment(bookingField.time.substring(0, 5), "HH:mm").format(
+            "HH:mm"
+          );
+          var timeA = moment(time, "HH:mm").format("h A");
+          var info = bookingField.info;
+          all_day_people += people;
+          if (info != "") {
+            info =
+              '<small class="text-muted"><span style="white-space: pre-wrap;">' +
+              bookingField.info +
+              "</span></small>";
+          }
+          if (!$("#time_" + time.substr(0, 2)).length) {
+            var total_people = people;
+            $(".booking_list_names").append(
+              '<h6 class="mt-3" id="time_' +
+                time.substr(0, 2) +
+                '">' +
+                timeA +
+                ' - <span id="time_people_' +
+                time.substr(0, 2) +
+                '">' +
+                total_people +
+                "</span> People</span></h6>"
+            );
+          } else {
+            total_people += people;
+            document.getElementById(
+              "time_people_" + time.substr(0, 2)
+            ).innerHTML = total_people;
+          }
+          document.getElementById("all_day_people").innerHTML =
+            all_day_people + " Total People";
+          $(".booking_list_names").append(
+            '\
                     <ul class="list-group">\
                         <li class="list-group-item">\
                             <div class="d-flex justify-content-start align-items-center">\
-                                <span data-id="' + data.objects[i].pk + '" class="editBookings font-weight-bold" style="cursor: pointer;">' + time + ' - (' + people + 'ppl) - ' + name + '</span>\
+                                <span data-id="' +
+              data.objects[i].pk +
+              '" class="editBookings font-weight-bold" style="cursor: pointer;">' +
+              time +
+              " - (" +
+              people +
+              "ppl) - " +
+              name +
+              '</span>\
                             </div>\
-                            <div class="text-left">' + info + '</div>\
+                            <div class="text-left">' +
+              info +
+              "</div>\
                         </li>\
-                    </ul>')
-                var assign = ""
-                if (bookingField.assign != "") {
-                    assign = '<span class="ml-4 badge badge-secondary text-uppercase">' + bookingField.assign + '</span>'
-                }
-                cap_at_time()
-            }     
-            $(".editBookings").on("click", function(){
-                var id = $(this).data("id")
-                $(".editBookings").css("color", "")
-                $(this).css("color", "green")
-                document.getElementById("addBooking").hidden = true
-                document.getElementById("updateBooking").hidden = false
-                document.getElementById("deleteBooking").hidden = false
-                $.ajax({
-                    url: '/ajax/11/',
-                    data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
-                    dataType: 'json',
-                    type: 'GET',
-                    success: function(data) {
-                        var booking = data.booking[0].fields
-                        $("#updateBooking").data("id", id)
-                        document.getElementById("booking_name").value = booking.name
-                        document.getElementById("booking_people").value = booking.people
-                        document.getElementById("booking_tel").value = booking.tel
-                        document.getElementById("booking_taker").value = booking.initials
-                        document.getElementById("booking_additional").value = booking.info
-                        document.getElementById("time_dropdown").value = booking.time.substr(0, 5)
-                        document.getElementById("booking_timetaken").hidden = false
-                        var time_taken = moment(booking.created_date)
-                        time_taken = time_taken.format("DD/MM/YYYY") + " at " + time_taken.format("HH:mm")
-                        document.getElementById("booking_timetaken").innerHTML = "Booking taken on " + time_taken
-                        cap_at_time()
-                    },
-                });
-            });     
+                    </ul>"
+          );
+          var assign = "";
+          if (bookingField.assign != "") {
+            assign =
+              '<span class="ml-4 badge badge-secondary text-uppercase">' +
+              bookingField.assign +
+              "</span>";
+          }
+          cap_at_time();
         }
+        $(".editBookings").on("click", function () {
+          var id = $(this).data("id");
+          $(".editBookings").css("color", "");
+          $(this).css("color", "green");
+          document.getElementById("addBooking").hidden = true;
+          document.getElementById("updateBooking").hidden = false;
+          document.getElementById("deleteBooking").hidden = false;
+          $.ajax({
+            url: "/ajax/11/",
+            data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+              var booking = data.booking[0].fields;
+              $("#updateBooking").data("id", id);
+              document.getElementById("booking_name").value = booking.name;
+              document.getElementById("booking_people").value = booking.people;
+              document.getElementById("booking_tel").value = booking.tel;
+              document.getElementById("booking_taker").value = booking.initials;
+              document.getElementById("booking_additional").value =
+                booking.info;
+              document.getElementById(
+                "time_dropdown"
+              ).value = booking.time.substr(0, 5);
+              document.getElementById("booking_timetaken").hidden = false;
+              var time_taken = moment(booking.created_date);
+              time_taken =
+                time_taken.format("DD/MM/YYYY") +
+                " at " +
+                time_taken.format("HH:mm");
+              document.getElementById("booking_timetaken").innerHTML =
+                "Booking taken on " + time_taken;
+              cap_at_time();
+            },
+          });
+        });
+      },
     });
-}
+  }
 
-$(document).on('keypress',function(e) {
-    if(e.which == 13) {
-        if (!$("#booking_additional").is(':focus')) {
-            if (document.getElementById("updateBooking").hidden == false) {
-                return false
-            }
+  $(document).on("keypress", function (e) {
+    if (e.which == 13) {
+      if (!$("#booking_additional").is(":focus")) {
+        if (document.getElementById("updateBooking").hidden == false) {
+          return false;
         }
+      }
     }
-});
-
+  });
 </script>
 {% endblock other %}

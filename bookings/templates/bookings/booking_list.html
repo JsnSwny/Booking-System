@@ -1,647 +1,1088 @@
-{% extends "bookings/base.html" %}
-{% load static %}
-    {% block content %}
-        <!-- CREATE BOOKING -->
-        <i onclick="topFunction()" class="scrollButton fas fa-arrow-up" id="scrollUp" hidden="true"></i>
-        <i onclick="topFunction()" class="scrollButton fas fa-arrow-down" id="scrollDown" hidden="true"></i>
+{% extends "bookings/base.html" %} {% load static %} {% block content %}
+<!-- CREATE BOOKING -->
+<i
+  onclick="topFunction()"
+  class="scrollButton fas fa-arrow-up"
+  id="scrollUp"
+  hidden="true"
+></i>
+<i
+  onclick="topFunction()"
+  class="scrollButton fas fa-arrow-down"
+  id="scrollDown"
+  hidden="true"
+></i>
 
-        <!-- ADD WALK IN MODAL -->
-        <div class="modal fade" id="tableModal" tabindex="-1" role="dialog" aria-labelledby="tableModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add Walk In</h5> 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="ml-2 modal-body">
-                        How many people? <input id="modal_People" type="number">         
-                    </div>
-                    <div class="row">
-                        <small id="modal_Error" class="text-danger text-center ml-4 mr-4 mb-2" role="alert"></small>
-                    </div>
-                    <div class="ml-4 mb-4">
-                        <button type="button" class="btn btn-success" data-id="" id="submitWalkIn">Add Walk In</button>
-                    </div>
-                </div>
-            </div>
+<!-- ADD WALK IN MODAL -->
+<div
+  class="modal fade"
+  id="tableModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="tableModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Walk In</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ml-2 modal-body">
+        How many people? <input id="modal_People" type="number" />
+      </div>
+      <div class="row">
+        <small
+          id="modal_Error"
+          class="text-danger text-center ml-4 mr-4 mb-2"
+          role="alert"
+        ></small>
+      </div>
+      <div class="ml-4 mb-4">
+        <button
+          type="button"
+          class="btn btn-success"
+          data-id=""
+          id="submitWalkIn"
+        >
+          Add Walk In
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD WALK IN MODAL -->
+<div
+  class="modal fade"
+  id="takeawayModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="takeawayModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Takeaway</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ml-2 modal-body">
+        Name <input class="form-control" id="takeawayName" type="text" />
+      </div>
+      <div class="ml-2 modal-body">
+        Address <input class="form-control" id="takeawayAddress" type="text" />
+      </div>
+      <div class="ml-2 modal-body">
+        Telephone
+        <input class="form-control" id="takeawayTelephone" type="number" />
+      </div>
+      <div class="ml-2 modal-body">
+        People <input class="form-control" id="takeawayPeople" type="number" />
+      </div>
+      <div class="ml-2 modal-body">
+        Info
+        <textarea class="form-control" id="takeawayInfo"></textarea>
+      </div>
+      <div class="row">
+        <small
+          id="modal_Error"
+          class="text-danger text-center ml-4 mr-4 mb-2"
+          role="alert"
+        ></small>
+      </div>
+      <div class="ml-4 mb-4">
+        <button
+          type="button"
+          class="btn btn-success"
+          data-id=""
+          id="submitTakeaway"
+        >
+          Add Takeaway
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE TABLE MODAL -->
+<div
+  class="tableBookingModal modal fade"
+  id="tableBookingModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="tableModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h3 class="modal-title w-100">Select a Table</h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div id="selectTables"></div>
+
+        <h5 class="text-center mt-4">Insufficient Table Size</h5>
+        <div class="row align-items-center justify-content-center">
+          <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
         </div>
+        <div
+          id="selectGroup_insufficient"
+          class="row align-items-center justify-content-center mx-4"
+        ></div>
 
-        <!-- UPDATE TABLE MODAL -->
-        <div class="tableBookingModal modal fade" id="tableBookingModal" tabindex="-1" role="dialog" aria-labelledby="tableModal" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                            <div class="modal-header text-center">
-                                <h3 class="modal-title w-100">Select a Table</h3>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                        <div class="modal-body">
-                            <div id="selectTables">
- 
-                            </div>
-
-                            <h5 class="text-center mt-4">Insufficient Table Size</h5>
-                            <div class="row align-items-center justify-content-center">
-                            <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
-                            </div>
-                            <div id="selectGroup_insufficient" class="row align-items-center justify-content-center mx-4"></div>
-
-
-                            <h5 class="text-center">Tables In Use</h5>
-                            <div class="row align-items-center justify-content-center">
-                            <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
-                            </div>
-                            <div id="selectGroup_inUse" class="row align-items-center justify-content-center mx-4"></div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="assignTableModal modal fade" id="assignTableModal" tabindex="-1" role="dialog" aria-labelledby="assignTableModal" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Assign Table</h5>
-                            <p hidden=true id="assign_id"></p>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="ml-2 modal-body">
-                            <div class="row align-items-center justify-content-center">
-                                Assign Table To: <input id="assignInput" class="ml-2" type="text">
-                            </div>
-                            <div class="row align-items-center justify-content-center mt-3">
-                                {% for i in staff %}
-                                    <div><h1 class="assignPersonButton btn btn-dark btn-sm mx-1">{{ i.name }}</h1></div>
-                                {% endfor %}
-                            
-                            </div>
-                        </div>
-                        <div class="row align-items-center justify-content-center">
-                            <button type="button" class="btn btn-success mb-4" data-id="" id="assignTableSubmit">Assign Table</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-        <div class="booking-title">
-            <h1 id="booking-title-1"></h1>
-            <h2 id="booking-title-2"></h2>
-        </div>    
-        <div class="current-stats">
-            
-            <p>{{ today_tables }} Table(s) Today</p>
-            <!-- <span><i class="fas fa-chart-bar fa-3x"></i></span> -->
-            <p>{{ today_people }} People Today</p>
+        <h5 class="text-center">Tables In Use</h5>
+        <div class="row align-items-center justify-content-center">
+          <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
         </div>
-        <div class="row justify-content-center">
-            <div class="mb-4">    
-                <input onkeydown="return false;" readonly type="text" class="form-control text-center" id="main_datepicker" autocomplete="off" required>
-            </div> 
-        </div>   
-        <p class="ml-3 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>
-       
-        <div id="alertList" class="mt-4">
-        </div>
+        <div
+          id="selectGroup_inUse"
+          class="row align-items-center justify-content-center mx-4"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- CURRENT TIME UPDATED EVERY SECOND -->
-        
-        <h4 id="current_time" class="text-center mt-4"></h4>
-        <div id="available_tables" class="mt-3">
-            <h4 class="text-center">Available Tables</h4>
-            <h6 class="text-center text-muted mb-3">Select Table to Add Walk-In</h6>
-            <div id="tables">
-            </div>
+<div
+  class="assignTableModal modal fade"
+  id="assignTableModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="assignTableModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign Table</h5>
+        <p hidden="true" id="assign_id"></p>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="ml-2 modal-body">
+        <div class="row align-items-center justify-content-center">
+          Assign Table To: <input id="assignInput" class="ml-2" type="text" />
         </div>
-        <div id="currentTablesTitle" hidden=false>
-            <div class="tableTitle">
-                <h2 class="strike">Current Tables</h2>
-            </div>
+        <div class="row align-items-center justify-content-center mt-3">
+          {% for i in staff %}
+          <div>
+            <h1 class="assignPersonButton btn btn-dark btn-sm mx-1">
+              {{ i.name }}
+            </h1>
+          </div>
+          {% endfor %}
         </div>
-        
-        <div id="bookinglist" class="mt-1">
-        </div>
+      </div>
+      <div class="row align-items-center justify-content-center">
+        <button
+          type="button"
+          class="btn btn-success mb-4"
+          data-id=""
+          id="assignTableSubmit"
+        >
+          Assign Table
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <div id="clearedTablesTitle" hidden=false>
-            <div class="tableTitle">
-                <h2 class="strike">Cleared Tables</h2>
-            </div>
-        </div>
+<div class="booking-title">
+  <h1 id="booking-title-1"></h1>
+  <h2 id="booking-title-2"></h2>
+</div>
+<div class="current-stats">
+  <p>{{ today_tables }} Table(s) Today</p>
+  <!-- <span><i class="fas fa-chart-bar fa-3x"></i></span> -->
+  <p>{{ today_people }} People Today</p>
+</div>
+<div class="row justify-content-center">
+  <div class="mb-4">
+    <input
+      onkeydown="return false;"
+      readonly
+      type="text"
+      class="form-control text-center"
+      id="main_datepicker"
+      autocomplete="off"
+      required
+    />
+  </div>
+</div>
+<p class="ml-3 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>
 
-        
-        <div id="clearedlist" class="mt-1">
-        </div>
+<div id="alertList" class="mt-4"></div>
 
-        <!-- 
+<!-- CURRENT TIME UPDATED EVERY SECOND -->
+
+<h4 id="current_time" class="text-center mt-4"></h4>
+<div id="available_tables" class="mt-3">
+  <h4 class="text-center">Available Tables</h4>
+  <h6 class="text-center text-muted mb-3">Select Table to Add Walk-In</h6>
+  <div id="tables"></div>
+</div>
+<div id="takeaway" class="mt-3 d-flex justify-content-center">
+  <button id="addTakeaway" class="btn btn-primary mx-auto">Add Takeaway</button>
+</div>
+<div id="currentTablesTitle" hidden="false">
+  <div class="tableTitle">
+    <h2 class="strike">Current Tables</h2>
+  </div>
+</div>
+
+<div id="bookinglist" class="mt-1"></div>
+
+<div id="clearedTablesTitle" hidden="false">
+  <div class="tableTitle">
+    <h2 class="strike">Cleared Tables</h2>
+  </div>
+</div>
+
+<div id="clearedlist" class="mt-1"></div>
+
+<div id="takeawayListTitle" hidden="false">
+  <div class="tableTitle">
+    <h2 class="strike">Takeaway</h2>
+  </div>
+</div>
+
+<div id="takeawayList" class="mt-1"></div>
+
+<!-- 
 
             --------------------
             END OF BOOKINGS LIST
             --------------------
             
         -->
-    
-    <script>
 
-        $(".assignPersonButton").on("click", function(){
-            var name = $(this).html()
-            document.getElementById("assignInput").value = name
-        });
+<script>
+  $(".assignPersonButton").on("click", function () {
+    var name = $(this).html();
+    document.getElementById("assignInput").value = name;
+  });
 
-        $('#main_datepicker').on('change', function() {
-            updateBookings()
-        });
+  $("#main_datepicker").on("change", function () {
+    updateBookings();
+  });
 
+  $("#addTakeaway").on("click", function () {
+    $("#takeawayModal").modal("show");
+  });
 
-        $("#assignTableSubmit").on("click", function(){
-            $("#assignTableModal").modal("hide")
-            $.ajax({
-                url: '/ajax/21/',
-                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': $($(this)).data("id"), 'assign': $("#assignInput").val()},
-                dataType: 'json',
-                type: 'GET',
-                success: function(data) {
-                    updateBookings()
-                }
-            });
-        });
+  $("#submitTakeaway").on("click", function () {
+    $("#takeawayModal").modal("hide");
+    $.ajax({
+      url: "/ajax/40/",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        name: $("#takeawayName").val(),
+        people: $("#takeawayPeople").val(),
+        address: $("#takeawayAddress").val(),
+        telephone: $("#takeawayTelephone").val(),
+        info: $("#takeawayInfo").val(),
+      },
+      dataType: "json",
+      type: "GET",
+      success: function (data) {
+        updateBookings();
+      },
+    });
+  });
 
-        function updateBookings() {
-            date = document.getElementById("main_datepicker").value
-            if (date == moment().format("DD/MM/YYYY")) {
-                $(".current-stats").show();
+  $("#assignTableSubmit").on("click", function () {
+    $("#assignTableModal").modal("hide");
+    $.ajax({
+      url: "/ajax/21/",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        id: $($(this)).data("id"),
+        assign: $("#assignInput").val(),
+      },
+      dataType: "json",
+      type: "GET",
+      success: function (data) {
+        updateBookings();
+      },
+    });
+  });
+
+  function updateBookings() {
+    date = document.getElementById("main_datepicker").value;
+    if (date == moment().format("DD/MM/YYYY")) {
+      $(".current-stats").show();
+    } else {
+      $(".current-stats").hide();
+    }
+    $.ajax({
+      url: "/ajax/1/",
+      data: { csrfmiddlewaretoken: "{{ csrf_token }}", date: date },
+      dataType: "json",
+      type: "GET",
+      global: false,
+      success: function (data) {
+        var top = false;
+        document.getElementById("clearedTablesTitle").hidden = true;
+        document.getElementById("currentTablesTitle").hidden = true;
+        date = document.getElementById("main_datepicker").value;
+        var full_date = moment(date, "DD/MM/YYYY");
+        document.getElementById("booking-title-1").innerHTML = full_date.format(
+          "dddd Do"
+        );
+        document.getElementById("booking-title-2").innerHTML = full_date.format(
+          "MMMM YYYY"
+        );
+
+        $("#bookinglist").html("");
+        $("#clearedlist").html("");
+        $("#alertList").html("");
+
+        var today = false;
+        if (moment().format("DD/MM/YYYY") == date) {
+          today = true;
+          document.getElementById("available_tables").hidden = false;
+          document.getElementById("current_time").hidden = false;
+        } else {
+          document.getElementById("available_tables").hidden = true;
+          document.getElementById("current_time").hidden = true;
+        }
+
+        for (i = 0; i < data.objects.length; i++) {
+          var bookingField = data.objects[i].fields;
+          var name = bookingField.name.toUpperCase();
+          var people = bookingField.people;
+          var info = bookingField.info;
+          var arrived = bookingField.arrived;
+          var cleared = bookingField.cleared;
+          var online = bookingField.online;
+          if (info != "") {
+            info =
+              '<small class="mb-2"><span class="h6">Additional Info: </span> <br> <span style="white-space: pre-wrap;">' +
+              bookingField.info +
+              "</span></small>";
+          }
+
+          var time = moment(bookingField.time.substring(0, 5), "HH:mm").format(
+            "HH:mm"
+          );
+          var hours = moment(moment(), "HH:mm").diff(
+            moment(time, "HH:mm"),
+            "hours"
+          );
+          var minutes = moment(moment(), "HH:mm").diff(
+            moment(time, "HH:mm"),
+            "minutes"
+          );
+          minutes -= hours * 60;
+          var contentStyle = "";
+          var lineThrough = "";
+          var div = "bookinglist";
+          var assign = "";
+
+          if (today == true) {
+            if (cleared == false) {
+              document.getElementById("currentTablesTitle").hidden = false;
             } else {
-                $(".current-stats").hide();
+              document.getElementById("clearedTablesTitle").hidden = false;
+              var div = "clearedlist";
+              contentStyle = "opacity: 0.5;";
             }
-            $.ajax({
-                url: '/ajax/1/',
-                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date},
-                dataType: 'json',
-                type: 'GET',
-                global: false,
-                success: function(data) {
-                    var top = false
-                    document.getElementById("clearedTablesTitle").hidden = true
-                    document.getElementById("currentTablesTitle").hidden = true
-                    date = document.getElementById("main_datepicker").value
-                    var full_date = moment(date, "DD/MM/YYYY")
-                    document.getElementById("booking-title-1").innerHTML = full_date.format("dddd Do")
-                    document.getElementById("booking-title-2").innerHTML = full_date.format("MMMM YYYY")
-                    
-                    $("#bookinglist").html("");
-                    $("#clearedlist").html("");
-                    $("#alertList").html("");
-                    var today = false
-                    if (moment().format("DD/MM/YYYY") == date) {
-                        today = true
-                        document.getElementById("available_tables").hidden = false
-                        document.getElementById("current_time").hidden = false
-                    } else {
-                        document.getElementById("available_tables").hidden = true
-                        document.getElementById("current_time").hidden = true
-                    }
+            if (arrived == true && cleared == false) {
+              lineThrough = "text-decoration: line-through";
+            }
+            if (bookingField.assign != "") {
+              var assign =
+                '<span class="badge badge-pill badge-secondary text-uppercase">' +
+                bookingField.assign +
+                "</span>";
+            }
+          }
 
+          if (today == true) {
+            if (moment() > moment(bookingField.time, "HH:mm")) {
+              if (hours == 0) {
+                var time_text =
+                  '"ml-2 text-danger">' + Math.abs(minutes) + " minutes ago";
+              } else {
+                var time_text =
+                  '"ml-2 text-danger">' +
+                  Math.abs(hours) +
+                  " hour(s) and " +
+                  Math.abs(minutes) +
+                  " minutes ago";
+              }
+            } else {
+              if (hours == 0) {
+                var time_text =
+                  '"ml-2 text-success"> in ' + Math.abs(minutes) + " minutes";
+              } else {
+                var time_text =
+                  '"ml-2 text-success"> in ' +
+                  Math.abs(hours) +
+                  " hour(s) and " +
+                  Math.abs(minutes) +
+                  " minutes";
+              }
+            }
+          } else {
+            var time_text = "";
+          }
+          var topBooking = "";
+          if (top == false) {
+            if (div == "bookinglist") {
+              if (arrived == false) {
+                var topBooking = 'id="topBooking"';
+                top = true;
+              }
+            }
+          } else {
+            topBooking = "";
+          }
 
-                    for (i = 0; i < data.objects.length; i++) {
-                        var bookingField = data.objects[i].fields
-                        var name = bookingField.name.toUpperCase()
-                        var people = bookingField.people
-                        var info = bookingField.info
-                        var arrived = bookingField.arrived
-                        var cleared = bookingField.cleared
-                        var online = bookingField.online
-                        if(info != "") {
-                            info = '<small class="mb-2"><span class="h6">Additional Info: </span> <br> <span style="white-space: pre-wrap;">' + bookingField.info + '</span></small>'
-                        }
+          var preIcon = "";
+          if (online == true) {
+            preIcon =
+              "<span class='pre-icon'><i class='fas fa-laptop'></i></span>";
+          } else {
+            if (name == "WALK IN") {
+              preIcon =
+                "<span class='pre-icon'><i class='fas fa-walking'></i></span>";
+            } else {
+              preIcon =
+                "<span class='pre-icon'><i class='fas fa-phone'></i></span>";
+            }
+          }
 
-                        var time = moment(bookingField.time.substring(0, 5), "HH:mm").format("HH:mm");
-                        var hours = moment(moment(),"HH:mm").diff(moment(time,"HH:mm"), "hours")
-                        var minutes = moment(moment(),"HH:mm").diff(moment(time,"HH:mm"), "minutes")
-                        minutes -= (hours * 60)
-                        var contentStyle = ""
-                        var lineThrough = ""
-                        var div = "bookinglist"
-                        var assign = ""
-
-                        if (today == true) {
-                            if(cleared == false) {
-                                document.getElementById("currentTablesTitle").hidden = false
-                            } else {
-                                document.getElementById("clearedTablesTitle").hidden = false
-                                var div = "clearedlist"
-                                contentStyle = "opacity: 0.5;"
-                                              
-                            }
-                            if(arrived == true && cleared == false) {
-                                lineThrough = 'text-decoration: line-through'
-                            } 
-                            if (bookingField.assign != "") {
-                                var assign = '<span class="badge badge-pill badge-secondary text-uppercase">' + bookingField.assign + '</span>'                            }
-                        }
-
-                        if (today == true) {
-                            if(moment() > moment(bookingField.time, "HH:mm")) {
-
-                                if(hours == 0) {
-                                    var time_text = '"ml-2 text-danger">' + Math.abs(minutes) + ' minutes ago'
-                                } else {
-                                    var time_text = '"ml-2 text-danger">' + Math.abs(hours) + ' hour(s) and ' + Math.abs(minutes) + ' minutes ago'
-                                }
-                            } else {
-                                if(hours == 0) {
-                                    var time_text = '"ml-2 text-success"> in ' + Math.abs(minutes) + ' minutes'
-                                } else {
-                                    var time_text = '"ml-2 text-success"> in ' + Math.abs(hours) + ' hour(s) and ' + Math.abs(minutes) + ' minutes'
-                                }        
-                            }
-                        } else {
-                            var time_text = ""
-                        }
-                        var topBooking = ""
-                        if(top == false) {
-                            if(div == "bookinglist") {
-                                if (arrived == false) {
-                                    var topBooking = 'id="topBooking"'
-                                    top = true
-                                }
-
-                            }
-                        } else {
-                            topBooking = ""
-                        }
-
-                        var preIcon = ""
-                        if(online == true) {
-                            preIcon = "<span class='pre-icon'><i class='fas fa-laptop'></i></span>"
-                        } else {
-                            if(name == "WALK IN") {
-                                preIcon = "<span class='pre-icon'><i class='fas fa-walking'></i></span>"
-                            } else {
-                                preIcon = "<span class='pre-icon'><i class='fas fa-phone'></i></span>"
-                            }
-                        }
-
-
-                        $("#" + div).append('\
+          $("#" + div).append(
+            '\
                         <div class="ml-3 mr-3 mb-4">\
-                            <div ' + topBooking + 'class="content-section p-2" style="' + contentStyle + '">\
+                            <div ' +
+              topBooking +
+              'class="content-section p-2" style="' +
+              contentStyle +
+              '">\
                                 <div class="time_to float-right">\
-                                    <small class=' + time_text + '</small>\
+                                    <small class=' +
+              time_text +
+              '</small>\
                                 </div>\
                                 <div class="ml-1 mb-1 mt-1 row">\
-                                    <div class="row" id="tablelist_' + data.objects[i].pk + '">\
+                                    <div class="row" id="tablelist_' +
+              data.objects[i].pk +
+              '">\
                                     </div>\
                                 </div>\
                                 <div class="mx-3 row">\
-                                    <h4 data-strike-id=' + data.objects[i].pk + ' class="booking-name" style="' + lineThrough + '">\
-                                        ' + preIcon + '<span class="mr-2">' + time + ' - ' + name + ' (' + people + 'ppl)</span>' + assign + '\
+                                    <h4 data-strike-id=' +
+              data.objects[i].pk +
+              ' class="booking-name" style="' +
+              lineThrough +
+              '">\
+                                        ' +
+              preIcon +
+              '<span class="mr-2">' +
+              time +
+              " - " +
+              name +
+              " (" +
+              people +
+              "ppl)</span>" +
+              assign +
+              '\
                                     </h4>\
                                 </div>\
                                 <div class="mt-2 ml-3">\
-                                    ' + info + '\
+                                    ' +
+              info +
+              '\
                                 </div>\
                                 <p class="ml-2 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>\
-                                <div id="footerText_'+data.objects[i].pk+'" class="footer-text">\
+                                <div id="footerText_' +
+              data.objects[i].pk +
+              '" class="footer-text">\
                                 </div>\
                             </div>\
-                        </div>');        
+                        </div>'
+          );
 
-                        if(data.objects[i].table != "None") {
-                            $("#tablelist_" + data.objects[i].pk).append('\
-                                <div><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn text-light" style="background: ' + data.objects[i].colour + ';">' + data.objects[i].table + '</h1>\
-                                </div>');
-                        } 
-                        else {
-                            $("#tablelist_" + data.objects[i].pk).append('\
-                                <div><h1 id="' + data.objects[i].pk + '" data-target="#tableBookingModal" data-people="' + people + '" data-time="' + time + '" class="bookingTable ml-4 btn btn-danger" style="">Assign Table</h1>\
-                                </div>');  
-                        }
+          if (data.objects[i].table != "None") {
+            $("#tablelist_" + data.objects[i].pk).append(
+              '\
+                                <div><h1 id="' +
+                data.objects[i].pk +
+                '" data-target="#tableBookingModal" data-people="' +
+                people +
+                '" data-time="' +
+                time +
+                '" class="bookingTable ml-4 btn text-light" style="background: ' +
+                data.objects[i].colour +
+                ';">' +
+                data.objects[i].table +
+                "</h1>\
+                                </div>"
+            );
+          } else {
+            $("#tablelist_" + data.objects[i].pk).append(
+              '\
+                                <div><h1 id="' +
+                data.objects[i].pk +
+                '" data-target="#tableBookingModal" data-people="' +
+                people +
+                '" data-time="' +
+                time +
+                '" class="bookingTable ml-4 btn btn-danger" style="">Assign Table</h1>\
+                                </div>'
+            );
+          }
 
-                        if (today == true) {
-                            if(arrived == true && cleared == false) {
-                                $("#footerText_" + data.objects[i].pk).append('\
-                                    <h6 class="btn btn-sm clearedTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#clearedTable_'+data.objects[i].pk+'">Clear Table</h6>\
-                                    <h6 class="btn btn-sm assignTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#assignTable_'+data.objects[i].pk+'">Assign</h6>\
-                                    <h6 class="btn btn-sm text-muted editFooter" data-id="'+data.objects[i].pk+'" style="cursor: pointer;">Edit</h6>');
-                            } else if(arrived == false && cleared == false){
-                                $("#footerText_" + data.objects[i].pk).append('\
-                                    <h6 class="btn btn-sm arrivedTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#arrivedTable_'+data.objects[i].pk+'">Arrived</h6>\
-                                    <h6 class="btn btn-sm assignTable text-muted" data-id='+ data.objects[i].pk + ' style="cursor: pointer;" id="#assignTable_'+data.objects[i].pk+'">Assign</h6>\
-                                    <h6 class="btn btn-sm text-muted editFooter" data-id="'+data.objects[i].pk+'" style="cursor: pointer;">Edit</h6>');
-                            } else {
-                                $("#footerText_" + data.objects[i].pk).append('\
-                                    <h6 class="undoTable btn btn-sm text-muted" style="cursor: pointer;" id="#undoTable_'+data.objects[i].pk+'">Undo</h6>');
-                            }
-                        }
-                    }
+          if (today == true) {
+            if (arrived == true && cleared == false) {
+              $("#footerText_" + data.objects[i].pk).append(
+                '\
+                                    <h6 class="btn btn-sm clearedTable text-muted" data-id=' +
+                  data.objects[i].pk +
+                  ' style="cursor: pointer;" id="#clearedTable_' +
+                  data.objects[i].pk +
+                  '">Clear Table</h6>\
+                                    <h6 class="btn btn-sm assignTable text-muted" data-id=' +
+                  data.objects[i].pk +
+                  ' style="cursor: pointer;" id="#assignTable_' +
+                  data.objects[i].pk +
+                  '">Assign</h6>\
+                                    <h6 class="btn btn-sm text-muted editFooter" data-id="' +
+                  data.objects[i].pk +
+                  '" style="cursor: pointer;">Edit</h6>'
+              );
+            } else if (arrived == false && cleared == false) {
+              $("#footerText_" + data.objects[i].pk).append(
+                '\
+                                    <h6 class="btn btn-sm arrivedTable text-muted" data-id=' +
+                  data.objects[i].pk +
+                  ' style="cursor: pointer;" id="#arrivedTable_' +
+                  data.objects[i].pk +
+                  '">Arrived</h6>\
+                                    <h6 class="btn btn-sm assignTable text-muted" data-id=' +
+                  data.objects[i].pk +
+                  ' style="cursor: pointer;" id="#assignTable_' +
+                  data.objects[i].pk +
+                  '">Assign</h6>\
+                                    <h6 class="btn btn-sm text-muted editFooter" data-id="' +
+                  data.objects[i].pk +
+                  '" style="cursor: pointer;">Edit</h6>'
+              );
+            } else {
+              $("#footerText_" + data.objects[i].pk).append(
+                '\
+                                    <h6 class="undoTable btn btn-sm text-muted" style="cursor: pointer;" id="#undoTable_' +
+                  data.objects[i].pk +
+                  '">Undo</h6>'
+              );
+            }
+          }
+        }
 
-                    $(".deleteCheck").on("click", function(){
-                        var confirm_del = confirm("Are you sure you want to delete this booking?")
-                        var id = this.id
-                        id = (id.split("_")[1])
-                        if(confirm_del == true){
-                            $.ajax({
-                                url: '/ajax/9/',
-                                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
-                                dataType: 'json',
-                                type: 'GET',
-                                success: function(data) {
-                                    updateBookings()
-                                },
-                            });
-                        }
-                    });
-                    $(".assignTable").on("click", function(){
-                        $("#assignTableModal").modal("show")
-                        $("#assignTableSubmit").data("id", $($(this)).data('id'))
-                    });
+        $(".deleteCheck").on("click", function () {
+          var confirm_del = confirm(
+            "Are you sure you want to delete this booking?"
+          );
+          var id = this.id;
+          id = id.split("_")[1];
+          if (confirm_del == true) {
+            $.ajax({
+              url: "/ajax/9/",
+              data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+              dataType: "json",
+              type: "GET",
+              success: function (data) {
+                updateBookings();
+              },
+            });
+          }
+        });
+        $(".assignTable").on("click", function () {
+          $("#assignTableModal").modal("show");
+          $("#assignTableSubmit").data("id", $($(this)).data("id"));
+        });
 
-                    $(".editFooter").on("click", function(){
-                        window.location.href = "/create#" + $(this).data("id");
-                    });
+        $(".editFooter").on("click", function () {
+          window.location.href = "/create#" + $(this).data("id");
+        });
 
-                    $(".arrivedTable").on("click", function(){
-                        var id = this.id
-                        id = (id.split("_")[1])
-                        $("[data-strike-id=" + id + "]").css("text-decoration", "line-through")
-                        $.ajax({
-                            url: '/ajax/6/',
-                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
-                            dataType: 'json',
-                            type: 'GET',
-                            success: function(data) {
-                                updateBookings()
-                            },
-                        });
+        $(".arrivedTable").on("click", function () {
+          var id = this.id;
+          id = id.split("_")[1];
+          $("[data-strike-id=" + id + "]").css(
+            "text-decoration",
+            "line-through"
+          );
+          $.ajax({
+            url: "/ajax/6/",
+            data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+              updateBookings();
+            },
+          });
+        });
+        $(".undoTable").on("click", function () {
+          var id = this.id;
+          id = id.split("_")[1];
 
-                    });   
-                    $(".undoTable").on("click", function(){
-                        var id = this.id
-                        id = (id.split("_")[1])
+          $.ajax({
+            url: "/ajax/8/",
+            data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+              updateBookings();
+            },
+          });
+        });
 
-                        $.ajax({
-                            url: '/ajax/8/',
-                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
-                            dataType: 'json',
-                            type: 'GET',
-                            success: function(data) {
-                                updateBookings()
-                            },
-                        });
-                    }); 
+        $(".clearedTable").on("click", function () {
+          var confirm_del = confirm(
+            "Are you sure you want to clear this booking?"
+          );
+          var id = this.id;
+          id = id.split("_")[1];
+          if (confirm_del == true) {
+            $.ajax({
+              url: "/ajax/7/",
+              data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+              dataType: "json",
+              type: "GET",
+              success: function (data) {
+                updateBookings();
+              },
+            });
+          }
+        });
 
-                    $(".clearedTable").on("click", function(){
-                        var confirm_del = confirm("Are you sure you want to clear this booking?")
-                        var id = this.id
-                        id = (id.split("_")[1])
-                        if(confirm_del == true){
+        $(".bookingTable").on("click", function () {
+          $($(this).attr("data-target")).modal("show");
+          var id = this.id;
+          var people = $(this).data("people");
+          var group = "";
+          $.ajax({
+            url: "/ajax/5/",
+            data: {
+              csrfmiddlewaretoken: "{{ csrf_token }}",
+              time: $(this).data("time"),
+            },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+              document.getElementById("selectTables").innerHTML = "";
+              document.getElementById("selectGroup_insufficient").innerHTML =
+                "";
+              document.getElementById("selectGroup_inUse").innerHTML = "";
 
-                            $.ajax({
-                                url: '/ajax/7/',
-                                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
-                                dataType: 'json',
-                                type: 'GET',
-                                success: function(data) {
-                                    updateBookings()
-                                },
-                            });
-                        }
-                    });  
+              for (i = 0; i < data.unavailable.length; i++) {
+                var tableField = data.unavailable[i].fields;
+                $("#selectGroup_inUse").append(
+                  '\
+                                        <p data-id="' +
+                    id +
+                    '" data-table="' +
+                    data.unavailable[i].pk +
+                    '" class="changeTable text-light mx-1 btn btn-sm" style="background: ' +
+                    data.unavailable[i].colour +
+                    '; opacity: 0.6;"> <span class="font-weight-bold">' +
+                    tableField.name +
+                    "</span> (" +
+                    tableField.people +
+                    "ppl)</p>"
+                );
+              }
 
-                    $(".bookingTable").on("click", function(){
-                        $($(this).attr("data-target")).modal("show");
-                        var id = this.id
-                        var people = $(this).data("people")
-                        var group = ""
-                        $.ajax({
-                            url: '/ajax/5/',
-                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'time': $(this).data("time")},
-                            dataType: 'json',
-                            type: 'GET',
-                            success: function(data) {
-                                document.getElementById('selectTables').innerHTML = ""
-                                document.getElementById('selectGroup_insufficient').innerHTML = ""
-                                document.getElementById('selectGroup_inUse').innerHTML = ""
-
-                                for(i=0; i < data.unavailable.length; i++) {
-                                    var tableField = data.unavailable[i].fields
-                                    $("#selectGroup_inUse").append('\
-                                        <p data-id="' + id + '" data-table="' + data.unavailable[i].pk + '" class="changeTable text-light mx-1 btn btn-sm" style="background: '+ data.unavailable[i].colour + '; opacity: 0.6;"> <span class="font-weight-bold">' + tableField.name + '</span> (' + tableField.people + 'ppl)</p>');            
-                                }
-
-                                for (i = 0; i < data.available.length; i++) {
-                                    var tableField = data.available[i].fields
-                                    var table = tableField.name
-                                    var table_people = tableField.people
-                                    var colour = data.available[i].colour
-                                    var table_id = data.available[i].pk
-                                    var group_name = data.available[i].group_name
-                                    if (table_people >= people) {
-                                        if (group != tableField.group) {
-                                            $("#selectTables").append('<h5 class="text-center">' + group_name + ' Tables</h5>\
+              for (i = 0; i < data.available.length; i++) {
+                var tableField = data.available[i].fields;
+                var table = tableField.name;
+                var table_people = tableField.people;
+                var colour = data.available[i].colour;
+                var table_id = data.available[i].pk;
+                var group_name = data.available[i].group_name;
+                if (table_people >= people) {
+                  if (group != tableField.group) {
+                    $("#selectTables").append(
+                      '<h5 class="text-center">' +
+                        group_name +
+                        ' Tables</h5>\
                                             <div class="row align-items-center justify-content-center">\
                                             <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>\
                                             </div>\
-                                            <div id="selectGroup_' + tableField.group + '" class="row align-items-center justify-content-center mx-4"></div>')
-                                            group = tableField.group
-                                            
-                                        }
-                                        $("#selectGroup_" + tableField.group).append('\
-                                        <p data-id="' + id + '" data-table="' + table_id + '" class="changeTable text-light mx-1 btn btn-sm" style="background: '+colour+';"><span class="font-weight-bold">' + table + '</span> (' + table_people + 'ppl)</p>'); 
-                                    }
-                                    else {
-                                        $("#selectGroup_insufficient").append('\
-                                        <p data-id="' + id + '" data-table="' + table_id + '" class="changeTable text-light mx-1 btn btn-sm" style="background: '+colour+';"><span class="font-weight-bold">' + table + '</span> (' + table_people + 'ppl)</p>');                                         
-                                    }
-                                }
-                                $(".changeTable").on("click", function(){
-                                    var table_id = $(this).data("table")
-                                    var id = $(this).data("id")
-                                    $.ajax({
-                                        url: '/ajax/2/',
-                                        data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id, 'table_id': table_id},
-                                        dataType: 'json',
-                                        type: 'GET',
-                                        success: function(data) {
-                                            $('#tableBookingModal').modal('toggle');
-                                            updateBookings()
-                                        },
-                                    });
-
-                                });
-                            },
-                        });
-                    });
-
-                    for (i = 0; i < data.alerts.length; i++) {
-                        $("#alertList").append('\
-                            <div class="alert alert-danger text-dark text-center text-uppercase font-weight-bold alertBookingList" data-id="' + data.alerts[i].pk + '" style="white-space: pre-wrap;">' + data.alerts[i].fields.message + '</div>');
-                    }
-                    $(".alertBookingList").on("click", function(){
-                        $("#alertModal").modal("show")  
-                        var id = $(this).attr("data-id")
-                        document.getElementById("addAlert").hidden = true
-                        document.getElementById("updateAlert").hidden = false
-                        document.getElementById("deleteAlert").hidden = false
-                        $('#updateAlert').attr('data-id', id);
-                        $.ajax({
-                            url: '/ajax/14/',
-                            data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id},
-                            dataType: 'json',
-                            type: 'GET',
-                            success: function(data) {
-                                document.getElementById("alert_id").value = data.id
-                                document.getElementById("alert_datepicker").value = data.date.split("-").reverse().join("/")
-                                document.getElementById("alert_title").innerHTML = "Update Alert <br> (id: " + data.id + ")"
-                                document.getElementById("alert_message").value = data.message
-                            },
-                        });
-                    });
-                },
-            });
-  
-            var date = moment();
-            var time = moment(date).format("HH:mm")
-            date = moment(date).format("DD/MM/YYYY")
-            var group = ""
-            $.ajax({
-                url: '/ajax/5/',
-                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'date': date, 'time': time},
-                dataType: 'json',
-                type: 'GET',
-                global: false,
-                success: function(data) {
-                    document.getElementById('tables').innerHTML = ""
-                    for (i = 0; i < data.available.length; i++) {
-                        var tableField = data.available[i].fields
-                        var table = tableField.name
-                        var people = tableField.people
-                        var colour = data.available[i].colour
-                        var id = data.available[i].pk
-
-                        if (group != tableField.group) {
-                            $("#tables").append('<div id="group_' + tableField.group + '" class="row align-items-center justify-content-center"></div>')
-                            group = tableField.group
-                        }
-                        $("#group_" + tableField.group).append('\
-                        <p data-id=' + id + ' class="tables text-light mx-1 btn btn-sm" style="background: '+colour+';"><span class="font-weight-bold">' + table + '</span> (' + people + 'ppl)</p>');       
-                    }
-
-                    $(".tables").on("click", function(){
-                        $("#tableModal").modal("show");
-                        document.getElementById("modal_Error").innerHTML = ""
-                        $("#submitWalkIn").data("id", $(this).data("id"))
-                        document.getElementById("modal_People").value = ''
-                    });
-                },
-            });
-        };
-
-        // Updates the current time every second
-        function updateTime() {
-            var d = new Date();
-            var n = d.toLocaleTimeString();
-            document.getElementById('current_time').innerHTML = n;
-        }
-
-        $("#updateAlert").on("click", function(){ 
-            var date = document.getElementById("alert_datepicker").value
-            var message = document.getElementById("alert_message").value
-            var id = $(this).attr("data-id")
-            date = date.split("/")
-            date = date.reverse().join("-")
-
-            $.ajax({
-                url: '/ajax/15/',
-                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'id': id, 'date': date, 'message': message},
-                dataType: 'json',
-                type: 'GET',
-                global: false,
-                success: function(data) {
-                    document.getElementById("addAlert").hidden = false
-                    document.getElementById("updateAlert").hidden = true
-                    document.getElementById("deleteAlert").hidden = true
-                    document.getElementById("alert_title").innerHTML = "Create Alert"
-                    document.getElementById("alert_message").value = ""  
-                    updateBookings()
-                    bookingsList(document.getElementById("alert_datepicker").value)             
+                                            <div id="selectGroup_' +
+                        tableField.group +
+                        '" class="row align-items-center justify-content-center mx-4"></div>'
+                    );
+                    group = tableField.group;
+                  }
+                  $("#selectGroup_" + tableField.group).append(
+                    '\
+                                        <p data-id="' +
+                      id +
+                      '" data-table="' +
+                      table_id +
+                      '" class="changeTable text-light mx-1 btn btn-sm" style="background: ' +
+                      colour +
+                      ';"><span class="font-weight-bold">' +
+                      table +
+                      "</span> (" +
+                      table_people +
+                      "ppl)</p>"
+                  );
+                } else {
+                  $("#selectGroup_insufficient").append(
+                    '\
+                                        <p data-id="' +
+                      id +
+                      '" data-table="' +
+                      table_id +
+                      '" class="changeTable text-light mx-1 btn btn-sm" style="background: ' +
+                      colour +
+                      ';"><span class="font-weight-bold">' +
+                      table +
+                      "</span> (" +
+                      table_people +
+                      "ppl)</p>"
+                  );
                 }
-            });
+              }
+              $(".changeTable").on("click", function () {
+                var table_id = $(this).data("table");
+                var id = $(this).data("id");
+                $.ajax({
+                  url: "/ajax/2/",
+                  data: {
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    id: id,
+                    table_id: table_id,
+                  },
+                  dataType: "json",
+                  type: "GET",
+                  success: function (data) {
+                    $("#tableBookingModal").modal("toggle");
+                    updateBookings();
+                  },
+                });
+              });
+            },
+          });
         });
 
-        $( document ).ready(function() {
-            
-            var date = moment().format("DD/MM/YYYY")
-            document.getElementById("main_datepicker").value = date
-            updateBookings()
-            updateTime()
-
+        for (i = 0; i < data.alerts.length; i++) {
+          $("#alertList").append(
+            '\
+                            <div class="alert alert-danger text-dark text-center text-uppercase font-weight-bold alertBookingList" data-id="' +
+              data.alerts[i].pk +
+              '" style="white-space: pre-wrap;">' +
+              data.alerts[i].fields.message +
+              "</div>"
+          );
+        }
+        $(".alertBookingList").on("click", function () {
+          $("#alertModal").modal("show");
+          var id = $(this).attr("data-id");
+          document.getElementById("addAlert").hidden = true;
+          document.getElementById("updateAlert").hidden = false;
+          document.getElementById("deleteAlert").hidden = false;
+          $("#updateAlert").attr("data-id", id);
+          $.ajax({
+            url: "/ajax/14/",
+            data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+            dataType: "json",
+            type: "GET",
+            success: function (data) {
+              document.getElementById("alert_id").value = data.id;
+              document.getElementById(
+                "alert_datepicker"
+              ).value = data.date.split("-").reverse().join("/");
+              document.getElementById("alert_title").innerHTML =
+                "Update Alert <br> (id: " + data.id + ")";
+              document.getElementById("alert_message").value = data.message;
+            },
+          });
         });
-        
-        setInterval(updateBookings, 15000)
-        setInterval(updateTime, 1000)
+      },
+    });
 
-        window.onscroll = function() {
-            scrollFunction()
-        };
+    var date = moment();
+    var time = moment(date).format("HH:mm");
+    date = moment(date).format("DD/MM/YYYY");
+    var group = "";
+    $.ajax({
+      url: "/ajax/5/",
+      data: { csrfmiddlewaretoken: "{{ csrf_token }}", date: date, time: time },
+      dataType: "json",
+      type: "GET",
+      global: false,
+      success: function (data) {
+        document.getElementById("tables").innerHTML = "";
+        for (i = 0; i < data.available.length; i++) {
+          var tableField = data.available[i].fields;
+          var table = tableField.name;
+          var people = tableField.people;
+          var colour = data.available[i].colour;
+          var id = data.available[i].pk;
 
-        function scrollFunction() {
-            var pos = $("#topBooking").position();
-            if ($("html, body").scrollTop() > pos.top + $("#topBooking").innerHeight()) {
-                document.getElementById("scrollUp").hidden = false;
-                document.getElementById("scrollDown").hidden = true;
-            } else if (window.scrollY + window.innerHeight < pos.top + 85 ) {
-                document.getElementById("scrollDown").hidden = false;
-                document.getElementById("scrollUp").hidden = true;
-            } else {
-                document.getElementById("scrollDown").hidden = true;
-                document.getElementById("scrollUp").hidden = true;
-            }
+          if (group != tableField.group) {
+            $("#tables").append(
+              '<div id="group_' +
+                tableField.group +
+                '" class="row align-items-center justify-content-center"></div>'
+            );
+            group = tableField.group;
+          }
+          $("#group_" + tableField.group).append(
+            "\
+                        <p data-id=" +
+              id +
+              ' class="tables text-light mx-1 btn btn-sm" style="background: ' +
+              colour +
+              ';"><span class="font-weight-bold">' +
+              table +
+              "</span> (" +
+              people +
+              "ppl)</p>"
+          );
         }
 
-        function topFunction() {
-            $("html, body").animate({scrollTop:$('#topBooking').position().top}, 'slow');
+        $(".tables").on("click", function () {
+          $("#tableModal").modal("show");
+          document.getElementById("modal_Error").innerHTML = "";
+          $("#submitWalkIn").data("id", $(this).data("id"));
+          document.getElementById("modal_People").value = "";
+        });
+      },
+    });
+    $("#takeawayList").html("");
+    $.ajax({
+      url: "/ajax/41/",
+      data: { csrfmiddlewaretoken: "{{ csrf_token }}", date: date },
+      dataType: "json",
+      type: "GET",
+      global: false,
+      success: function (data) {
+        if (data.takeaways.length > 0) {
+          document.getElementById("takeawayListTitle").hidden = false;
         }
+        for (i = 0; i < data.takeaways.length; i++) {
+          var takeaway = data.takeaways[i].fields;
+          var name = takeaway.name;
+          var people = takeaway.people;
+          var info = takeaway.info;
+          var tel = takeaway.tel;
+          var address = takeaway.address;
+          $("#takeawayList").append(
+            '\
+                        <div class="ml-3 mr-3 mb-4">\
+                            <div ' +
+              "" +
+              'class="content-section p-2" style="' +
+              "" +
+              '">\
+                                <div class="time_to float-right">\
+                                    <small class=' +
+              "" +
+              '</small>\
+                                </div>\
+                                <div class="ml-1 mb-1 mt-1 row">\
+                                    <div class="row" id="tablelist_' +
+              data.takeaways[i].pk +
+              '">\
+                                    </div>\
+                                </div>\
+                                <div class="mx-3 row">\
+                                    <h4 data-id=' +
+              data.takeaways[i].pk +
+              ` class="booking-name takeawayDelete cursor" style="cursor: pointer;` +
+              "" +
+              '">\
+                                        ' +
+              "" +
+              '<span class="mr-2">' +
+              "" +
+              "" +
+              name +
+              " (" +
+              people +
+              "ppl)" +
+              ` <small><i style="margin-right: 10px;" class="fas fa-phone"></i>${tel} / <i style="margin-right: 10px;" class="fas fa-home"></i>${address}</small>` +
+              "</span>" +
+              "" +
+              '\
+                                    </h4>\
+                                </div>\
+                                <div class="mt-2 ml-3">\
+                                    ' +
+              info +
+              '\
+                                </div>\
+                                <p class="ml-2 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>\
+                                <div id="footerText_' +
+              data.takeaways[i].pk +
+              '" class="footer-text">\
+                                </div>\
+                            </div>\
+                        </div>'
+          );
+        }
+        $(".takeawayDelete").on("click", function () {
+          var confirm_del = confirm(
+            "Are you sure you want to delete this takeaway?"
+          );
+          var id = $(this).attr("data-id");
 
-        $('#assignTableModal').on('shown.bs.modal', function () {
-            $('#assignInput').trigger('focus')
-        })
-
-        $('#tableModal').on('shown.bs.modal', function () {
-            $('#modal_People').trigger('focus')
-        })
-
-
-
-        $("#submitWalkIn").on("click", function(){
-            var id = $(this).data("id")
-            var people = document.getElementById("modal_People").value
-
+          if (confirm_del == true) {
             $.ajax({
-                url: '/ajax/4/',
-                data: {'csrfmiddlewaretoken': '{{ csrf_token }}', 'people': people, 'id': id},
-                dataType: 'json',
-                type: 'GET',
-                success: function(data) {
-                    if(data.valid == 'False'){
-                        document.getElementById("modal_Error").innerHTML = "The value you entered is invalid, the number should be less than or equal to the table size"
-                    } else {
-                        $('#tableModal').modal('toggle');
-                        updateBookings()
-                    }
-                },
+              url: "/ajax/42/",
+              data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: id },
+              dataType: "json",
+              type: "GET",
+              success: function (data) {
+                updateBookings();
+              },
             });
+          }
+        });
+      },
+    });
+  }
 
-        });  
+  // Updates the current time every second
+  function updateTime() {
+    var d = new Date();
+    var n = d.toLocaleTimeString();
+    document.getElementById("current_time").innerHTML = n;
+  }
 
-    </script>
+  $("#updateAlert").on("click", function () {
+    var date = document.getElementById("alert_datepicker").value;
+    var message = document.getElementById("alert_message").value;
+    var id = $(this).attr("data-id");
+    date = date.split("/");
+    date = date.reverse().join("-");
+
+    $.ajax({
+      url: "/ajax/15/",
+      data: {
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        id: id,
+        date: date,
+        message: message,
+      },
+      dataType: "json",
+      type: "GET",
+      global: false,
+      success: function (data) {
+        document.getElementById("addAlert").hidden = false;
+        document.getElementById("updateAlert").hidden = true;
+        document.getElementById("deleteAlert").hidden = true;
+        document.getElementById("alert_title").innerHTML = "Create Alert";
+        document.getElementById("alert_message").value = "";
+        updateBookings();
+        bookingsList(document.getElementById("alert_datepicker").value);
+      },
+    });
+  });
+
+  $(document).ready(function () {
+    var date = moment().format("DD/MM/YYYY");
+    document.getElementById("main_datepicker").value = date;
+    updateBookings();
+    updateTime();
+  });
+
+  setInterval(updateBookings, 15000);
+  setInterval(updateTime, 1000);
+
+  window.onscroll = function () {
+    scrollFunction();
+  };
+
+  function scrollFunction() {
+    var pos = $("#topBooking").position();
+    if (
+      $("html, body").scrollTop() >
+      pos.top + $("#topBooking").innerHeight()
+    ) {
+      document.getElementById("scrollUp").hidden = false;
+      document.getElementById("scrollDown").hidden = true;
+    } else if (window.scrollY + window.innerHeight < pos.top + 85) {
+      document.getElementById("scrollDown").hidden = false;
+      document.getElementById("scrollUp").hidden = true;
+    } else {
+      document.getElementById("scrollDown").hidden = true;
+      document.getElementById("scrollUp").hidden = true;
+    }
+  }
+
+  function topFunction() {
+    $("html, body").animate(
+      { scrollTop: $("#topBooking").position().top },
+      "slow"
+    );
+  }
+
+  $("#assignTableModal").on("shown.bs.modal", function () {
+    $("#assignInput").trigger("focus");
+  });
+
+  $("#tableModal").on("shown.bs.modal", function () {
+    $("#modal_People").trigger("focus");
+  });
+
+  $("#submitWalkIn").on("click", function () {
+    var id = $(this).data("id");
+    var people = document.getElementById("modal_People").value;
+
+    $.ajax({
+      url: "/ajax/4/",
+      data: { csrfmiddlewaretoken: "{{ csrf_token }}", people: people, id: id },
+      dataType: "json",
+      type: "GET",
+      success: function (data) {
+        if (data.valid == "False") {
+          document.getElementById("modal_Error").innerHTML =
+            "The value you entered is invalid, the number should be less than or equal to the table size";
+        } else {
+          $("#tableModal").modal("toggle");
+          updateBookings();
+        }
+      },
+    });
+  });
+</script>
 
 {% endblock content %}
-

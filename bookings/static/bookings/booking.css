@@ -1,39 +1,41 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,700&display=swap");
 
-body, html {
-    margin: 0;
-    height: 100vh;
-    font-family: Montserrat;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url("/static/media/restaurant-2.jpg");
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: white;
+body,
+html {
+  margin: 0;
+  height: 100vh;
+  font-family: Montserrat;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+    url("/static/media/restaurant-2.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
 }
 
 header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
 }
 
 .header-inner img {
-    display: block;
-    width: 170px;
-    height: 170px;
-    margin: 0 auto;
+  display: block;
+  width: 170px;
+  height: 170px;
+  margin: 0 auto;
 }
 
 .header-inner h1 {
-    margin-top: 10px;
-    font-size: 54px;
-    color: rgb(255, 115, 50);
+  margin-top: 10px;
+  font-size: 54px;
+  color: rgb(255, 115, 50);
 }
 
 .header-inner span {
-    color: white;
+  color: white;
 }
 
 .booking-container {
@@ -43,234 +45,232 @@ header {
 }
 
 .booking-box {
-    background-color: rgba(39, 39, 39, 0.411);
-    text-align: center;
-    -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-    -moz-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-    box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-    padding: 50px 0;
-    width: 60%;
-    margin-bottom: 40px;
+  background-color: rgba(39, 39, 39, 0.411);
+  text-align: center;
+  -webkit-box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
+  -moz-box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
+  box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
+  padding: 50px 0;
+  width: 60%;
+  margin-bottom: 40px;
 }
 
 .booking-box h1 {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .date-time-people {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .book-input {
-    margin: 0 20px;
-    width: 20%;
+  margin: 0 20px;
+  width: 20%;
 }
 
 .book-input h5 {
-    color: rgb(255, 115, 50);
+  color: rgb(255, 115, 50);
 }
 
-.book-input input, .book-input select, .details input {
-    height: 25px;
-    border: 2px solid white;
-    border-radius: 5px;
-    width: 100%;
-    padding: 5px 0;
-    text-align: center;
-    outline: none;
+.book-input input,
+.book-input select,
+.details input {
+  height: 25px;
+  border: 2px solid white;
+  border-radius: 5px;
+  width: 100%;
+  padding: 5px 0;
+  text-align: center;
+  outline: none;
 }
 
 .book-input select {
-    height: 35px;
+  height: 35px;
 }
 
 .details {
-    margin-top: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .details input {
-    width: 80%;
-    margin: 0 20px;
+  width: 80%;
+  margin: 0 20px;
 }
 
 .details-input h2 {
-    margin-top: 30px;
-    margin-bottom: 5px;
+  margin-top: 30px;
+  margin-bottom: 5px;
 }
 
 .submit-btn {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
-.submit-btn .btn, .contact-btn .btn {
-    display: block;
-    margin: 0 auto;
-    font-size: 18px;
-    width: 200px;
-    text-align: center;
-    padding: 10px 0;
-    cursor: pointer;
-    background: rgb(255, 115, 50);
-    border-radius: 5px;
-    color: white;
-    transition: background-color 0.5s ease;
-  }
+.submit-btn .btn,
+.contact-btn .btn {
+  display: block;
+  margin: 0 auto;
+  font-size: 18px;
+  width: 200px;
+  text-align: center;
+  padding: 10px 0;
+  cursor: pointer;
+  background: rgb(255, 115, 50);
+  border-radius: 5px;
+  color: white;
+  transition: background-color 0.5s ease;
+}
 
 .contact-btn .btn {
-    background-color: rgb(150, 150, 150);
+  background-color: rgb(150, 150, 150);
 }
 
 .contact-btn .btn:hover {
-    background-color: rgb(109, 109, 109);
+  background-color: rgb(109, 109, 109);
 }
 
 .btn:hover {
-    background: rgb(216, 85, 25);
+  background: rgb(216, 85, 25);
 }
 
 .contact-btn {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .contact-btn p {
-    font-size: 18px;
-    margin: 5px;
+  font-size: 18px;
+  margin: 5px;
 }
 
 .contact-btn a {
-    color: rgb(255, 115, 50);
+  color: rgb(255, 115, 50);
 }
 
 @media only screen and (max-width: 1024px) {
-    .booking-box {
-        width: 90%;
-    }
-    .date-time-people {
-        margin: 0 80px;
-    }
-    .book-input {
-        width: 80%;
-    }
-    .details {
-        display: block;
-    }
-    .details-input {
-        margin: 30px 0;
-    }
-    .header-inner h1 {
-        font-size: 42px;
-    }
-    .header-inner img {
-        width: 120px;
-        height: 120px;
-    }
+  .booking-box {
+    width: 90%;
+  }
+  .date-time-people {
+    margin: 0 80px;
+  }
+  .book-input {
+    width: 80%;
+  }
+  .details {
+    display: block;
+  }
+  .details-input {
+    margin: 30px 0;
+  }
+  .header-inner h1 {
+    font-size: 42px;
+  }
+  .header-inner img {
+    width: 120px;
+    height: 120px;
+  }
 }
 
 @media only screen and (max-width: 720px) {
-    .date-time-people {
-        margin: 0;
-        display: inline-block;
-    }
+  .date-time-people {
+    margin: 0;
+    display: inline-block;
+  }
 }
 
-
-
-
-
 .ui-datepicker-title {
-    color: #78909C;
+  color: #78909c;
 }
 
 .ui-datepicker-unselectable .ui-state-default {
-    color: rgb(0, 0, 0, 0.4);
-    font-size: 30px;
+  color: rgb(0, 0, 0, 0.4);
+  font-size: 30px;
 }
 
 #ui-datepicker-div {
-	display: none;
-	background-color: #fff;
-	box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.1);
-	margin-top: 0.25rem;
-	border-radius: 0.5rem;
-    padding: 0.5rem;
+  display: none;
+  background-color: #fff;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+  margin-top: 0.25rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
 .ui-datepicker-calendar thead th {
-	padding: 0.25rem 0;
-	text-align: center;
-	font-size: 0.75rem;
-	font-weight: 400;
-    color: #78909C;
-  
+  padding: 0.25rem 0;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #78909c;
 }
 
 .ui-datepicker-calendar tbody td {
-	width: 2.5rem;
-	text-align: center;
-	padding: 0;
+  width: 2.5rem;
+  text-align: center;
+  padding: 0;
 }
 .ui-datepicker-calendar tbody td a {
-	display: block;
-	border-radius: 0.25rem;
-	line-height: 2rem;
-	transition: 0.3s all;
-    color: #546E7A;
-    padding: 10px;
-	font-size: 30px;
-	text-decoration: none;
+  display: block;
+  border-radius: 0.25rem;
+  line-height: 2rem;
+  transition: 0.3s all;
+  color: #546e7a;
+  padding: 10px;
+  font-size: 30px;
+  text-decoration: none;
 }
-.ui-datepicker-calendar tbody td a:hover {	
-	background-color: #E0F2F1;
+.ui-datepicker-calendar tbody td a:hover {
+  background-color: #e0f2f1;
 }
 .ui-datepicker-calendar tbody td a.ui-state-active {
-	font-weight: bold;
+  font-weight: bold;
 }
 .ui-datepicker-header a.ui-corner-all {
-	cursor: pointer;
-	position: absolute;
-	top: 0;
-	width: 2rem;
-	height: 2rem;
-	margin: 0.5rem;
-	border-radius: 0.25rem;
-	transition: 0.3s all;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.5rem;
+  border-radius: 0.25rem;
+  transition: 0.3s all;
 }
 .ui-datepicker-header a.ui-corner-all:hover {
-	background-color: #ECEFF1;
+  background-color: #eceff1;
 }
-.ui-datepicker-header a.ui-datepicker-prev {	
-	left: 0;	
-	background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
-	background-repeat: no-repeat;
-	background-size: 0.5rem;
-	background-position: 50%;
-	transform: rotate(180deg);
+.ui-datepicker-header a.ui-datepicker-prev {
+  left: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
+  background-repeat: no-repeat;
+  background-size: 0.5rem;
+  background-position: 50%;
+  transform: rotate(180deg);
 }
 .ui-datepicker-header a.ui-datepicker-next {
-	right: 0;
-	background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==');
-	background-repeat: no-repeat;
-	background-size: 10px;
-	background-position: 50%;
+  right: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
+  background-repeat: no-repeat;
+  background-size: 10px;
+  background-position: 50%;
 }
-.ui-datepicker-header a>span {
-	display: none;
+.ui-datepicker-header a > span {
+  display: none;
 }
 .ui-datepicker-title {
-	text-align: center;
-	line-height: 2rem;
-	margin-bottom: 0.25rem;
-	font-size: 0.875rem;
-	font-weight: 500;
-	padding-bottom: 0.25rem;
+  text-align: center;
+  line-height: 2rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding-bottom: 0.25rem;
 }
 .ui-datepicker-week-col {
-	color: #78909C;
-	font-weight: 400;
-	font-size: 0.75rem;
+  color: #78909c;
+  font-weight: 400;
+  font-size: 0.75rem;
 }

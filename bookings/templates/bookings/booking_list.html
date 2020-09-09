@@ -147,7 +147,7 @@
 
         <h5 class="text-center mt-4">Insufficient Table Size</h5>
         <div class="row align-items-center justify-content-center">
-          <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
+          <p class="col-4" style="border-bottom: 1px solid #dddddd"></p>
         </div>
         <div
           id="selectGroup_insufficient"
@@ -156,7 +156,7 @@
 
         <h5 class="text-center">Tables In Use</h5>
         <div class="row align-items-center justify-content-center">
-          <p class="col-4" style="border-bottom: 1px solid #dddddd;"></p>
+          <p class="col-4" style="border-bottom: 1px solid #dddddd"></p>
         </div>
         <div
           id="selectGroup_inUse"
@@ -225,6 +225,7 @@
   <p>{{ today_tables }} Table(s) Today</p>
   <!-- <span><i class="fas fa-chart-bar fa-3x"></i></span> -->
   <p>{{ today_people }} People Today</p>
+  <p>{{ today_takeaways }} Takeaways Today</p>
 </div>
 <div class="row justify-content-center">
   <div class="mb-4">
@@ -239,7 +240,7 @@
     />
   </div>
 </div>
-<p class="ml-3 mr-3 p-1" style="border-bottom: 1px solid #dddddd;"></p>
+<p class="ml-3 mr-3 p-1" style="border-bottom: 1px solid #dddddd"></p>
 
 <div id="alertList" class="mt-4"></div>
 
@@ -298,6 +299,11 @@
 
   $("#addTakeaway").on("click", function () {
     $("#takeawayModal").modal("show");
+    document.getElementById("takeawayName").value = "";
+    document.getElementById("takeawayAddress").value = "";
+    document.getElementById("takeawayTelephone").value = "";
+    document.getElementById("takeawayPeople").value = "";
+    document.getElementById("takeawayInfo").value = "";
   });
 
   $("#submitTakeaway").on("click", function () {
@@ -887,6 +893,7 @@
       },
     });
     $("#takeawayList").html("");
+    var date = document.getElementById("main_datepicker").value;
     $.ajax({
       url: "/ajax/41/",
       data: { csrfmiddlewaretoken: "{{ csrf_token }}", date: date },

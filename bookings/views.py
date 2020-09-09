@@ -481,6 +481,8 @@ def getAjaxRequest(request, id):
             date = request.GET.get('date')
             datetime_object = datetime.datetime.strptime(date, '%d/%m/%Y')
 
+            print(date)
+
             takeaways = Takeaway.objects.filter(
                 date=datetime_object, user_id=request.user.id).order_by('id')
             takeaways_dict = serializers.serialize('python', takeaways)
@@ -666,7 +668,8 @@ def bookings(request):
         'staff': staff,
         'groups': TableGroup.objects.all(),
         'today_people': sum([x['people'] for x in Booking.objects.filter(user_id=request.user.id, date=datetime.datetime.now()).values('people')]),
-        'today_tables': len(Booking.objects.filter(user_id=request.user.id, date=datetime.datetime.now()))})
+        'today_tables': len(Booking.objects.filter(user_id=request.user.id, date=datetime.datetime.now())),
+        'today_takeaways': len(Takeaway.objects.filter(date=datetime.datetime.now(), user_id=request.user.id))})
 
 
 def history(request):

@@ -386,7 +386,7 @@
       '<option value="" disabled selected>Select a time</option>'
     );
     var times = [];
-    for (i = 0; i < 19; i++) {
+    for (i = 0; i < 18; i++) {
       if (i < 10) {
         i = "0" + i;
       }
@@ -395,6 +395,7 @@
       times.push(i + ":30");
       times.push(i + ":45");
     }
+    times.push("18:00")
     for (i = 0; i < times.length; i++) {
       $("#time_dropdown").append(
         '<option style="padding: 8px;" data-time=' +

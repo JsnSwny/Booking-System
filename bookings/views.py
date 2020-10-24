@@ -80,20 +80,22 @@ def getAjaxRequest(request, id):
             time = booking.time
             arrived = booking.arrived
             cleared = booking.cleared
+            booking_type = booking.booking_type
 
             data = {'people': people, 'name': name, 'time': time,
-                    'id': id, 'arrived': arrived, 'cleared': cleared}
+                    'id': id, 'arrived': arrived, 'cleared': cleared, 'booking_type': booking_type}
 
         # Add Walk In
         elif id == 4:
             id = request.GET.get('id')
             people = request.GET.get('people')
+            booking_type = request.GET.get('booking_type')
 
             if people == '':
                 people = 0
 
             if int(people) <= TableItem.objects.filter(pk=id)[0].people and int(people) > 0:
-                addWalkIn(id, people, request.user.id)
+                addWalkIn(id, people, request.user.id, booking_type)
             else:
                 data = {'valid': 'False'}
 
@@ -167,6 +169,7 @@ def getAjaxRequest(request, id):
             additional = request.GET.get('additional')
             userid = request.GET.get('userid')
             email = request.GET.get('email')
+            booking_type = request.GET.get('booking_type')
             if userid == None:
                 userid = request.user.id
 
@@ -187,7 +190,7 @@ def getAjaxRequest(request, id):
                           "reservetableuk@gmail.com", [user.usersettings.email])
             else:
                 booking = Booking(initials=taker, name=name, people=people,
-                                  time=time, date=date, tel=tel, info=additional, user_id=userid)
+                                  time=time, date=date, tel=tel, info=additional, user_id=userid, booking_type=booking_type)
 
             booking.save()
         elif id == 11:
@@ -203,10 +206,11 @@ def getAjaxRequest(request, id):
             taker = request.GET.get('taker')
             tel = request.GET.get('tel')
             additional = request.GET.get('additional')
+            booking_type = request.GET.get('booking_type')
             id = request.GET.get('id')
 
             Booking.objects.filter(pk=id).update(
-                initials=taker, name=name, people=people, time=time, date=date, tel=tel, info=additional)
+                initials=taker, name=name, people=people, time=time, date=date, tel=tel, info=additional, booking_type=booking_type)
             for e in Booking.objects.filter(pk=id):
                 e.save()
 
@@ -422,7 +426,6 @@ def getAjaxRequest(request, id):
             people = request.GET.get('people')
 
             datetime_object = datetime.datetime.strptime(date, '%d/%m/%Y')
-            print(datetime_object)
 
             id = User.objects.get(username=user).pk
             bookings = Booking.objects.filter(user_id=id, date=datetime_object)
@@ -481,8 +484,6 @@ def getAjaxRequest(request, id):
             date = request.GET.get('date')
             datetime_object = datetime.datetime.strptime(date, '%d/%m/%Y')
 
-            print(date)
-
             takeaways = Takeaway.objects.filter(
                 date=datetime_object, user_id=request.user.id).order_by('id')
             takeaways_dict = serializers.serialize('python', takeaways)
@@ -532,10 +533,10 @@ def download(request):
     return response
 
 
-def addWalkIn(table, people, userid):
+def addWalkIn(table, people, userid, booking_type):
     table = TableItem.objects.filter(pk=table).first()
     booking = Booking(name='Walk In', arrived='True', people=people, time=datetime.datetime.now(
-    ).time(), date=datetime.datetime.now(), table=table, user_id=userid, walk_in=True)
+    ).time(), date=datetime.datetime.now(), table=table, user_id=userid, walk_in=True, booking_type=booking_type)
     booking.save()
     Booking.history.filter(name="Walk In").delete()
 
@@ -669,7 +670,10 @@ def bookings(request):
         'groups': TableGroup.objects.all(),
         'today_people': sum([x['people'] for x in Booking.objects.filter(user_id=request.user.id, date=datetime.datetime.now()).values('people')]),
         'today_tables': len(Booking.objects.filter(user_id=request.user.id, date=datetime.datetime.now())),
-        'today_takeaways': len(Takeaway.objects.filter(date=datetime.datetime.now(), user_id=request.user.id))})
+        'today_takeaways': len(Takeaway.objects.filter(date=datetime.datetime.now(), user_id=request.user.id)),
+        'today_meals': len(Booking.objects.filter(date=datetime.datetime.now(), user_id=request.user.id, booking_type="M")),
+        'today_drinks': len(Booking.objects.filter(date=datetime.datetime.now(), user_id=request.user.id, booking_type="D"))
+    })
 
 
 def history(request):

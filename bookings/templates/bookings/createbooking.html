@@ -97,6 +97,13 @@
           </div>
         </div>
         <div class="form-group col-md-12">
+          <h6 class="float-left">Booking Type</h6>
+          <select id="booking_type" class="form-control" required>
+            <option value="M" selected="selected">Meal</option>
+            <option value="D">Drinks</option>
+          </select>
+        </div>
+        <div class="form-group col-md-12">
           <h6 class="float-left">Extra Information</h6>
           <textarea
             class="form-control"
@@ -178,6 +185,7 @@
     var taker = document.getElementById("booking_taker").value;
     var tel = document.getElementById("booking_tel").value;
     var additional = document.getElementById("booking_additional").value;
+    var booking_type = document.getElementById("booking_type").value;
     if (name != "" && time != "" && taker != "") {
       date = date.split("/");
       date = date.reverse().join("-");
@@ -193,6 +201,7 @@
           taker: taker,
           tel: tel,
           additional: additional,
+          booking_type: booking_type
         },
         dataType: "json",
         type: "GET",
@@ -203,6 +212,7 @@
           document.getElementById("booking_tel").value = "";
           document.getElementById("booking_additional").value = "";
           document.getElementById("booking_taker").value = "";
+          document.getElementById("booking_type").value = "M";
           document.getElementById("time_dropdown").value = "";
           document.getElementById("booking_timetaken").hidden = true;
           $("#addBooking").prop("disabled", false);
@@ -219,6 +229,7 @@
     var people = document.getElementById("booking_people").value;
     var taker = document.getElementById("booking_taker").value;
     var tel = document.getElementById("booking_tel").value;
+    var booking_type = document.getElementById("booking_type").value;
     var additional = document.getElementById("booking_additional").value;
     var id = $(this).data("id");
     date = date.split("/").reverse().join("-");
@@ -235,6 +246,7 @@
         taker: taker,
         tel: tel,
         additional: additional,
+        booking_type: booking_type
       },
       dataType: "json",
       type: "GET",
@@ -248,6 +260,7 @@
         document.getElementById("booking_tel").value = "";
         document.getElementById("booking_additional").value = "";
         document.getElementById("booking_taker").value = "";
+        document.getElementById("booking_type").value = "M";
         document.getElementById("time_dropdown").value = "";
         document.getElementById("booking_timetaken").hidden = true;
         bookingsList(document.getElementById("datepicker").value);
@@ -328,6 +341,7 @@
           document.getElementById("booking_tel").value = "";
           document.getElementById("booking_additional").value = "";
           document.getElementById("booking_taker").value = "";
+          document.getElementById("booking_type").value = "M";
           document.getElementById("time_dropdown").value = "";
           document.getElementById("booking_timetaken").hidden = true;
           bookingsList(document.getElementById("datepicker").value);
@@ -358,6 +372,7 @@
           document.getElementById("booking_people").value = booking.people;
           document.getElementById("booking_tel").value = booking.tel;
           document.getElementById("booking_taker").value = booking.initials;
+          document.getElementById("booking_type").value = booking.booking_type;
           document.getElementById("booking_additional").value = booking.info;
           document.getElementById("time_dropdown").value = booking.time.substr(
             0,
@@ -419,6 +434,7 @@
     document.getElementById("booking_tel").value = "";
     document.getElementById("booking_additional").value = "";
     document.getElementById("booking_people").value = "";
+    document.getElementById("booking_type").value = "M";
     bookingsList(date);
     $("#time_dropdown").prop("selectedIndex", 0);
     cap_at_time();
@@ -601,6 +617,7 @@
               document.getElementById("booking_people").value = booking.people;
               document.getElementById("booking_tel").value = booking.tel;
               document.getElementById("booking_taker").value = booking.initials;
+              document.getElementById("booking_type").value = booking.booking_type;
               document.getElementById("booking_additional").value =
                 booking.info;
               document.getElementById(

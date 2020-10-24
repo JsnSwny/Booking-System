@@ -45,6 +45,17 @@ class Booking(models.Model):
     online = models.BooleanField(default=False)
     walk_in = models.BooleanField(default=False)
 
+    TYPES = [
+        ("M", 'Meal'),
+        ("D", 'Drinks'),
+    ]
+    booking_type = models.CharField(
+        max_length=1,
+        choices=TYPES,
+        blank=True,
+        null=True
+    )
+
     def __str__(self):
         d = f'{str(self.date)[8:10]}/{str(self.date)[5:7]}/{str(self.date)[0:4]}'
         return f'{d} - {str(self.time)[0:5]} - {self.name} ({self.people}) taken by {self.initials} at {str(self.created_date)[0:16]}'

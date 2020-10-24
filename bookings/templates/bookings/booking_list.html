@@ -36,7 +36,14 @@
         </button>
       </div>
       <div class="ml-2 modal-body">
-        How many people? <input id="modal_People" type="number" />
+        How many people? <input id="modal_People" class="form-control" type="number" />
+      </div>
+      <div class="ml-2 modal-body">
+        Booking Type?
+        <select id="modal_Type" class="form-control" required>
+          <option value="M" selected="selected">Meal</option>
+          <option value="D">Drinks</option>
+        </select>
       </div>
       <div class="row">
         <small
@@ -222,7 +229,7 @@
   <h2 id="booking-title-2"></h2>
 </div>
 <div class="current-stats">
-  <p>{{ today_tables }} Table(s) Today</p>
+  <p>{{ today_tables }} Table(s) Today [{{ today_meals}} M : {{today_drinks }} D]</p>
   <!-- <span><i class="fas fa-chart-bar fa-3x"></i></span> -->
   <p>{{ today_people }} People Today</p>
   <p>{{ today_takeaways }} Takeaways Today</p>
@@ -391,6 +398,12 @@
           var arrived = bookingField.arrived;
           var cleared = bookingField.cleared;
           var online = bookingField.online;
+          var booking_type = bookingField.booking_type;
+          if(booking_type == "M" || booking_type == "D") {
+            booking_type = `[${booking_type == "M" ? "MEAL" : "DRINKS"}]`;
+          } else {
+            booking_type = "";
+          }
           if (info != "") {
             info =
               '<small class="mb-2"><span class="h6">Additional Info: </span> <br> <span style="white-space: pre-wrap;">' +
@@ -474,7 +487,6 @@
           } else {
             topBooking = "";
           }
-
           var preIcon = "";
           if (online == true) {
             preIcon =
@@ -522,7 +534,7 @@
               name +
               " (" +
               people +
-              "ppl)</span>" +
+              "ppl) " + `${booking_type}` +"</span>" +
               assign +
               '\
                                     </h4>\
@@ -889,6 +901,7 @@
           document.getElementById("modal_Error").innerHTML = "";
           $("#submitWalkIn").data("id", $(this).data("id"));
           document.getElementById("modal_People").value = "";
+          document.getElementById("modal_Type").value = "M";
         });
       },
     });
@@ -1073,10 +1086,11 @@
   $("#submitWalkIn").on("click", function () {
     var id = $(this).data("id");
     var people = document.getElementById("modal_People").value;
+    var booking_type = document.getElementById("modal_Type").value;
 
     $.ajax({
       url: "/ajax/4/",
-      data: { csrfmiddlewaretoken: "{{ csrf_token }}", people: people, id: id },
+      data: { csrfmiddlewaretoken: "{{ csrf_token }}", people: people, id: id, booking_type: booking_type },
       dataType: "json",
       type: "GET",
       success: function (data) {

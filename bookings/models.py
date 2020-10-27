@@ -48,6 +48,8 @@ class Booking(models.Model):
     TYPES = [
         ("M", 'Meal'),
         ("D", 'Drinks'),
+        ('HT', 'High Tea'),
+        ('AT', 'Afternoon Tea')
     ]
     booking_type = models.CharField(
         max_length=1,

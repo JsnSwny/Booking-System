@@ -401,8 +401,9 @@
           var cleared = bookingField.cleared;
           var online = bookingField.online;
           var booking_type = bookingField.booking_type;
-          if(booking_type == "M" || booking_type == "D") {
-            booking_type = `[${booking_type == "M" ? "MEAL" : "DRINKS"}]`;
+          var booking_type_obj = {"M": "MEAL", "D": "DRINKS", "HT": "HIGH TEA", "AT": "AFTERNOON TEA"};
+          if(booking_type in booking_type_obj) {
+            booking_type = `[${booking_type_obj[booking_type]}]`;
           } else {
             booking_type = "";
           }

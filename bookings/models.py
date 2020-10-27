@@ -52,7 +52,7 @@ class Booking(models.Model):
         ('AT', 'Afternoon Tea')
     ]
     booking_type = models.CharField(
-        max_length=1,
+        max_length=2,
         choices=TYPES,
         blank=True,
         null=True

@@ -123,6 +123,7 @@ input:focus {
   border-radius: 0.5rem;
   padding: 0.5rem;
   font-size: 30px;
+  top: 348px !important;
 }
 
 .ui-datepicker-calendar thead th {
@@ -728,7 +729,6 @@ input {
   #ui-datepicker-div {
     left: 20px !important;
     right: 20px !important;
-    top: 348px !important;
   }
   .ui-datepicker-calendar {
     margin: 0 auto;

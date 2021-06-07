@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,700&display=swap");
 
-
 body {
   background: #fafafa;
   color: #333333;
@@ -10,18 +9,18 @@ body {
 }
 
 .scrollButton {
-	position: fixed; /* Fixed/sticky position */
-	bottom: 20px;
-	right: 20px;
-	z-index: 99; /* Make sure it does not overlap */
-	border: none; /* Remove borders */
-	outline: none; /* Remove outline */
-	background-color: rgba(255, 102, 0, 0.8); /* Set a background color */
-	color: white; /* Text color */
-	cursor: pointer; /* Add a mouse pointer on hover */
-	padding: 15px; /* Some padding */
-	border-radius: 10px; /* Rounded corners */
-	font-size: 18px; /* Increase font size */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px;
+  right: 20px;
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: rgba(255, 102, 0, 0.8); /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
 }
 
 .tableTitle {
@@ -35,15 +34,20 @@ body {
   font-weight: bold;
 }
 
-html { 
-	overflow-y: scroll; 
+html {
+  overflow-y: scroll;
 }
 
 input[readonly] {
-    background-color:#FFF !important;
+  background-color: #fff !important;
 }
-	
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #444444;
 }
 
@@ -58,11 +62,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .current-stats p {
   line-height: 10px;
-
 }
 
-.close { 
-  position: absolute; 
+.close {
+  position: absolute;
   right: 1rem;
 }
 
@@ -78,12 +81,11 @@ ul {
   background-color: #141414;
 }
 
-
 label {
-	display: block;
-	margin-bottom: 0.5rem;
-	color: rgb(0, 0, 0);
-	padding: 0.5rem 0.75rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: rgb(0, 0, 0);
+  padding: 0.5rem 0.75rem;
   text-align: center;
 }
 
@@ -92,133 +94,180 @@ label {
   transition-duration: 0.4s;
 }
 
-
 .bookingbutton {
   background-color: white;
-	color: rgb(78, 78, 78);
-	border: 2px solid #e7e7e7;
+  color: rgb(78, 78, 78);
+  border: 2px solid #e7e7e7;
 }
 
 .bookingbutton:hover {
-	color: rgb(0, 255, 64);
-	border: 2px solid #bdbdbd;
-	background-color: rgb(226, 225, 225);
-	cursor: pointer;
+  color: rgb(0, 255, 64);
+  border: 2px solid #bdbdbd;
+  background-color: rgb(226, 225, 225);
+  cursor: pointer;
 }
 
-input:focus {outline: none;}
-
+input:focus {
+  outline: none;
+}
 
 .ui-datepicker-unselectable .ui-state-default {
   color: rgb(0, 0, 0, 0.4);
 }
 
 #ui-datepicker-div {
-	display: none;
-	background-color: #fff;
-	box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.1);
-	margin-top: 0.25rem;
-	border-radius: 0.5rem;
+  display: none;
+  background-color: #fff;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+  margin-top: 0.25rem;
+  border-radius: 0.5rem;
   padding: 0.5rem;
   font-size: 30px;
 }
 
 .ui-datepicker-calendar thead th {
-	padding: 0.25rem 0;
-	text-align: center;
-	font-size: 0.75rem;
-	font-weight: 400;
-  color: #78909C;
-  
+  padding: 0.25rem 0;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #78909c;
 }
 
 .ui-datepicker-calendar tbody td {
-	width: 2.5rem;
-	text-align: center;
-	padding: 0;
+  width: 2.5rem;
+  text-align: center;
+  padding: 0;
 }
 .ui-datepicker-calendar tbody td a {
-	display: block;
-	border-radius: 0.25rem;
-	line-height: 2rem;
-	transition: 0.3s all;
-  color: #546E7A;
+  display: block;
+  border-radius: 0.25rem;
+  line-height: 2rem;
+  transition: 0.3s all;
+  color: #546e7a;
   padding: 10px;
-	font-size: 30px;
-	text-decoration: none;
+  font-size: 30px;
+  text-decoration: none;
 }
-.ui-datepicker-calendar tbody td a:hover {	
-	background-color: #E0F2F1;
+.ui-datepicker-calendar tbody td a:hover {
+  background-color: #e0f2f1;
 }
 .ui-datepicker-calendar tbody td a.ui-state-active {
-	font-weight: bold;
+  font-weight: bold;
 }
 .ui-datepicker-header a.ui-corner-all {
-	cursor: pointer;
-	position: absolute;
-	top: 0;
-	width: 2rem;
-	height: 2rem;
-	margin: 0.5rem;
-	border-radius: 0.25rem;
-	transition: 0.3s all;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.5rem;
+  border-radius: 0.25rem;
+  transition: 0.3s all;
 }
 .ui-datepicker-header a.ui-corner-all:hover {
-	background-color: #ECEFF1;
+  background-color: #eceff1;
 }
-.ui-datepicker-header a.ui-datepicker-prev {	
-	left: 0;	
-	background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
-	background-repeat: no-repeat;
-	background-size: 0.5rem;
-	background-position: 50%;
-	transform: rotate(180deg);
+.ui-datepicker-header a.ui-datepicker-prev {
+  left: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
+  background-repeat: no-repeat;
+  background-size: 0.5rem;
+  background-position: 50%;
+  transform: rotate(180deg);
 }
 .ui-datepicker-header a.ui-datepicker-next {
-	right: 0;
-	background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==');
-	background-repeat: no-repeat;
-	background-size: 10px;
-	background-position: 50%;
+  right: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMyIgdmlld0JveD0iMCAwIDEzIDEzIj48cGF0aCBmaWxsPSIjNDI0NzcwIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03LjI4OCA2LjI5NkwzLjIwMiAyLjIxYS43MS43MSAwIDAgMSAuMDA3LS45OTljLjI4LS4yOC43MjUtLjI4Ljk5OS0uMDA3TDguODAzIDUuOGEuNjk1LjY5NSAwIDAgMSAuMjAyLjQ5Ni42OTUuNjk1IDAgMCAxLS4yMDIuNDk3bC00LjU5NSA0LjU5NWEuNzA0LjcwNCAwIDAgMS0xLS4wMDcuNzEuNzEgMCAwIDEtLjAwNi0uOTk5bDQuMDg2LTQuMDg2eiIvPjwvc3ZnPg==");
+  background-repeat: no-repeat;
+  background-size: 10px;
+  background-position: 50%;
 }
-.ui-datepicker-header a>span {
-	display: none;
+.ui-datepicker-header a > span {
+  display: none;
 }
 .ui-datepicker-title {
-	text-align: center;
-	line-height: 2rem;
-	margin-bottom: 0.25rem;
-	font-size: 0.875rem;
-	font-weight: 500;
-	padding-bottom: 0.25rem;
+  text-align: center;
+  line-height: 2rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding-bottom: 0.25rem;
 }
 .ui-datepicker-week-col {
-	color: #78909C;
-	font-weight: 400;
-	font-size: 0.75rem;
+  color: #78909c;
+  font-weight: 400;
+  font-size: 0.75rem;
 }
 
-td.dates_low {border: none !important;padding: 1px 0 1px 1px !important;background: none !important;overflow:hidden;}
-td.dates_low a {background: #73dd78 50% 50% repeat-x; color: white !important;}
+td.dates_low {
+  border: none !important;
+  padding: 1px 0 1px 1px !important;
+  background: none !important;
+  overflow: hidden;
+}
+td.dates_low a {
+  background: #73dd78 50% 50% repeat-x;
+  color: white !important;
+}
 
-td.dates_med {border: none !important;padding: 1px 0 1px 1px !important;background: none !important;overflow:hidden;}
-td.dates_med a {background: #f88e03 50% 50% repeat-x; color: white !important;}
+td.dates_med {
+  border: none !important;
+  padding: 1px 0 1px 1px !important;
+  background: none !important;
+  overflow: hidden;
+}
+td.dates_med a {
+  background: #f88e03 50% 50% repeat-x;
+  color: white !important;
+}
 
-td.dates_high {border: none !important;padding: 1px 0 1px 1px !important;background: none !important;overflow:hidden;}
-td.dates_high a {background: #f81404 50% 50% repeat-x; color: white !important;}
+td.dates_high {
+  border: none !important;
+  padding: 1px 0 1px 1px !important;
+  background: none !important;
+  overflow: hidden;
+}
+td.dates_high a {
+  background: #f81404 50% 50% repeat-x;
+  color: white !important;
+}
 
-td.dates_low_before {border: none !important;padding: 1px 0 1px 1px !important;background: none !important;overflow:hidden;}
-td.dates_low_before a {background: rgb(115, 221, 120, 0.3) 50% 50% repeat-x; color: white !important;}
+td.dates_low_before {
+  border: none !important;
+  padding: 1px 0 1px 1px !important;
+  background: none !important;
+  overflow: hidden;
+}
+td.dates_low_before a {
+  background: rgb(115, 221, 120, 0.3) 50% 50% repeat-x;
+  color: white !important;
+}
 
-td.dates_med_before {border: none !important;padding: 1px 0 1px 1px !important;background: none !important;overflow:hidden;}
-td.dates_med_before a {background: rgb(248, 142, 3, 0.3) 50% 50% repeat-x; color: white !important;}
+td.dates_med_before {
+  border: none !important;
+  padding: 1px 0 1px 1px !important;
+  background: none !important;
+  overflow: hidden;
+}
+td.dates_med_before a {
+  background: rgb(248, 142, 3, 0.3) 50% 50% repeat-x;
+  color: white !important;
+}
 
-td.dates_high_before {border: none !important;padding: 1px 0 1px 1px !important;background: none !important;overflow:hidden;}
-td.dates_high_before a {background: rgb(248, 20, 4, 0.3) 50% 50% repeat-x; color: white !important;}
+td.dates_high_before {
+  border: none !important;
+  padding: 1px 0 1px 1px !important;
+  background: none !important;
+  overflow: hidden;
+}
+td.dates_high_before a {
+  background: rgb(248, 20, 4, 0.3) 50% 50% repeat-x;
+  color: white !important;
+}
 
-td.today a {font-weight: bold !important;}
-
-
+td.today a {
+  font-weight: bold !important;
+}
 
 .content-section {
   background: #ffffff;
@@ -232,15 +281,15 @@ td.today a {font-weight: bold !important;}
   padding-bottom: 4px;
   border: 1px solid #dddddd;
   border-radius: 3px;
-  margin-bottom: 20px;  
+  margin-bottom: 20px;
 }
 
 #booking-name {
-  text-transform: uppercase
+  text-transform: uppercase;
 }
 
 input {
-  padding:30px;
+  padding: 30px;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   background-color: #fff;
@@ -249,8 +298,9 @@ input {
   width: 190px;
 }
 
-::-webkit-datetime-edit { padding: 5px; }
-
+::-webkit-datetime-edit {
+  padding: 5px;
+}
 
 #button:hover {
   cursor: pointer;
@@ -363,9 +413,9 @@ input {
   border-radius: 20px;
   width: 50%;
   padding: 30px;
-  -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-  -moz-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-  box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  -webkit-box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
+  -moz-box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
+  box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
   text-align: center;
 }
 
@@ -411,14 +461,17 @@ input {
   background-color: rgb(255, 145, 95);
 }
 
-#create-group-modal input, #add-table-modal input {
+#create-group-modal input,
+#add-table-modal input {
   margin-top: 20px;
   box-shadow: inset 0px 0px 0px 0px red;
   border-radius: 5px;
   height: 40px;
 }
 
-#create-group-modal .btn-1, #add-table-modal .btn-1, #table-people-modal .btn-1 {
+#create-group-modal .btn-1,
+#add-table-modal .btn-1,
+#table-people-modal .btn-1 {
   width: 100px;
   margin-top: 20px;
 }
@@ -430,7 +483,7 @@ input {
   outline: none;
   font-weight: bold;
   color: white;
-  background-color: #0074D9;
+  background-color: #0074d9;
   border-radius: 5px;
   border: none;
 }
@@ -463,7 +516,8 @@ input {
   height: 40px;
 }
 
-.add-staff input, .add-staff .btn-1 {
+.add-staff input,
+.add-staff .btn-1 {
   margin: 10px;
 }
 
@@ -496,16 +550,15 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
- 
 }
 
 .password-box {
   background-color: rgb(255, 255, 255);
   text-align: center;
 
-  -webkit-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-  -moz-box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
-  box-shadow: 0px 10px 8px -2px rgba(0,0,0,0.47);
+  -webkit-box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
+  -moz-box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
+  box-shadow: 0px 10px 8px -2px rgba(0, 0, 0, 0.47);
   padding: 50px 40px;
   margin-bottom: 8em;
 }
@@ -548,7 +601,6 @@ input {
   margin-top: 30px;
 }
 
-
 .footer-text {
   width: 100%;
   display: flex;
@@ -568,7 +620,8 @@ input {
   line-height: 15px;
 }
 
-.stats-profile-container, .stats-report-container {
+.stats-profile-container,
+.stats-report-container {
   background-color: rgb(26, 26, 26);
   color: white;
   width: 400px;
@@ -577,7 +630,8 @@ input {
   text-align: center;
 }
 
-.stats-profile-container h1, .stats-profile-container p {
+.stats-profile-container h1,
+.stats-profile-container p {
   color: white;
 }
 
@@ -595,7 +649,8 @@ input {
   margin-top: 10px;
 }
 
-.stats-report-content span, .stats-report-content p {
+.stats-report-content span,
+.stats-report-content p {
   color: rgb(44, 44, 44);
   margin: 0 5px;
 }
@@ -609,28 +664,25 @@ input {
   text-align: left;
 }
 
-
 .stats-graph {
   width: 60%;
   margin: 0 auto;
 }
 
-
-
 @media only screen and (max-width: 1400px) {
   .stats-container {
     display: block;
   }
-  .stats-profile-container, .stats-report-container {
+  .stats-profile-container,
+  .stats-report-container {
     margin: 20px auto;
     width: 80%;
   }
   .stats-graph {
     width: 90%;
   }
-  canvas{
-    width:100% !important;
-    
+  canvas {
+    width: 100% !important;
   }
 
   .stats-container h2 {
@@ -639,9 +691,7 @@ input {
   .stats-container h1 {
     font-size: 28px;
   }
-
 }
-
 
 @media only screen and (max-width: 720px) {
   #modal-box {
@@ -654,7 +704,7 @@ input {
   .table-item h4 {
     font-size: 18px;
   }
-  
+
   .table-item h6 {
     font-size: 14px;
   }
@@ -674,5 +724,15 @@ input {
   }
   .footer-text h6 {
     font-size: 12px;
+  }
+  #ui-datepicker-div {
+    left: 20px !important;
+    right: 20px !important;
+  }
+  .ui-datepicker-calendar {
+    margin: 0 auto;
+  }
+  .ui-datepicker-calendar tbody td a {
+    font-size: 18px;
   }
 }
